@@ -1,0 +1,88 @@
+.card {
+  --accent: var(--green);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 16px 16px 14px;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: var(--shadow-tile);
+  border: 1px solid rgba(13, 13, 16, 0.04);
+}
+
+.borderline {
+  --accent: var(--amber);
+}
+
+.skip {
+  --accent: var(--coral);
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  font-size: 0.95rem;
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+.meta {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.ring {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+}
+
+.ring svg {
+  position: absolute;
+  inset: 0;
+  transform: rotate(-90deg);
+}
+
+.track {
+  fill: none;
+  stroke: var(--panel-soft-2);
+  stroke-width: 3.5;
+}
+
+.arc {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 3.5;
+  stroke-linecap: round;
+}
+
+.ring b {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: -0.03em;
+}
+
+.note {
+  font-size: 0.75rem;
+  color: var(--muted);
+  padding-top: 10px;
+  border-top: 1px dashed var(--line-strong);
+}

@@ -1,0 +1,96 @@
+.section {
+  position: relative;
+  padding-block: clamp(64px, 8vw, 120px);
+  overflow: hidden;
+}
+
+.stage {
+  position: relative;
+  min-height: clamp(560px, 52vw, 760px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cards {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.card {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: clamp(176px, 15.5vw, 232px);
+  transform: rotate(var(--r));
+  will-change: transform;
+}
+
+.copy {
+  position: relative;
+  z-index: 1;
+  max-width: 620px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  padding-inline: var(--pad-x);
+}
+
+.copy .lead {
+  max-width: 540px;
+}
+
+.copy :global(.btn) {
+  margin-top: 0.35rem;
+}
+
+/* ---------- mobile marquee ---------- */
+
+.marquee {
+  display: none;
+  position: relative;
+  margin-top: 40px;
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.track {
+  display: flex;
+  gap: 14px;
+  width: max-content;
+  padding-inline: 7px;
+  animation: slide 38s linear infinite;
+}
+
+.marquee:hover .track {
+  animation-play-state: paused;
+}
+
+.slot {
+  width: 208px;
+  flex: none;
+}
+
+@keyframes slide {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 960px) {
+  .cards {
+    display: none;
+  }
+
+  .stage {
+    min-height: 0;
+    padding-block: 12px;
+  }
+
+  .marquee {
+    display: block;
+  }
+}

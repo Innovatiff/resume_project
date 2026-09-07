@@ -1,0 +1,247 @@
+.section {
+  margin-top: var(--gutter);
+  padding-block: clamp(64px, 8vw, 120px);
+  overflow: hidden;
+}
+
+.section::before {
+  content: "";
+  position: absolute;
+  inset: -30% auto auto -15%;
+  width: 55%;
+  height: 80%;
+  background: radial-gradient(closest-side, rgba(239, 79, 66, 0.07), transparent 70%);
+  pointer-events: none;
+}
+
+.grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: clamp(32px, 5vw, 80px);
+  align-items: center;
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.fine {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.fine li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.95rem;
+  color: var(--ink-2);
+}
+
+.fine li svg {
+  width: 20px;
+  height: 20px;
+  color: var(--purple);
+  flex: none;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: clamp(20px, 2.5vw, 30px);
+  border-radius: var(--r-card);
+  background: var(--panel-soft);
+  border: 1px solid var(--line);
+}
+
+.drop {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 150px;
+  padding: 22px;
+  border-radius: 18px;
+  border: 1.5px dashed var(--line-strong);
+  background: #fff;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
+}
+
+.drop:hover,
+.drop[data-over="true"] {
+  border-color: var(--purple);
+  background: #faf8ff;
+}
+
+.drop[data-has="true"] {
+  border-style: solid;
+  border-color: var(--green);
+  background: #f7fdf9;
+}
+
+.drop input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.dropIcon {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  background: var(--purple-soft);
+  color: var(--purple-deep);
+}
+
+.dropIcon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.drop[data-has="true"] .dropIcon {
+  background: var(--green-soft);
+  color: var(--green-ink);
+}
+
+.drop b {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  font-size: 1rem;
+}
+
+.drop small {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.fileRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+}
+
+.fileRow button {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--panel-soft-2);
+  color: var(--ink);
+  position: relative;
+  z-index: 2;
+}
+
+.fileRow button svg {
+  width: 14px;
+  height: 14px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--ink-2);
+}
+
+.field label span {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.field textarea,
+.field input {
+  width: 100%;
+  border-radius: 14px;
+  border: 1px solid var(--line-strong);
+  background: #fff;
+  padding: 13px 15px;
+  font-size: 0.95rem;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.field textarea {
+  min-height: 120px;
+  resize: vertical;
+  line-height: 1.45;
+}
+
+.field textarea:focus,
+.field input:focus {
+  outline: none;
+  border-color: var(--purple);
+  box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.14);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: end;
+}
+
+.status {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  background: var(--yellow-soft);
+  color: #5a4600;
+}
+
+.status[data-kind="error"] {
+  background: var(--coral-soft);
+  color: var(--coral-deep);
+}
+
+.status[data-kind="ok"] {
+  background: var(--green-soft);
+  color: var(--green-ink);
+}
+
+.consent {
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+@media (max-width: 960px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .row {
+    grid-template-columns: 1fr;
+  }
+
+  .row :global(.btn) {
+    width: 100%;
+  }
+}
