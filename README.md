@@ -16,7 +16,31 @@ npm run lint
 
 Node 20.9+ is required by Next.js 16.
 
-## What is on the page
+## Pages
+
+| Route | What it is |
+| --- | --- |
+| `/` | Home: hero with the tile diagram, verdict cloud, bento, six rules, pricing and organizations teasers |
+| `/how-it-works` | The seven-step pipeline, the bento, and Maria's end-to-end walkthrough |
+| `/pricing` | Tiers, the full comparison matrix, add-ons, the 85-or-free guarantee, pricing FAQ |
+| `/organizations` | Who seats are for, seat packages, how a pilot runs, organization FAQ |
+| `/about` | Positioning (the three wedges), the six rules in detail, company |
+| `/faq` | All questions, grouped by category |
+| `/scan` | The free scan form, how it works, what you get, privacy FAQ |
+| `/contact` | Email channels for customers, organizations and privacy requests |
+| `/privacy`, `/terms`, `/refunds` | Plain-language legal drafts with a sticky table of contents |
+| `not-found` | Styled 404 |
+
+`sitemap.xml` and `robots.txt` are generated from `src/lib/site.ts`; set `NEXT_PUBLIC_SITE_URL` in production. `public/og.png` is the social preview image.
+
+### Shared structure
+
+- `Navbar` and `Footer` live in the root layout. The navbar marks the active page and its overlay menu closes on navigation.
+- `PageHero` is the consistent header panel for every sub-page (eyebrow, blurred-in title, lead, actions, optional floating tiles).
+- `CtaBand` is the ink-black closing call to action used at the bottom of every page.
+- Section copy shared with the home page lives in `src/lib/content.ts`; page-level copy (process steps, comparison matrix, legal text, FAQ categories) lives in `src/lib/pages.ts`.
+
+### Home page sections
 
 | Section | Component | Notes |
 | --- | --- | --- |
@@ -25,14 +49,8 @@ Node 20.9+ is required by Next.js 16.
 | "The only tool that will tell you not to apply" | `VerdictCloud` | Parallax cloud of example verdict cards; auto-scrolling strip on phones |
 | Everything in the package | `Bento` | 3 + 2 grid with animated mini-UIs: score bars, pay report stack, red-flag doc, metric interview, Plan B orbit |
 | Six rules we never break | `RulesFan` | Fanned arc carousel, auto-advances, click or dot to select |
-| A customer, end to end | `StoryCarousel` | Maria's journey as a 3D card carousel, swipe / arrows / keyboard, labelled as illustrative |
-| Pricing | `Pricing` | Free / $29 / $99 (featured) / $299, add-ons, the "85 or it's free" guarantee |
-| For organizations | `Organizations` | B2B seat packages on an ink-black panel |
-| FAQ | `Faq` | Animated accordion |
-| Free scan | `FreeScan` | Upload + posting + email form, posts to `/api/scan` |
+| Pricing and organizations teasers | `Teasers` | Compact previews linking to the full pages |
 | Footer | `Footer` | Link columns and the giant coral wordmark with a blur sweep |
-
-All copy, prices, FAQ answers and example data live in one file: `src/lib/content.ts`. Edit there, not in components.
 
 ## Design system
 
@@ -41,7 +59,7 @@ Tokens are CSS custom properties in `src/app/globals.css` (colours, radii, shado
 Motion:
 
 - `SmoothScroll` runs Lenis synced to GSAP's ticker and ScrollTrigger.
-- `RevealManager` animates anything tagged `data-reveal` (fade, rise, blur) and `data-reveal-text` (word-by-word motion-blur reveal, see `BlurText`).
+- `RevealManager` animates anything tagged `data-reveal` (fade, rise, blur) and `data-reveal-text` (word-by-word motion-blur reveal, see `BlurText`). It re-initialises on every route change; elements already in view animate in immediately, the rest wait for ScrollTrigger.
 - Everything respects `prefers-reduced-motion`: smooth scrolling is skipped, reveals are instant, autoplay carousels stop.
 - Content is fully visible with JavaScript disabled; the inline bootstrap script marks `html.js` before first paint so hidden-until-revealed states never flash.
 
@@ -61,7 +79,7 @@ The variant is chosen before first paint: `?h=a` or `?h=b` in the URL wins, then
 ## Things still to decide (from the plan)
 
 - **Name and domain.** "Shortlist" is a placeholder; `hello@shortlist.ca` in `content.ts` is too. Check `.ca` availability and CIPO before launch.
-- **Legal pages.** Privacy, Terms and Refunds links point to `#` until written. PIPEDA applies: state the retention window and one-click delete.
-- **Sign in.** The button is a placeholder until accounts exist (the thin slice ships without them).
+- **Legal pages.** `/privacy`, `/terms` and `/refunds` are plain-language drafts written from the business plan. Review them with counsel before launch. Choices made in the drafts that you may want to change: free-scan files deleted within 24 hours, paid files kept for the access period plus 30 days, a 14-day window to claim the guarantee, a 48-hour unused-pass refund, and the fair-use caps (50 and 150 packages) stated in the terms as the plan intends.
+- **Sign in.** There is no sign-in button; the thin slice ships without accounts. Add one when accounts exist.
 - **Fair-use caps** for the passes live in the terms and are deliberately not shown anywhere in the UI.
 - **Payments.** CTAs scroll to the free scan; wire Stripe Checkout links to the paid tiers when ready.

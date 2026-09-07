@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import Link from "next/link";
 import styles from "./Footer.module.css";
 import Logo from "./Logo";
 import { brand, footer } from "@/lib/content";
@@ -10,13 +11,30 @@ const socialIcon = {
   linkedin: <IconLinkedIn />,
 };
 
+function Smart({ href, children, ...rest }: { href: string; children: React.ReactNode; [k: string]: unknown }) {
+  if (href.startsWith("/")) {
+    return (
+      <Link href={href} {...rest}>
+        {children}
+      </Link>
+    );
+  }
+  return (
+    <a href={href} {...rest}>
+      {children}
+    </a>
+  );
+}
+
 export default function Footer() {
   const year = new Date().getFullYear();
   return (
     <footer className={`panel ${styles.footer}`}>
       <div className={`wrap ${styles.top}`}>
         <div className={styles.brandCol} data-reveal="">
-          <Logo />
+          <Link href="/" aria-label={`${brand.name} home`}>
+            <Logo />
+          </Link>
           <p>{brand.blurb}</p>
           <small>
             {brand.region} · <a href={`mailto:${brand.email}`}>{brand.email}</a>
@@ -29,7 +47,7 @@ export default function Footer() {
             <ul>
               {c.links.map((l) => (
                 <li key={l.label}>
-                  <a href={l.href}>{l.label}</a>
+                  <Smart href={l.href}>{l.label}</Smart>
                 </li>
               ))}
             </ul>
@@ -52,9 +70,9 @@ export default function Footer() {
         <span>
           © {year} {brand.name}. {brand.region}. All prices CAD.
         </span>
-        <a href="#">Privacy</a>
-        <a href="#">Terms</a>
-        <a href="#guarantee">Refund policy</a>
+        <Link href="/privacy">Privacy</Link>
+        <Link href="/terms">Terms</Link>
+        <Link href="/refunds">Refund policy</Link>
       </div>
 
       <div className={styles.wordmark} aria-hidden="true" data-reveal="">

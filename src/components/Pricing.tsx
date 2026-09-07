@@ -1,13 +1,13 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef } from "react";
 import styles from "./Pricing.module.css";
 import BlurText from "./BlurText";
 import { pricing } from "@/lib/content";
-import { scrollToHash } from "@/lib/lenis-store";
 import { IconCheck, IconDollar } from "./icons";
 
-export default function Pricing() {
+export default function Pricing({ showHead = true }: { showHead?: boolean }) {
   const tiersRef = useRef<HTMLDivElement>(null);
 
   /* On small screens the tiers are a snap scroller: open on the featured tier. */
@@ -21,19 +21,21 @@ export default function Pricing() {
   }, []);
 
   return (
-    <section className={`panel section ${styles.section}`} id="pricing" aria-labelledby="pricing-title">
+    <section className={`panel section ${styles.section}`} id="pricing" aria-labelledby={showHead ? "pricing-title" : undefined} aria-label={showHead ? undefined : "Pricing"}>
       <div className="wrap">
-        <div className="section-head">
-          <span className="icon-tile" data-reveal="scale" style={{ color: "var(--green)" }}>
-            <IconDollar />
-          </span>
-          <BlurText as="h2" className="h-display h2" id="pricing-title">
-            {pricing.title}
-          </BlurText>
-          <p className="lead" data-reveal="">
-            {pricing.lead}
-          </p>
-        </div>
+        {showHead ? (
+          <div className="section-head">
+            <span className="icon-tile" data-reveal="scale" style={{ color: "var(--green)" }}>
+              <IconDollar />
+            </span>
+            <BlurText as="h2" className="h-display h2" id="pricing-title">
+              {pricing.title}
+            </BlurText>
+            <p className="lead" data-reveal="">
+              {pricing.lead}
+            </p>
+          </div>
+        ) : null}
 
         <div className={styles.tiers} ref={tiersRef} data-lenis-prevent="">
           {pricing.tiers.map((t) => (
@@ -59,16 +61,9 @@ export default function Pricing() {
                   </li>
                 ))}
               </ul>
-              <a
-                className={`btn ${t.featured ? "btn--coral" : "btn--outline"} btn--block`}
-                href={t.cta.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollToHash(t.cta.href);
-                }}
-              >
+              <Link className={`btn ${t.featured ? "btn--coral" : "btn--outline"} btn--block`} href={t.cta.href}>
                 {t.cta.label}
-              </a>
+              </Link>
             </article>
           ))}
         </div>

@@ -3,9 +3,12 @@ import type { ReactNode } from "react";
 import { Inter_Tight, Outfit } from "next/font/google";
 import "lenis/dist/lenis.css";
 import "./globals.css";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import SmoothScroll from "@/components/SmoothScroll";
 import RevealManager from "@/components/RevealManager";
 import { headlineBootstrap } from "@/lib/headline";
+import { siteUrl } from "@/lib/site";
 
 const display = Inter_Tight({
   subsets: ["latin"],
@@ -23,7 +26,11 @@ const description =
   "Shortlist tells Canadian job seekers which postings are worth applying to, what those roles actually pay in their city, and rewrites the resume for the ones that pass. Under five minutes. One-time purchase, no subscription.";
 
 export const metadata: Metadata = {
-  title: "Shortlist — Know which jobs are worth applying to",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Shortlist — Know which jobs are worth applying to",
+    template: "%s · Shortlist",
+  },
   description,
   applicationName: "Shortlist",
   keywords: ["resume", "ATS score", "job search", "Canada", "Windsor", "salary report", "cover letter"],
@@ -33,11 +40,13 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_CA",
     siteName: "Shortlist",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Shortlist: stop applying to 200 jobs." }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Shortlist — Stop applying to 200 jobs.",
     description,
+    images: ["/og.png"],
   },
   robots: { index: true, follow: true },
 };
@@ -55,7 +64,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body>
         {/* Picks the headline variant and marks JS-enabled before first paint. */}
         <script dangerouslySetInnerHTML={{ __html: headlineBootstrap }} />
+        <Navbar />
         {children}
+        <Footer />
         <SmoothScroll />
         <RevealManager />
       </body>

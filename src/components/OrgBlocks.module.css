@@ -1,0 +1,112 @@
+.section {
+  padding-block: clamp(72px, 9vw, 130px);
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: clamp(36px, 4.5vw, 60px);
+}
+
+.card {
+  padding: 28px 28px 30px;
+  border-radius: var(--r-card);
+  background: #fff;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  box-shadow: var(--shadow-tile);
+}
+
+.icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.card:nth-child(1) .icon { background: linear-gradient(160deg, #a98af9, var(--purple) 55%, #7443f0); }
+.card:nth-child(2) .icon { background: linear-gradient(160deg, #78dff5, var(--cyan) 60%, #1eb9de); color: #04425a; }
+.card:nth-child(3) .icon { background: linear-gradient(160deg, #ffe07a, var(--yellow) 60%, #f6c52e); color: #4a3a00; }
+
+.card h3 {
+  font-size: clamp(1.15rem, 1.5vw, 1.35rem);
+}
+
+.card p {
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+/* ---------- pilot steps ---------- */
+
+.pilot {
+  padding-block: clamp(72px, 9vw, 130px);
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: clamp(36px, 4.5vw, 60px);
+  counter-reset: step;
+}
+
+.step {
+  position: relative;
+  padding: 26px 24px 28px;
+  border-radius: var(--r-card);
+  background: #fff;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.step::before {
+  counter-increment: step;
+  content: counter(step, decimal-leading-zero);
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  font-size: 2.4rem;
+  line-height: 1;
+  color: var(--purple);
+}
+
+.step h3 {
+  font-size: 1.1rem;
+}
+
+.step p {
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 1000px) {
+  .steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .cards,
+  .steps {
+    grid-template-columns: 1fr;
+    max-width: 560px;
+    margin-inline: auto;
+  }
+}

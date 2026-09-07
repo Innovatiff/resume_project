@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef } from "react";
 import type { CSSProperties } from "react";
 import styles from "./VerdictCloud.module.css";
@@ -7,7 +8,6 @@ import BlurText from "./BlurText";
 import PostingCard from "./PostingCard";
 import { cloud, postings } from "@/lib/content";
 import { ensureGsap, prefersReducedMotion } from "@/lib/motion";
-import { scrollToHash } from "@/lib/lenis-store";
 import { IconTarget } from "./icons";
 
 /* Cloud layout: top-left of each card in % of the stage, rotation, parallax speed. */
@@ -95,17 +95,9 @@ export default function VerdictCloud() {
           <p className={`lead ${styles.lead}`} data-reveal="">
             {cloud.lead}
           </p>
-          <a
-            className="btn btn--purple"
-            href={cloud.cta.href}
-            data-reveal=""
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToHash(cloud.cta.href);
-            }}
-          >
+          <Link className="btn btn--purple btn--lg" href={cloud.cta.href} data-reveal="">
             {cloud.cta.label}
-          </a>
+          </Link>
         </div>
       </div>
 

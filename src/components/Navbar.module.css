@@ -67,6 +67,11 @@
   background: var(--panel-soft);
 }
 
+.links a[aria-current="page"] {
+  color: var(--ink);
+  background: var(--panel-soft-2);
+}
+
 .actions {
   display: flex;
   align-items: center;
@@ -153,10 +158,16 @@
   filter: blur(0);
 }
 
-.overlay[data-open="true"] .overlayLinks a:nth-child(1) { transition-delay: 0.18s; }
-.overlay[data-open="true"] .overlayLinks a:nth-child(2) { transition-delay: 0.26s; }
-.overlay[data-open="true"] .overlayLinks a:nth-child(3) { transition-delay: 0.34s; }
-.overlay[data-open="true"] .overlayLinks a:nth-child(4) { transition-delay: 0.42s; }
+.overlay[data-open="true"] .overlayLinks li:nth-child(1) a { transition-delay: 0.18s; }
+.overlay[data-open="true"] .overlayLinks li:nth-child(2) a { transition-delay: 0.26s; }
+.overlay[data-open="true"] .overlayLinks li:nth-child(3) a { transition-delay: 0.34s; }
+.overlay[data-open="true"] .overlayLinks li:nth-child(4) a { transition-delay: 0.42s; }
+.overlay[data-open="true"] .overlayLinks li:nth-child(5) a { transition-delay: 0.5s; }
+.overlay[data-open="true"] .overlayLinks li:nth-child(6) a { transition-delay: 0.58s; }
+
+.overlayLinks a[aria-current="page"] {
+  color: #b9a4ff;
+}
 
 .overlayFoot {
   margin-top: auto;
@@ -182,7 +193,7 @@
 
 @media (max-width: 900px) {
   .links,
-  .signIn {
+  .secondary {
     display: none;
   }
 

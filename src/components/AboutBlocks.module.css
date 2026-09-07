@@ -1,0 +1,268 @@
+.section {
+  padding-block: clamp(72px, 9vw, 130px);
+}
+
+.wedges {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: clamp(36px, 4.5vw, 60px);
+}
+
+.wedge {
+  position: relative;
+  padding: 28px 28px 30px;
+  border-radius: var(--r-card);
+  background: #fff;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow: hidden;
+}
+
+.wedge::before {
+  content: "";
+  position: absolute;
+  inset: auto -30% -50% auto;
+  width: 60%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, var(--tint), transparent 70%);
+  pointer-events: none;
+}
+
+.wedge:nth-child(1) { --tint: rgba(239, 79, 66, 0.16); }
+.wedge:nth-child(2) { --tint: rgba(139, 92, 246, 0.18); }
+.wedge:nth-child(3) { --tint: rgba(62, 207, 239, 0.2); }
+
+.wedgeNum {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  font-size: 2.6rem;
+  line-height: 1;
+  color: var(--muted-2);
+}
+
+.wedge h3 {
+  font-size: clamp(1.2rem, 1.6vw, 1.45rem);
+}
+
+.wedge p {
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+/* ---------- theirs vs ours ---------- */
+
+.versus {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.col {
+  padding: 28px 30px;
+  border-radius: var(--r-card);
+  border: 1px solid var(--line);
+}
+
+.theirs {
+  background: var(--panel-soft);
+}
+
+.ours {
+  background: var(--ink);
+  color: #fff;
+}
+
+.col h4 {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+.ours h4 {
+  color: #b9a4ff;
+}
+
+.col ul {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.col li {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: var(--ink-2);
+}
+
+.ours li {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.col li i {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  margin-top: 1px;
+}
+
+.theirs li i {
+  background: var(--coral-soft);
+  color: var(--coral-deep);
+}
+
+.ours li i {
+  background: rgba(139, 92, 246, 0.3);
+  color: #d7caff;
+}
+
+.col li i svg {
+  width: 13px;
+  height: 13px;
+}
+
+/* ---------- rules grid ---------- */
+
+.rules {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: clamp(36px, 4.5vw, 60px);
+}
+
+.rule {
+  padding: 26px 26px 28px;
+  border-radius: var(--r-card);
+  background: #fff;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ruleHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ruleIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 15px;
+  display: grid;
+  place-items: center;
+  background: var(--panel-soft);
+  color: var(--coral);
+}
+
+.ruleIcon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.ruleNum {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--muted-2);
+  letter-spacing: -0.02em;
+}
+
+.rule h3 {
+  font-size: 1.15rem;
+}
+
+.rule p {
+  color: var(--muted);
+  font-size: 0.93rem;
+  line-height: 1.5;
+}
+
+/* ---------- company ---------- */
+
+.company {
+  margin-top: var(--gutter);
+  padding-block: clamp(64px, 7vw, 110px);
+}
+
+.companyGrid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: clamp(28px, 4vw, 64px);
+  align-items: center;
+}
+
+.companyCopy {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.companyCopy p {
+  color: var(--ink-2);
+  line-height: 1.6;
+}
+
+.facts {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--r-card);
+  border: 1px solid var(--line);
+  background: var(--panel-soft);
+  padding: 8px 26px;
+}
+
+.factRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.95rem;
+}
+
+.factRow:last-child {
+  border-bottom: 0;
+}
+
+.factRow span {
+  color: var(--muted);
+}
+
+.factRow b {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-align: right;
+}
+
+@media (max-width: 960px) {
+  .wedges,
+  .rules {
+    grid-template-columns: 1fr;
+    max-width: 560px;
+    margin-inline: auto;
+  }
+
+  .versus,
+  .companyGrid {
+    grid-template-columns: 1fr;
+  }
+}

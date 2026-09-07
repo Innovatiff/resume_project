@@ -211,6 +211,14 @@ ol {
   color: #fff;
 }
 
+.panel + .panel {
+  margin-top: var(--gutter);
+}
+
+[id] {
+  scroll-margin-top: calc(var(--nav-h) + 40px);
+}
+
 .section {
   position: relative;
   padding-block: clamp(76px, 9vw, 150px);

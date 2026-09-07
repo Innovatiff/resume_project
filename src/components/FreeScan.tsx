@@ -16,7 +16,7 @@ function fmtSize(bytes: number) {
   return bytes > 1024 * 1024 ? `${(bytes / 1024 / 1024).toFixed(1)} MB` : `${Math.max(1, Math.round(bytes / 1024))} KB`;
 }
 
-export default function FreeScan() {
+export default function FreeScan({ first = false }: { first?: boolean }) {
   const [file, setFile] = useState<File | null>(null);
   const [over, setOver] = useState(false);
   const [posting, setPosting] = useState("");
@@ -78,7 +78,7 @@ export default function FreeScan() {
   const busy = status.kind === "busy";
 
   return (
-    <section className={`panel ${styles.section}`} id="scan" aria-labelledby="scan-title">
+    <section className={`panel ${styles.section} ${first ? styles.first : ""}`} id="scan" aria-labelledby="scan-title">
       <div className={`wrap ${styles.grid}`}>
         <div className={styles.copy}>
           <BlurText as="h2" className="h-display h2" id="scan-title">

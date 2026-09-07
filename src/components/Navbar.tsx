@@ -1,14 +1,16 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
-import type { MouseEvent } from "react";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import styles from "./Navbar.module.css";
 import Logo from "./Logo";
 import { nav, brand } from "@/lib/content";
-import { getLenis, scrollToHash } from "@/lib/lenis-store";
+import { getLenis } from "@/lib/lenis-store";
 import { IconArrowRight, IconMenu, IconX } from "./icons";
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -38,46 +40,32 @@ export default function Navbar() {
     };
   }, [open]);
 
-  const go = useCallback((e: MouseEvent<HTMLAnchorElement>, href: string) => {
-    if (!href.startsWith("#")) return;
-    e.preventDefault();
-    setOpen(false);
-    if (href === "#top") {
-      const lenis = getLenis();
-      if (lenis) lenis.scrollTo(0, { duration: 1.2 });
-      else window.scrollTo({ top: 0, behavior: "smooth" });
-      history.replaceState(null, "", " ");
-      return;
-    }
-    // Let the overlay start closing before the page moves.
-    window.setTimeout(() => scrollToHash(href), open ? 120 : 0);
-    history.replaceState(null, "", href);
-  }, [open]);
+  const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
   return (
     <header className={styles.header}>
       <nav className={`${styles.bar} ${scrolled ? styles.scrolled : ""}`} aria-label="Primary">
-        <a href="#top" className={styles.brand} onClick={(e) => go(e, "#top")} aria-label={`${brand.name} home`}>
+        <Link href="/" className={styles.brand} aria-label={`${brand.name} home`} onClick={() => setOpen(false)}>
           <Logo />
-        </a>
+        </Link>
 
         <ul className={styles.links}>
           {nav.links.map((l) => (
             <li key={l.href}>
-              <a href={l.href} onClick={(e) => go(e, l.href)}>
+              <Link href={l.href} aria-current={isActive(l.href) ? "page" : undefined}>
                 {l.label}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
 
         <div className={styles.actions}>
-          <a className={`btn btn--ghost btn--sm ${styles.signIn}`} href={nav.signIn.href}>
-            {nav.signIn.label}
-          </a>
-          <a className="btn btn--ink btn--sm" href={nav.cta.href} onClick={(e) => go(e, nav.cta.href)}>
+          <Link className={`btn btn--ghost btn--sm ${styles.secondary}`} href={nav.secondary.href}>
+            {nav.secondary.label}
+          </Link>
+          <Link className="btn btn--ink btn--sm" href={nav.cta.href} onClick={() => setOpen(false)}>
             {nav.cta.label}
-          </a>
+          </Link>
           <button
             type="button"
             className={styles.burger}
@@ -94,23 +82,20 @@ export default function Navbar() {
       <div id="mobile-menu" className={styles.overlay} data-open={open} aria-hidden={!open}>
         <nav aria-label="Mobile">
           <ul className={styles.overlayLinks}>
-            {nav.links.map((l) => (
+            {[...nav.links, nav.secondary].map((l) => (
               <li key={l.href}>
-                <a href={l.href} onClick={(e) => go(e, l.href)} tabIndex={open ? 0 : -1}>
+                <Link href={l.href} tabIndex={open ? 0 : -1} aria-current={isActive(l.href) ? "page" : undefined} onClick={() => setOpen(false)}>
                   {l.label}
                   <IconArrowRight />
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
         </nav>
         <div className={styles.overlayFoot}>
-          <a className="btn btn--coral btn--lg btn--block" href={nav.cta.href} onClick={(e) => go(e, nav.cta.href)} tabIndex={open ? 0 : -1}>
+          <Link className="btn btn--coral btn--lg btn--block" href={nav.cta.href} tabIndex={open ? 0 : -1} onClick={() => setOpen(false)}>
             Scan my resume free
-          </a>
-          <a className="btn btn--white btn--block" href={nav.signIn.href} tabIndex={open ? 0 : -1}>
-            {nav.signIn.label}
-          </a>
+          </Link>
           <p className={styles.overlayMeta}>
             {brand.region} · No subscription, no auto-renew
           </p>

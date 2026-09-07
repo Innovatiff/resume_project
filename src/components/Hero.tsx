@@ -1,11 +1,11 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef } from "react";
 import styles from "./Hero.module.css";
 import BlurText from "./BlurText";
 import { hero } from "@/lib/content";
 import { ensureGsap, isTouchDevice, prefersReducedMotion } from "@/lib/motion";
-import { scrollToHash } from "@/lib/lenis-store";
 import { IconBriefcase, IconCheck, IconDoc, IconEyes, IconFlag } from "./icons";
 
 /* Tile geometry: centre position in % of the 1000x400 diagram, size in cqw. */
@@ -192,26 +192,12 @@ export default function Hero() {
             {hero.lead}
           </p>
           <div className={styles.ctas} data-reveal="" data-reveal-delay="1.15">
-            <a
-              className="btn btn--coral btn--lg"
-              href={hero.primary.href}
-              onClick={(e) => {
-                e.preventDefault();
-                scrollToHash(hero.primary.href);
-              }}
-            >
+            <Link className="btn btn--coral btn--lg" href={hero.primary.href}>
               {hero.primary.label}
-            </a>
-            <a
-              className="btn btn--ghost btn--lg"
-              href={hero.secondary.href}
-              onClick={(e) => {
-                e.preventDefault();
-                scrollToHash(hero.secondary.href);
-              }}
-            >
+            </Link>
+            <Link className="btn btn--ghost btn--lg" href={hero.secondary.href}>
               {hero.secondary.label}
-            </a>
+            </Link>
           </div>
           <ul className={styles.trust} data-reveal="" data-reveal-delay="1.3">
             {hero.trust.map((t) => (

@@ -21,13 +21,14 @@ export const brand = {
 
 export const nav = {
   links: [
-    { label: "How it works", href: "#how-it-works" },
-    { label: "Pricing", href: "#pricing" },
-    { label: "For organizations", href: "#organizations" },
-    { label: "FAQ", href: "#faq" },
+    { label: "How it works", href: "/how-it-works" },
+    { label: "Pricing", href: "/pricing" },
+    { label: "Organizations", href: "/organizations" },
+    { label: "About", href: "/about" },
+    { label: "FAQ", href: "/faq" },
   ] as Link[],
-  signIn: { label: "Sign in", href: "#" } as Link,
-  cta: { label: "Free scan", href: "#scan" } as Link,
+  secondary: { label: "Contact", href: "/contact" } as Link,
+  cta: { label: "Free scan", href: "/scan" } as Link,
 };
 
 export const hero = {
@@ -37,8 +38,8 @@ export const hero = {
   },
   lead:
     "Shortlist tells Canadian job seekers which postings are worth applying to, what those roles really pay in their city, and then rewrites their resume for the ones that pass. Delivered in under five minutes.",
-  primary: { label: "Scan my resume free", href: "#scan" } as Link,
-  secondary: { label: "See pricing", href: "#pricing" } as Link,
+  primary: { label: "Scan my resume free", href: "/scan" } as Link,
+  secondary: { label: "See pricing", href: "/pricing" } as Link,
   trust: ["No subscription", "No auto-renew", "No card retained", "Prices in CAD"],
 };
 
@@ -72,7 +73,7 @@ export const cloud = {
   title: "The only tool that will tell you not to apply.",
   lead:
     "Every competitor is paid to make you apply more. Several sell mass auto-apply, which employers now flag and filter. Our value is subtraction. The resume is an output. The decision is the product.",
-  cta: { label: "See how a verdict is made", href: "#how-it-works" } as Link,
+  cta: { label: "See how a verdict is made", href: "/how-it-works" } as Link,
 };
 
 export interface BentoCopy {
@@ -294,7 +295,7 @@ export const pricing = {
         "The three specific reasons it is being filtered out",
         "One scan per email address every 7 days",
       ],
-      cta: { label: "Scan for free", href: "#scan" },
+      cta: { label: "Scan for free", href: "/scan" },
     },
     {
       id: "single",
@@ -312,7 +313,7 @@ export const pricing = {
         "One free revision within 48 hours",
         "Delivery in under 5 minutes",
       ],
-      cta: { label: "Buy a Single Shot", href: "#scan" },
+      cta: { label: "Buy a Single Shot", href: "/scan" },
     },
     {
       id: "pass",
@@ -329,7 +330,7 @@ export const pricing = {
         "LinkedIn headline and About rewrite",
         "No subscription, no auto-renew, no card retained",
       ],
-      cta: { label: "Get the 30-Day Pass", href: "#scan" },
+      cta: { label: "Get the 30-Day Pass", href: "/scan" },
       featured: true,
       badge: "Most people choose this",
     },
@@ -346,7 +347,7 @@ export const pricing = {
         "Priority delivery in under 2 minutes",
         "Direct email access, same-day response",
       ],
-      cta: { label: "Get Landed", href: "#scan" },
+      cta: { label: "Get Landed", href: "/scan" },
     },
   ] as Tier[],
   addons: [
@@ -441,28 +442,28 @@ export const footer = {
     {
       title: "Product",
       links: [
-        { label: "Free scan", href: "#scan" },
-        { label: "Single Shot", href: "#pricing" },
-        { label: "30-Day Pass", href: "#pricing" },
-        { label: "Landed", href: "#pricing" },
-        { label: "For organizations", href: "#organizations" },
+        { label: "Free scan", href: "/scan" },
+        { label: "How it works", href: "/how-it-works" },
+        { label: "Pricing", href: "/pricing" },
+        { label: "Guarantee", href: "/pricing#guarantee" },
+        { label: "For organizations", href: "/organizations" },
       ],
     },
     {
       title: "Company",
       links: [
-        { label: "How it works", href: "#how-it-works" },
-        { label: "The six rules", href: "#rules" },
-        { label: "Guarantee", href: "#guarantee" },
-        { label: "FAQ", href: "#faq" },
+        { label: "About", href: "/about" },
+        { label: "The six rules", href: "/about#rules" },
+        { label: "FAQ", href: "/faq" },
+        { label: "Contact", href: "/contact" },
       ],
     },
     {
       title: "Legal",
       links: [
-        { label: "Privacy", href: "#" },
-        { label: "Terms", href: "#" },
-        { label: "Refunds", href: "#guarantee" },
+        { label: "Privacy", href: "/privacy" },
+        { label: "Terms", href: "/terms" },
+        { label: "Refunds", href: "/refunds" },
       ],
     },
   ] as { title: string; links: Link[] }[],
