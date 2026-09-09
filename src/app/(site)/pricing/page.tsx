@@ -9,7 +9,7 @@ import { faqPage, pricingPage } from "@/lib/pages";
 
 export const metadata: Metadata = {
   title: "Pricing",
-  description: "Free scan, Single Shot $29, 30-Day Pass $99, Landed $299. One-time purchases in Canadian dollars, no subscription, no card on file, and the 85-or-free guarantee.",
+  description: "Free scan, Single Shot $29, 30-Day Pass $99, Landed $299. One-time purchases in CAD or USD, no subscription, no card on file, and the 85-or-free guarantee.",
 };
 
 const pricingFaq = faqPage.categories.find((c) => c.id === "pricing")!;

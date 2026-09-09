@@ -1,6 +1,7 @@
 import "server-only";
 import type { CandidateProfile, InterviewPrep, JobRequirements, Language, LinkedInRewrite, MetricQuestion, ObjectionReport, PlanId, Strategy, TailoredResume } from "@/lib/app/types";
 import { config } from "@/lib/app/config";
+import { type CountryCode, detectCountry, isCountryCode } from "@/lib/app/markets";
 import { extractNumbers } from "@/lib/scoring/text";
 import { generate } from "./client";
 import { EXTRACT_SYSTEM, LINKEDIN_SYSTEM, LONG_SHOT_ADDENDUM, OBJECTIONS_SYSTEM, POSTING_SYSTEM, PREP_SYSTEM, QUESTIONS_SYSTEM, rewriteSystem } from "./prompts";
@@ -8,6 +9,13 @@ import { LinkedInSchema, ObjectionsSchema, PrepSchema, ProfileSchema, QuestionsS
 import { mockExtractProfile, mockLinkedIn, mockObjections, mockParsePosting, mockPrep, mockQuestions, mockRewrite } from "./mock";
 
 const n = <T>(v: T | null): T | undefined => (v === null ? undefined : v);
+/** The model is asked for an ISO code; accept a country name too. */
+const toCountry = (v: string | null): CountryCode | undefined => {
+  if (!v) return undefined;
+  const code = v.trim().toUpperCase();
+  if (code === "UK") return "GB";
+  return isCountryCode(code) ? code : detectCountry(v);
+};
 
 export function aiMode(): "live" | "mock" {
   return config.ai.mock ? "mock" : "live";
@@ -19,7 +27,7 @@ function toProfile(o: ProfileOut): CandidateProfile {
   return {
     name: n(o.name),
     headline: n(o.headline),
-    contact: { email: n(o.contact.email), phone: n(o.contact.phone), city: n(o.contact.city), province: n(o.contact.province), linkedin: n(o.contact.linkedin) },
+    contact: { email: n(o.contact.email), phone: n(o.contact.phone), city: n(o.contact.city), province: n(o.contact.province), country: toCountry(o.contact.country), linkedin: n(o.contact.linkedin) },
     summary: n(o.summary),
     experience: o.experience.map((e) => ({
       title: e.title,
@@ -56,6 +64,7 @@ function toRequirements(o: RequirementsOut): JobRequirements {
     location: n(o.location),
     city: n(o.city),
     province: n(o.province),
+    country: toCountry(o.country),
     remote: o.remote,
     employmentType: n(o.employmentType),
     salaryStated: n(o.salaryStated),
@@ -106,6 +115,8 @@ export interface RewriteInput {
   strategy: Strategy;
   plan: PlanId;
   language: Language;
+  /** Market of the posting: spelling and resume conventions. */
+  country: CountryCode;
   /** Figures the validator rejected on a previous attempt, for a corrective retry. */
   forbidden?: string[];
 }
@@ -145,7 +156,7 @@ export async function rewriteResume(input: RewriteInput): Promise<{ resume: Tail
     .join("\n\n");
   const { output, model } = await generate({
     role: input.plan === "landed" ? "premium" : "rewrite",
-    system: rewriteSystem(input.language),
+    system: rewriteSystem(input.language, input.country),
     user,
     schema: RewriteSchema,
     maxTokens: 12000,

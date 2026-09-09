@@ -2,6 +2,7 @@ import "server-only";
 import { adminDb } from "@/lib/firebase/admin";
 import type { CandidateProfile, ProfileSource, UserDoc } from "@/lib/app/types";
 import { nowIso } from "@/lib/app/hash";
+import type { CountryCode } from "@/lib/app/markets";
 
 const users = () => adminDb().collection("users");
 
@@ -10,7 +11,7 @@ export async function getUser(uid: string): Promise<UserDoc | null> {
   return snap.exists ? (snap.data() as UserDoc) : null;
 }
 
-export async function ensureUser(input: { uid: string; email: string; displayName?: string }): Promise<UserDoc> {
+export async function ensureUser(input: { uid: string; email: string; displayName?: string; country?: CountryCode }): Promise<UserDoc> {
   const ref = users().doc(input.uid);
   const snap = await ref.get();
   if (snap.exists) {
@@ -27,6 +28,7 @@ export async function ensureUser(input: { uid: string; email: string; displayNam
     email: input.email,
     displayName: input.displayName,
     language: "en",
+    country: input.country,
     createdAt: now,
     updatedAt: now,
   };
@@ -34,7 +36,7 @@ export async function ensureUser(input: { uid: string; email: string; displayNam
   return doc;
 }
 
-export async function updateUser(uid: string, patch: Partial<Pick<UserDoc, "language" | "city" | "province" | "displayName" | "stripeCustomerId">>): Promise<void> {
+export async function updateUser(uid: string, patch: Partial<Pick<UserDoc, "language" | "country" | "city" | "province" | "displayName" | "stripeCustomerId">>): Promise<void> {
   await users().doc(uid).set({ ...patch, updatedAt: nowIso() }, { merge: true });
 }
 

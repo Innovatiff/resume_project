@@ -7,7 +7,7 @@ import { faqPage } from "@/lib/pages";
 
 export const metadata: Metadata = {
   title: "FAQ",
-  description: "Plain answers about the guarantee, refunds, privacy under PIPEDA, how the AI is kept honest, languages, and how organization seats work.",
+  description: "Plain answers about the guarantee, refunds, privacy, how the AI is kept honest, languages, and how organization seats work.",
 };
 
 export default function FaqPage() {

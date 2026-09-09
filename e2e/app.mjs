@@ -48,6 +48,7 @@ const launchOptions = process.env.E2E_CHROMIUM
     : {};
 
 const posting = fs.readFileSync(path.join(FX, "posting.txt"), "utf8");
+const postingUs = fs.readFileSync(path.join(FX, "posting-us.txt"), "utf8");
 const email = `maria+${Date.now()}@example.com`;
 const password = "correct-horse-battery";
 
@@ -213,6 +214,26 @@ const password = "correct-horse-battery";
     await page.waitForTimeout(500);
     check("account lists the purchase", await page.isVisible("table.app-table >> text=30-Day Pass"));
     await page.screenshot({ path: shot("app-account.png"), fullPage: true });
+    // Playwright's browser sends Accept-Language en-US, so the account's home market defaults to the United States.
+    check("browser locale sets the default market and currency", await page.isVisible("text=All prices USD, one-time."));
+
+    // ---------- Markets: switch the account to Canada, score a US posting ----------
+    await page.goto(BASE + "/app/profile", { waitUntil: "networkidle" });
+    await page.selectOption("#country", "CA");
+    await page.click("text=Save preferences");
+    await page.waitForSelector("text=Preferences saved", { timeout: 20000 });
+    check("profile country select shows the province label", await page.isVisible("text=Province"));
+    await page.goto(BASE + "/app/account", { waitUntil: "networkidle" });
+    await page.waitForSelector("text=Purchases", { timeout: 20000 });
+    check("account prices follow the chosen market", (await page.isVisible("text=All prices CAD, one-time.")) && (await page.isVisible("text=CAD, one-time")));
+    await page.goto(BASE + "/app/applications/new", { waitUntil: "networkidle" });
+    await page.fill("#posting", postingUs);
+    await page.click("text=Score this posting");
+    await page.waitForURL(/\/app\/applications\/[0-9a-f-]{36}$/, { timeout: 90000 });
+    await page.waitForSelector("text=Score breakdown", { timeout: 30000 });
+    await page.waitForTimeout(500);
+    check("US posting gets a pay report in USD", (await page.isVisible("text=· USD")) && (await page.isVisible("text=Legally entitled to work in the United States")));
+    await page.screenshot({ path: shot("app-detail-us.png"), fullPage: true });
 
     // ---------- Marketing navbar follows the session ----------
     await page.goto(BASE + "/pricing", { waitUntil: "networkidle" });

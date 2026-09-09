@@ -91,7 +91,7 @@ export const pricingPage = {
   hero: {
     eyebrow: "Pricing",
     title: "One-time purchases. No subscription.",
-    lead: "All prices in Canadian dollars. Pay once, get the files, keep them. No card is kept on file and nothing renews on its own.",
+    lead: "Canadian dollars in Canada, US dollars everywhere else. Pay once, get the files, keep them. No card is kept on file and nothing renews on its own.",
   },
   compare: {
     title: "Everything, side by side.",
@@ -161,7 +161,7 @@ export const teasers = {
   pricing: {
     eyebrow: "Pricing",
     title: "Pay once. Keep the files.",
-    lead: "Three packages in Canadian dollars, all covered by the 85-or-free guarantee. Start with the free scan; no card, no account.",
+    lead: "Three packages, priced in Canadian dollars in Canada and US dollars everywhere else, all covered by the 85-or-free guarantee. Start with the free scan; no card, no account.",
     cta: { label: "See full pricing", href: "/pricing" } as Link,
   },
   org: {
@@ -195,7 +195,7 @@ export const orgPage = {
       },
       {
         title: "Settlement organizations",
-        body: "Newcomers arrive with strong experience that Canadian parsers cannot read. Foreign credentials become legible, with French and Spanish resume versions included.",
+        body: "Newcomers arrive with strong experience that applicant-tracking parsers cannot read. Foreign credentials become legible, with French and Spanish resume versions included.",
       },
       {
         title: "College career centres",
@@ -222,7 +222,7 @@ export const aboutPage = {
   hero: {
     eyebrow: "About Shortlist",
     title: "The resume is an output. The decision is the product.",
-    lead: "Shortlist is an independent Canadian company built on one idea: job seekers do not need more applications, they need fewer, better ones.",
+    lead: "Shortlist is an independent Canadian company built on one idea: job seekers do not need more applications, they need fewer, better ones. It works for postings in Canada, the United States and beyond.",
   },
   wedges: {
     title: "Three things nobody else will do.",
@@ -237,8 +237,8 @@ export const aboutPage = {
         body: "No subscription, no auto-renew, no card retained. One email at day 25 and the renewal is your call. The category has a reputation for hard cancellations; we refuse to be part of it.",
       },
       {
-        title: "Build for Canada, in three languages",
-        body: "Every major competitor is US-built and US-shaped. Nothing served a Spanish-speaking newcomer in Essex County trying to make foreign credentials legible to a Canadian employer. Now something does.",
+        title: "Built for Canada and the US, in three languages",
+        body: "Most tools are built for one market and one language. Shortlist reads postings on both sides of the border and beyond, speaks English, French and Spanish, and makes foreign credentials legible to the employer in front of you.",
       },
     ],
     theirs: ["Sell you a subscription with a free trial that converts", "Make money when you apply to more postings", "Let the model guess at salary", "Invent metrics to make bullets sound better", "Submit applications on your behalf", "Promise interviews"],
@@ -247,12 +247,12 @@ export const aboutPage = {
   company: {
     title: "Built in Windsor–Essex.",
     body: [
-      "Shortlist is a sole proprietorship registered in Ontario and run by its founder. It serves job seekers across Canada, with roots in the logistics, healthcare, trades, hospitality and administrative labour markets of Essex County.",
+      "Shortlist is a sole proprietorship registered in Ontario and run by its founder. It serves job seekers in Canada, the United States and beyond, with roots in the logistics, healthcare, trades, hospitality and administrative labour markets of Essex County.",
       "We publish the score breakdown, the refund policy and the six rules because a product that asks for your resume should be able to explain itself.",
     ],
     facts: [
       { label: "Based in", value: "Windsor–Essex, Ontario" },
-      { label: "Prices", value: "Canadian dollars" },
+      { label: "Prices", value: "CAD in Canada, USD elsewhere" },
       { label: "Languages", value: "English, French, Spanish" },
       { label: "Contact", value: brand.email },
     ],
@@ -335,11 +335,11 @@ export const faqPage = {
         },
         {
           q: "Are taxes included?",
-          a: "Prices are shown before tax. Applicable Canadian sales tax is calculated at checkout based on your province.",
+          a: "Prices are shown before tax. Applicable sales tax is calculated at checkout from your billing address: GST/HST in Canada, state sales tax in the US where it applies.",
         },
         {
           q: "Can I pay in US dollars?",
-          a: "Checkout can present prices in US dollars for customers outside Canada, but the service is built for the Canadian market and Canadian postings.",
+          a: "Prices are in Canadian dollars for customers in Canada and US dollars everywhere else. The score, pay report and rewrite work for postings in Canada, the United States, the UK, Australia and any other market. Pay data depends on coverage for that country, and the report says so plainly when there is none.",
         },
       ],
     },
@@ -390,7 +390,7 @@ export const contactPage = {
   channels: [
     { title: "Customers", body: "Questions about a scan, a delivery, a revision or a refund.", email: brand.email, subject: "Shortlist%20support" },
     { title: "Organizations", body: "Pilots, seat packages, white-labelled intake pages and reporting.", email: brand.email, subject: "Shortlist%20pilot" },
-    { title: "Privacy", body: "Access, correction or deletion requests under PIPEDA.", email: brand.email, subject: "Privacy%20request" },
+    { title: "Privacy", body: "Access, correction or deletion requests under PIPEDA, GDPR, CCPA or your local privacy law.", email: brand.email, subject: "Privacy%20request" },
   ],
   address: `${brand.name} · ${brand.region}`,
 };
@@ -415,7 +415,7 @@ export const legal: Record<"privacy" | "terms" | "refunds", LegalDoc> = {
   privacy: {
     title: "Privacy policy",
     updated: "September 2026",
-    intro: "Your resume is personal information. This policy explains, in plain language, what we collect, why, how long we keep it, and how to make it go away. Shortlist operates under Canada's Personal Information Protection and Electronic Documents Act (PIPEDA).",
+    intro: "Your resume is personal information. This policy explains, in plain language, what we collect, why, how long we keep it, and how to make it go away. Shortlist is a Canadian company and operates under Canada's Personal Information Protection and Electronic Documents Act (PIPEDA). If you are in the United States, the United Kingdom, the European Union or elsewhere, you also have the rights your local law gives you (for example the CCPA in California or the GDPR), and this policy applies to you the same way.",
     sections: [
       {
         id: "collect",
@@ -466,7 +466,7 @@ export const legal: Record<"privacy" | "terms" | "refunds", LegalDoc> = {
         id: "rights",
         heading: "Your rights",
         paragraphs: [
-          "Under PIPEDA you can ask what personal information we hold about you, ask us to correct it, withdraw your consent, and ask us to delete it. Email us and we will respond within 30 days. If you are not satisfied with our response, you can contact the Office of the Privacy Commissioner of Canada.",
+          "Wherever you live, you can ask what personal information we hold about you, ask us to correct it, withdraw your consent, and ask us to delete it. Email us and we will respond within 30 days. If you are not satisfied with our response, you can contact the Office of the Privacy Commissioner of Canada or your local data-protection authority.",
         ],
       },
       {
@@ -479,7 +479,7 @@ export const legal: Record<"privacy" | "terms" | "refunds", LegalDoc> = {
       {
         id: "age",
         heading: "Age",
-        paragraphs: ["Shortlist is for people who are legally able to work in Canada. It is not directed at anyone under 16."],
+        paragraphs: ["Shortlist is for people who are legally able to work in the country where they are applying. It is not directed at anyone under 16."],
       },
       {
         id: "changes",
@@ -505,7 +505,7 @@ export const legal: Record<"privacy" | "terms" | "refunds", LegalDoc> = {
       {
         id: "eligibility",
         heading: "Who can use it",
-        paragraphs: ["You must be at least 16 and legally able to work in Canada or the country where you are applying. You are responsible for the accuracy of the information you provide."],
+        paragraphs: ["You must be at least 16 and legally able to work in the country where you are applying. You are responsible for the accuracy of the information you provide."],
       },
       {
         id: "purchases",
@@ -515,7 +515,7 @@ export const legal: Record<"privacy" | "terms" | "refunds", LegalDoc> = {
           "Single Shot ($29): the complete package for one posting, with one free revision within 48 hours of delivery.",
           "30-Day Pass ($99): the complete package for unlimited postings for 30 days from purchase, plus the extension, tracker, metric interview, recruiter objection report and LinkedIn rewrite.",
           "Landed ($299): everything in the pass for 90 days from purchase, plus human review of every resume, two live 45-minute coaching sessions, priority delivery and direct email access.",
-          "Add-ons are one-time purchases as listed on the pricing page. All prices are in Canadian dollars; applicable taxes are added at checkout.",
+          "Add-ons are one-time purchases as listed on the pricing page. Prices are in Canadian dollars for customers in Canada and US dollars everywhere else; applicable taxes are added at checkout.",
         ],
       },
       {

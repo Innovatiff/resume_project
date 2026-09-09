@@ -24,10 +24,12 @@ const s = StyleSheet.create({
   para: { marginBottom: 8 },
 });
 
-function ResumeDoc({ r }: { r: TailoredResume }) {
+type Paper = "LETTER" | "A4";
+
+function ResumeDoc({ r, paper }: { r: TailoredResume; paper: Paper }) {
   return (
     <Document title={`${r.name} – Resume`} author={r.name} producer="Shortlist">
-      <Page size="LETTER" style={s.page}>
+      <Page size={paper} style={s.page}>
         <Text style={s.name}>{r.name}</Text>
         {r.headline ? <Text style={s.headline}>{r.headline}</Text> : null}
         {contactLine(r) ? <Text style={s.contact}>{contactLine(r)}</Text> : null}
@@ -90,11 +92,11 @@ function ResumeDoc({ r }: { r: TailoredResume }) {
   );
 }
 
-function LetterDoc({ letter, r, title, company }: { letter: string; r: TailoredResume; title: string; company?: string }) {
+function LetterDoc({ letter, r, title, company, paper }: { letter: string; r: TailoredResume; title: string; company?: string; paper: Paper }) {
   const date = new Date().toLocaleDateString("en-CA", { year: "numeric", month: "long", day: "numeric" });
   return (
     <Document title={`${r.name} – Cover letter`} author={r.name} producer="Shortlist">
-      <Page size="LETTER" style={{ ...s.page, fontSize: 11, lineHeight: 1.5 }}>
+      <Page size={paper} style={{ ...s.page, fontSize: 11, lineHeight: 1.5 }}>
         <Text style={s.name}>{r.name}</Text>
         {contactLine(r) ? <Text style={s.contact}>{contactLine(r)}</Text> : null}
         <Text style={s.para}>{date}</Text>
@@ -112,10 +114,10 @@ function LetterDoc({ letter, r, title, company }: { letter: string; r: TailoredR
   );
 }
 
-export async function buildResumePdf(r: TailoredResume): Promise<Buffer> {
-  return renderToBuffer(<ResumeDoc r={r} />);
+export async function buildResumePdf(r: TailoredResume, opts: { paper?: Paper } = {}): Promise<Buffer> {
+  return renderToBuffer(<ResumeDoc r={r} paper={opts.paper ?? "LETTER"} />);
 }
 
-export async function buildCoverLetterPdf(input: { letter: string; resume: TailoredResume; company?: string; title: string }): Promise<Buffer> {
-  return renderToBuffer(<LetterDoc letter={input.letter} r={input.resume} title={input.title} company={input.company} />);
+export async function buildCoverLetterPdf(input: { letter: string; resume: TailoredResume; company?: string; title: string; paper?: Paper }): Promise<Buffer> {
+  return renderToBuffer(<LetterDoc letter={input.letter} r={input.resume} title={input.title} company={input.company} paper={input.paper ?? "LETTER"} />);
 }

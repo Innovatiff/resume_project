@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
+import { formatMoney } from "@/lib/app/markets";
 import Link from "next/link";
 import type { ApplicationStatus, Verdict } from "@/lib/app/types";
 import { IconArrowLeft, IconCheck } from "@/components/icons";
@@ -182,9 +183,9 @@ export function Tabs({ tabs, active, onChange }: { tabs: { id: string; label: st
   );
 }
 
-export function money(n?: number): string {
+export function money(n?: number, currency = "CAD"): string {
   if (n === undefined || n === null) return "—";
-  return `$${Math.round(n).toLocaleString("en-CA")}`;
+  return formatMoney(n, currency);
 }
 
 export function fmtDate(iso?: string): string {

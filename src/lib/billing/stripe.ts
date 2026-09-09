@@ -4,7 +4,8 @@ import { config } from "@/lib/app/config";
 import { ApiError } from "@/lib/app/errors";
 import { addDays, newId, nowIso } from "@/lib/app/hash";
 import type { ProductId, Purchase } from "@/lib/app/types";
-import { PRODUCTS } from "./plans";
+import { type CheckoutCurrency, type CountryCode, checkoutCurrencyFor } from "@/lib/app/markets";
+import { PRODUCTS, priceFor } from "./plans";
 import { addPurchase, claimWebhookEvent, findPurchaseByPaymentIntent, findPurchaseBySession, listPurchases, updatePurchase } from "@/lib/store/purchases";
 import { planForPurchase } from "./entitlements";
 
@@ -27,12 +28,14 @@ export function billingMode(): "stripe" | "dev" | "off" {
   return "off";
 }
 
-export async function createCheckout(input: { uid: string; email: string; product: ProductId; origin: string }): Promise<{ url: string; mode: "stripe" | "dev" }> {
+export async function createCheckout(input: { uid: string; email: string; product: ProductId; origin: string; country?: CountryCode }): Promise<{ url: string; mode: "stripe" | "dev" }> {
   const product = PRODUCTS[input.product];
+  const currency = checkoutCurrencyFor(input.country);
+  const amount = priceFor(input.product, currency);
   const mode = billingMode();
 
   if (mode === "dev") {
-    const purchase = await grantPurchase({ uid: input.uid, product: input.product, source: "dev", amountCents: product.amountCents });
+    const purchase = await grantPurchase({ uid: input.uid, product: input.product, source: "dev", amountCents: amount, currency });
     return { url: `${input.origin}/checkout/success?dev=1&purchase=${purchase.id}`, mode: "dev" };
   }
   if (mode === "off") throw new ApiError(503, "billing_unavailable", "Payments are not configured yet. Email us and we will set you up by hand.");
@@ -45,8 +48,8 @@ export async function createCheckout(input: { uid: string; email: string; produc
       {
         quantity: 1,
         price_data: {
-          currency: "cad",
-          unit_amount: product.amountCents,
+          currency,
+          unit_amount: amount,
           product_data: { name: `Shortlist ${product.name}`, description: product.description },
         },
       },
@@ -64,7 +67,7 @@ export async function createCheckout(input: { uid: string; email: string; produc
 }
 
 /** Create the purchase record for a paid product. Idempotent on Stripe session id. */
-export async function grantPurchase(input: { uid: string; product: ProductId; source: Purchase["source"]; amountCents: number; stripeSessionId?: string; stripePaymentIntentId?: string }): Promise<Purchase> {
+export async function grantPurchase(input: { uid: string; product: ProductId; source: Purchase["source"]; amountCents: number; currency: CheckoutCurrency; stripeSessionId?: string; stripePaymentIntentId?: string }): Promise<Purchase> {
   if (input.stripeSessionId) {
     const existing = await findPurchaseBySession(input.stripeSessionId);
     if (existing) return existing;
@@ -86,7 +89,7 @@ export async function grantPurchase(input: { uid: string; product: ProductId; so
     product: input.product,
     status: "active",
     amountCents: input.amountCents,
-    currency: "cad",
+    currency: input.currency,
     createdAt: now,
     startsAt,
     endsAt: product.periodDays ? addDays(startsAt, product.periodDays) : undefined,
@@ -104,11 +107,13 @@ export async function grantFromSession(session: Stripe.Checkout.Session): Promis
   const uid = session.metadata?.uid;
   const product = session.metadata?.product as ProductId | undefined;
   if (!uid || !product || !(product in PRODUCTS)) return null;
+  const currency: CheckoutCurrency = session.currency === "usd" ? "usd" : "cad";
   return grantPurchase({
     uid,
     product,
     source: "stripe",
-    amountCents: session.amount_total ?? PRODUCTS[product].amountCents,
+    amountCents: session.amount_total ?? priceFor(product, currency),
+    currency,
     stripeSessionId: session.id,
     stripePaymentIntentId: typeof session.payment_intent === "string" ? session.payment_intent : session.payment_intent?.id,
   });

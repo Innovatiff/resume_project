@@ -2,6 +2,7 @@ import "server-only";
 import { adminAuth } from "@/lib/firebase/admin";
 import { ApiError } from "./errors";
 import { ensureUser } from "@/lib/store/users";
+import { countryFromLocale } from "./markets";
 import type { UserDoc } from "./types";
 
 export interface AuthedUser {
@@ -23,6 +24,7 @@ export async function requireUser(req: Request): Promise<AuthedUser> {
   }
   const email = decoded.email ?? "";
   if (!email) throw new ApiError(401, "no_email", "An email address is required on the account.");
-  const doc = await ensureUser({ uid: decoded.uid, email, displayName: decoded.name as string | undefined });
+  // First sign-in: the browser's locale region is the initial guess at the home market; the profile page can change it.
+  const doc = await ensureUser({ uid: decoded.uid, email, displayName: decoded.name as string | undefined, country: countryFromLocale(req.headers.get("accept-language")) });
   return { uid: decoded.uid, email, doc };
 }

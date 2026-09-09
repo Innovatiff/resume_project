@@ -3,6 +3,8 @@
    Dates are ISO strings so documents serialise cleanly to the client.
 ------------------------------------------------------------------- */
 
+import type { CheckoutCurrency, CountryCode, CurrencyCode } from "./markets";
+
 export type Language = "en" | "fr" | "es";
 
 export type PlanId = "single" | "pass" | "landed";
@@ -55,7 +57,9 @@ export interface CandidateProfile {
     email?: string;
     phone?: string;
     city?: string;
+    /** Province, state or region, as written. */
     province?: string;
+    country?: CountryCode;
     linkedin?: string;
   };
   summary?: string;
@@ -94,7 +98,10 @@ export interface JobRequirements {
   company?: string;
   location?: string;
   city?: string;
+  /** Province, state or region, as written. */
   province?: string;
+  /** Resolved market for pay data, currency and conventions. */
+  country?: CountryCode;
   remote?: boolean;
   employmentType?: string;
   salaryStated?: string;
@@ -141,7 +148,8 @@ export interface PayReport {
   available: boolean;
   title: string;
   location: string;
-  currency: "CAD";
+  country?: CountryCode;
+  currency: CurrencyCode;
   low?: number;
   median?: number;
   high?: number;
@@ -157,6 +165,7 @@ export interface PlanBRole {
   location?: string;
   salaryLow?: number;
   salaryHigh?: number;
+  currency?: CurrencyCode;
   url?: string;
   why: string;
 }
@@ -259,6 +268,8 @@ export interface UserDoc {
   email: string;
   displayName?: string;
   language: Language;
+  /** Home market: decides the checkout currency and the fallback for pay data. */
+  country?: CountryCode;
   city?: string;
   province?: string;
   createdAt: string;
@@ -276,7 +287,7 @@ export interface Purchase {
   product: ProductId;
   status: PurchaseStatus;
   amountCents: number;
-  currency: "cad";
+  currency: CheckoutCurrency;
   createdAt: string;
   startsAt: string;
   /** Undefined for single-use products. */
@@ -326,7 +337,7 @@ export interface PlanFeatures {
 }
 
 export interface MeResponse {
-  user: Pick<UserDoc, "uid" | "email" | "displayName" | "language" | "city" | "province" | "createdAt">;
+  user: Pick<UserDoc, "uid" | "email" | "displayName" | "language" | "country" | "city" | "province" | "createdAt"> & { currency: CheckoutCurrency };
   hasProfile: boolean;
   profile?: CandidateProfile;
   profileSource?: ProfileSource;

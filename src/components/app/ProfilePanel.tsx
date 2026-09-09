@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { apiFetch, ApiClientError } from "@/lib/app/auth-client";
 import { useMe } from "@/lib/app/use-me";
 import type { CandidateProfile, Language, ProfileSource } from "@/lib/app/types";
+import { COUNTRY_CODES, type CountryCode, MARKETS, marketFor } from "@/lib/app/markets";
 import { Card, Dropzone, Field, Notice, PageHead, Progress, Skeleton, fmtDate } from "./ui";
 
 const STEPS = ["Reading the file", "Extracting your profile", "Saving"];
@@ -14,11 +15,13 @@ export default function ProfilePanel() {
   const [busy, setBusy] = useState(false);
   const [step, setStep] = useState(0);
   const [msg, setMsg] = useState<{ kind: "error" | "success"; text: string } | null>(null);
-  const [edits, setEdits] = useState<{ language?: Language; city?: string; province?: string }>({});
+  const [edits, setEdits] = useState<{ language?: Language; country?: CountryCode; city?: string; province?: string }>({});
   const language: Language = edits.language ?? me?.user.language ?? "en";
+  const country: CountryCode = edits.country ?? me?.user.country ?? "CA";
   const city = edits.city ?? me?.user.city ?? "";
   const province = edits.province ?? me?.user.province ?? "";
   const setLanguage = (v: Language) => setEdits((e) => ({ ...e, language: v }));
+  const setCountry = (v: CountryCode) => setEdits((e) => ({ ...e, country: v }));
   const setCity = (v: string) => setEdits((e) => ({ ...e, city: v }));
   const setProvince = (v: string) => setEdits((e) => ({ ...e, province: v }));
   const [saving, setSaving] = useState(false);
@@ -52,7 +55,7 @@ export default function ProfilePanel() {
     setSaving(true);
     setMsg(null);
     try {
-      await apiFetch("/api/me", { method: "PATCH", body: JSON.stringify({ language, city, province }) });
+      await apiFetch("/api/me", { method: "PATCH", body: JSON.stringify({ language, country, city, province }) });
       await refresh();
       setEdits({});
       setMsg({ kind: "success", text: "Preferences saved." });
@@ -88,7 +91,7 @@ export default function ProfilePanel() {
                   <dt>Phone</dt>
                   <dd>{p.contact.phone ?? "—"}</dd>
                   <dt>Location</dt>
-                  <dd>{[p.contact.city, p.contact.province].filter(Boolean).join(", ") || "—"}</dd>
+                  <dd>{[p.contact.city, p.contact.province, p.contact.country && p.contact.country !== "OTHER" ? MARKETS[p.contact.country].name : undefined].filter(Boolean).join(", ") || "—"}</dd>
                   <dt>Experience</dt>
                   <dd>{p.totalYears ? `${p.totalYears} years` : `${p.experience.length} roles`}</dd>
                 </dl>
@@ -177,11 +180,20 @@ export default function ProfilePanel() {
                 <option value="es">Español</option>
               </select>
             </Field>
-            <Field label="Home city" hint="for pay data" htmlFor="city">
-              <input id="city" className="app-input" value={city} onChange={(e) => setCity(e.target.value)} placeholder="Windsor" />
+            <Field label="Country" hint="pay data and checkout currency" htmlFor="country">
+              <select id="country" className="app-select" value={country} onChange={(e) => setCountry(e.target.value as CountryCode)}>
+                {COUNTRY_CODES.map((c) => (
+                  <option key={c} value={c}>
+                    {MARKETS[c].name}
+                  </option>
+                ))}
+              </select>
             </Field>
-            <Field label="Province" htmlFor="prov">
-              <input id="prov" className="app-input" value={province} onChange={(e) => setProvince(e.target.value)} placeholder="ON" />
+            <Field label="Home city" hint="for pay data" htmlFor="city">
+              <input id="city" className="app-input" value={city} onChange={(e) => setCity(e.target.value)} placeholder={country === "US" ? "Detroit" : country === "CA" ? "Windsor" : "City"} />
+            </Field>
+            <Field label={marketFor(country).regionLabel} htmlFor="prov">
+              <input id="prov" className="app-input" value={province} onChange={(e) => setProvince(e.target.value)} placeholder={country === "US" ? "MI" : country === "CA" ? "ON" : ""} />
             </Field>
             <button type="button" className="btn btn--outline" disabled={saving} onClick={() => void savePrefs()}>
               {saving ? "Saving…" : "Save preferences"}

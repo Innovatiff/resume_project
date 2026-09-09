@@ -40,7 +40,14 @@ export function dateRange(start?: string, end?: string): string {
   return `${start ?? ""} – ${end ?? "Present"}`;
 }
 
-export async function buildResumeDocx(r: TailoredResume): Promise<Buffer> {
+export type Paper = "LETTER" | "A4";
+
+/** Page size in twips. */
+function pageSize(paper: Paper) {
+  return paper === "A4" ? { width: 11906, height: 16838 } : { width: 12240, height: 15840 };
+}
+
+export async function buildResumeDocx(r: TailoredResume, opts: { paper?: Paper } = {}): Promise<Buffer> {
   const children: Paragraph[] = [];
   children.push(line(r.name, { bold: true, size: 40, after: 20 }));
   if (r.headline) children.push(line(r.headline, { size: 24, color: "444444", after: 40 }));
@@ -96,12 +103,12 @@ export async function buildResumeDocx(r: TailoredResume): Promise<Buffer> {
     creator: "Shortlist",
     title: `${r.name} – Resume`,
     styles: { default: { document: { run: { font: FONT, size: 21 } } } },
-    sections: [{ properties: { page: { margin: { top: 900, bottom: 900, left: 1000, right: 1000 } } }, children }],
+    sections: [{ properties: { page: { size: pageSize(opts.paper ?? "LETTER"), margin: { top: 900, bottom: 900, left: 1000, right: 1000 } } }, children }],
   });
   return Packer.toBuffer(doc);
 }
 
-export async function buildCoverLetterDocx(input: { letter: string; resume: TailoredResume; company?: string; title: string }): Promise<Buffer> {
+export async function buildCoverLetterDocx(input: { letter: string; resume: TailoredResume; company?: string; title: string; paper?: Paper }): Promise<Buffer> {
   const children: Paragraph[] = [];
   children.push(line(input.resume.name, { bold: true, size: 28, after: 20 }));
   const contact = contactLine(input.resume);
@@ -113,7 +120,7 @@ export async function buildCoverLetterDocx(input: { letter: string; resume: Tail
     creator: "Shortlist",
     title: `${input.resume.name} – Cover letter`,
     styles: { default: { document: { run: { font: FONT, size: 22 } } } },
-    sections: [{ properties: { page: { margin: { top: 1100, bottom: 1100, left: 1100, right: 1100 } } }, children }],
+    sections: [{ properties: { page: { size: pageSize(input.paper ?? "LETTER"), margin: { top: 1100, bottom: 1100, left: 1100, right: 1100 } } }, children }],
   });
   return Packer.toBuffer(doc);
 }

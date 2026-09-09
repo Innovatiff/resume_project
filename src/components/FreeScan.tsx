@@ -182,7 +182,7 @@ export default function FreeScan({ first = false }: { first?: boolean }) {
           ) : null}
 
           <p className={styles.consent} id={`${uid}-consent`}>
-            One scan per email address every 7 days. No card, no account. Your resume is personal information under PIPEDA: it is used only to produce your score and deleted afterwards, never sold or shared.
+            One scan per email address every 7 days. No card, no account. Your resume is personal information: it is used only to produce your score and deleted afterwards, never sold or shared.
           </p>
         </form>
         )}

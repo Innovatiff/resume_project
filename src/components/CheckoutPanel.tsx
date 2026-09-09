@@ -3,8 +3,10 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { apiFetch, ApiClientError, useAuth } from "@/lib/app/auth-client";
-import { PRODUCTS, formatCad, isProduct } from "@/lib/billing/plans";
+import { apiFetch, ApiClientError, hardNavigate, useAuth } from "@/lib/app/auth-client";
+import { PRODUCTS, isProduct, priceFor } from "@/lib/billing/plans";
+import { formatCents } from "@/lib/app/markets";
+import { useCheckoutCurrency } from "@/lib/app/use-me";
 import type { Purchase } from "@/lib/app/types";
 import { Card, Notice, Spinner } from "@/components/app/ui";
 import { IconCheck } from "@/components/icons";
@@ -26,6 +28,7 @@ export function CheckoutPanel() {
   const raw = params.get("plan") ?? "pass";
   const productId = isProduct(raw) ? raw : "pass";
   const product = PRODUCTS[productId];
+  const currency = useCheckoutCurrency();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [mode, setMode] = useState<string | null>(null);
@@ -41,7 +44,7 @@ export function CheckoutPanel() {
     setError(null);
     try {
       const d = await apiFetch<{ url: string; mode: string }>("/api/billing/checkout", { method: "POST", body: JSON.stringify({ product: productId }) });
-      window.location.href = d.url;
+      hardNavigate(d.url);
     } catch (e) {
       setError(e instanceof ApiClientError ? e.message : "Could not start checkout.");
       setBusy(false);
@@ -55,7 +58,7 @@ export function CheckoutPanel() {
       <div className="app-grid app-grid--main">
         <Card title={product.name} hint={product.description}>
           <div className="app-stat">
-            {formatCad(product.amountCents)} <span style={{ fontSize: "0.9rem", fontWeight: 400, letterSpacing: 0, color: "var(--muted)" }}>CAD, one-time{product.periodDays ? ` · ${product.periodDays} days` : ""}</span>
+            {formatCents(priceFor(productId, currency), currency)} <span style={{ fontSize: "0.9rem", fontWeight: 400, letterSpacing: 0, color: "var(--muted)" }}>{currency.toUpperCase()}, one-time{product.periodDays ? ` · ${product.periodDays} days` : ""}</span>
           </div>
           <ul style={{ display: "grid", gap: 8 }}>
             {INCLUDES[productId].map((i) => (

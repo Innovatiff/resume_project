@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { marketFor } from "@/lib/app/markets";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { apiFetch, ApiClientError, downloadFile } from "@/lib/app/auth-client";
@@ -282,7 +283,7 @@ export default function ApplicationDetail({ id }: { id: string }) {
                       <span className="app-row__meta">{r.why}</span>
                     </span>
                     <span className="app-muted" style={{ whiteSpace: "nowrap" }}>
-                      {r.salaryLow ? `${money(r.salaryLow)}–${money(r.salaryHigh)}` : ""}
+                      {r.salaryLow ? `${money(r.salaryLow, r.currency)}–${money(r.salaryHigh, r.currency)}` : ""}
                     </span>
                   </div>
                 ))}
@@ -326,16 +327,16 @@ function PayCard({ app }: { app: Application }) {
   const span = Math.max(1, p.high - p.low);
   const pct = (v: number) => `${Math.max(0, Math.min(100, ((v - p.low!) / span) * 100))}%`;
   return (
-    <Card title="Pay report" hint={`${p.location} · ${p.sampleSize} postings`}>
+    <Card title="Pay report" hint={`${p.location} · ${p.sampleSize} postings · ${p.currency}`}>
       <div className="app-stat" style={{ fontSize: "1.9rem" }}>
-        {money(p.low)}–{money(p.high)}
+        {money(p.low, p.currency)}–{money(p.high, p.currency)}
       </div>
       <div className="app-band">
-        <span className="app-band__tick" style={{ left: pct(p.median) }} title={`Median ${money(p.median)}`} />
+        <span className="app-band__tick" style={{ left: pct(p.median) }} title={`Median ${money(p.median, p.currency)}`} />
       </div>
       <div className="app-band__labels">
         <span>25th</span>
-        <b>median {money(p.median)}</b>
+        <b>median {money(p.median, p.currency)}</b>
         <span>75th</span>
       </div>
       {app.requirements.salaryStated ? (
@@ -346,7 +347,7 @@ function PayCard({ app }: { app: Application }) {
         <p className="app-muted">The posting does not state pay. When they ask for a number, name the median and let them come up.</p>
       )}
       <p className="app-muted" style={{ fontSize: "0.78rem" }}>
-        {p.source === "adzuna" ? "Source: Adzuna market data, Canada." : "Sample data: connect Adzuna for live figures."} Never estimated by a model.
+        {p.source === "adzuna" ? `Source: Adzuna market data, ${marketFor(p.country).name}.` : "Sample data: connect Adzuna for live figures."} Never estimated by a model.
       </p>
     </Card>
   );

@@ -4,7 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { apiFetch, ApiClientError, hardNavigate, useAuth } from "@/lib/app/auth-client";
 import { useMe } from "@/lib/app/use-me";
-import { PRODUCTS, formatCad } from "@/lib/billing/plans";
+import { PRODUCTS, priceFor } from "@/lib/billing/plans";
+import { formatCents } from "@/lib/app/markets";
 import { Card, Notice, PageHead, Skeleton, fmtDate } from "./ui";
 import PlanPicker from "./PlanPicker";
 
@@ -31,6 +32,8 @@ export default function AccountPanel() {
 
   const e = me?.entitlement;
   const isPass = e?.plan === "pass" || e?.plan === "landed";
+  const currency = me?.user.currency ?? "cad";
+  const cur = currency.toUpperCase();
 
   return (
     <>
@@ -59,7 +62,7 @@ export default function AccountPanel() {
                       <td>{PRODUCTS[p.product]?.name ?? p.product}</td>
                       <td>{fmtDate(p.createdAt)}</td>
                       <td className="app-muted">{p.endsAt ? `${fmtDate(p.startsAt)} – ${fmtDate(p.endsAt)}` : "Single use"}</td>
-                      <td className="num">{formatCad(p.amountCents)}</td>
+                      <td className="num">{formatCents(p.amountCents, p.currency)}</td>
                       <td>
                         <span className="app-status" data-status={p.status === "active" ? "ready" : p.status === "refunded" ? "rejected" : "archived"}>
                           {p.status}
@@ -74,18 +77,18 @@ export default function AccountPanel() {
             )}
           </Card>
 
-          <Card title={e?.plan ? "Add or extend" : "Choose a package"} hint="All prices CAD, one-time.">
-            <PlanPicker current={e?.plan} />
+          <Card title={e?.plan ? "Add or extend" : "Choose a package"} hint={`All prices ${cur}, one-time.`}>
+            <PlanPicker current={e?.plan} currency={currency} />
             {isPass ? (
               <div className="app-actions">
                 <Link className="btn btn--ghost btn--sm" href="/checkout?plan=extra30">
-                  Extra 30 days · {formatCad(PRODUCTS.extra30.amountCents)}
+                  Extra 30 days · {formatCents(priceFor("extra30", currency), currency)}
                 </Link>
                 <Link className="btn btn--ghost btn--sm" href="/checkout?plan=rush_review">
-                  Rush human review · {formatCad(PRODUCTS.rush_review.amountCents)}
+                  Rush human review · {formatCents(priceFor("rush_review", currency), currency)}
                 </Link>
                 <Link className="btn btn--ghost btn--sm" href="/checkout?plan=coaching">
-                  Coaching session · {formatCad(PRODUCTS.coaching.amountCents)}
+                  Coaching session · {formatCents(priceFor("coaching", currency), currency)}
                 </Link>
               </div>
             ) : null}
@@ -110,7 +113,7 @@ export default function AccountPanel() {
             </button>
           </Card>
 
-          <Card title="Your data" hint="PIPEDA: one click deletes everything." className="app-danger">
+          <Card title="Your data" hint="One click deletes everything." className="app-danger">
             <p className="app-muted">Every application, your resume profile, purchase records and the sign-in itself. Deleted permanently and immediately. Downloads you already saved stay with you.</p>
             {confirming ? (
               <div className="app-actions">

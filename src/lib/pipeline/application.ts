@@ -1,5 +1,6 @@
 import "server-only";
-import type { Application, ApplicationPackage, CandidateProfile, Language, PlanId, ProfileSource, Purchase, Strategy, UserDoc } from "@/lib/app/types";
+import type { Application, ApplicationPackage, CandidateProfile, JobRequirements, Language, PlanId, ProfileSource, Purchase, Strategy, UserDoc } from "@/lib/app/types";
+import { DEFAULT_COUNTRY, detectCountry, type CountryCode } from "@/lib/app/markets";
 import { config } from "@/lib/app/config";
 import { ApiError } from "@/lib/app/errors";
 import { newId, nowIso } from "@/lib/app/hash";
@@ -49,14 +50,18 @@ export async function createApplication(user: UserDoc, input: CreateInput): Prom
   }
   if (!profile) throw new ApiError(400, "no_profile", "Upload your resume first so we can score it against the posting.");
 
-  const { requirements } = await parsePosting(input.postingText);
+  const { requirements: parsed } = await parsePosting(input.postingText);
+  const country = resolveCountry(parsed, input.postingText, user, profile);
+  const requirements: JobRequirements = { ...parsed, country };
   const score = scoreResume(profile, requirements, layout);
   const redFlags = checkRedFlags(input.postingText, requirements);
-  const city = requirements.city ?? user.city ?? profile.contact.city;
-  const province = requirements.province ?? user.province ?? profile.contact.province;
+  // Pay data uses the posting's location; the candidate's home location only when it is in the same market.
+  const home = user.country ?? profile.contact.country ?? DEFAULT_COUNTRY;
+  const city = requirements.city ?? (home === country ? (user.city ?? profile.contact.city) : undefined);
+  const province = requirements.province ?? (home === country ? (user.province ?? profile.contact.province) : undefined);
   const [payReport, planB] = await Promise.all([
-    getPayReport({ title: requirements.title, city, province }),
-    getPlanB({ profile, req: requirements, city, province }).catch(() => []),
+    getPayReport({ title: requirements.title, city, province, country }),
+    getPlanB({ profile, req: requirements, city, province, country }).catch(() => []),
   ]);
 
   const now = nowIso();
@@ -127,7 +132,8 @@ async function finishPackage(user: UserDoc, app: Application, plan: PlanId): Pro
   const purchase = (await requireBuildCapacity(user.uid)).purchase;
 
   const allowed = sourceNumberKeys(profile, answers);
-  const base = { profile, req: app.requirements, postingText: app.posting.text, questions, answers, strategy: app.strategy, plan, language };
+  const country: CountryCode = app.requirements.country ?? user.country ?? DEFAULT_COUNTRY;
+  const base = { profile, req: app.requirements, postingText: app.posting.text, questions, answers, strategy: app.strategy, plan, language, country };
 
   let draft = await rewriteResume(base);
   let checked = enforceNumbers(draft.resume, draft.coverLetter, allowed, false);
@@ -177,6 +183,19 @@ async function finishPackage(user: UserDoc, app: Application, plan: PlanId): Pro
   void sendEmail({ to: user.email, ...mail });
 
   return { ...app, ...patch, updatedAt: nowIso() };
+}
+
+/** Posting first (explicit, then detected from its text), then the account's market, then the resume's, then the home market. */
+function resolveCountry(req: JobRequirements, postingText: string, user: UserDoc, profile: CandidateProfile): CountryCode {
+  return (
+    req.country ??
+    detectCountry([req.location, req.city, req.province].filter(Boolean).join(", ")) ??
+    detectCountry(postingText) ??
+    user.country ??
+    profile.contact.country ??
+    detectCountry([profile.contact.city, profile.contact.province].filter(Boolean).join(", ")) ??
+    DEFAULT_COUNTRY
+  );
 }
 
 export function planFromPurchase(p: Purchase): PlanId {

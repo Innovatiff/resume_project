@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { PRODUCTS, formatCad, type Product } from "@/lib/billing/plans";
+import { PRODUCTS, priceFor, type Product } from "@/lib/billing/plans";
 import type { PlanId } from "@/lib/app/types";
+import { type CheckoutCurrency, formatCents } from "@/lib/app/markets";
 import { IconCheck } from "@/components/icons";
 
 const HIGHLIGHTS: Record<PlanId, string[]> = {
@@ -12,7 +13,7 @@ const HIGHLIGHTS: Record<PlanId, string[]> = {
 };
 
 /** Compact plan cards that send the user to checkout. Used on the dashboard and account page. */
-export default function PlanPicker({ compact = false, current }: { compact?: boolean; current?: PlanId | null }) {
+export default function PlanPicker({ compact = false, current, currency = "cad" }: { compact?: boolean; current?: PlanId | null; currency?: CheckoutCurrency }) {
   const plans = (["single", "pass", "landed"] as PlanId[]).map((id) => PRODUCTS[id] as Product);
   return (
     <div className="app-grid app-grid--3" data-compact={compact ? "" : undefined}>
@@ -25,7 +26,7 @@ export default function PlanPicker({ compact = false, current }: { compact?: boo
               {featured ? <span className="chip chip--coral">Most popular</span> : null}
             </div>
             <div className="app-stat" style={{ fontSize: "2rem" }}>
-              {formatCad(p.amountCents)} <span style={{ fontSize: "0.85rem", fontWeight: 400, letterSpacing: 0, color: featured ? "rgba(255,255,255,.6)" : "var(--muted)" }}>CAD, one-time</span>
+              {formatCents(priceFor(p.id, currency), currency)} <span style={{ fontSize: "0.85rem", fontWeight: 400, letterSpacing: 0, color: featured ? "rgba(255,255,255,.6)" : "var(--muted)" }}>{currency.toUpperCase()}, one-time</span>
             </div>
             <ul style={{ display: "flex", flexDirection: "column", gap: 6, fontSize: "0.88rem", color: featured ? "rgba(255,255,255,.85)" : "var(--ink-2)" }}>
               {HIGHLIGHTS[p.id as PlanId].map((h) => (

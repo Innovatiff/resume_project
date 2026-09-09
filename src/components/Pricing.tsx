@@ -90,7 +90,7 @@ export default function Pricing({ showHead = true }: { showHead?: boolean }) {
                 </li>
               ))}
             </ul>
-            <p className={styles.fine}>All prices in Canadian dollars. Taxes calculated at checkout.</p>
+            <p className={styles.fine}>Canadian dollars in Canada, US dollars everywhere else. Taxes calculated at checkout.</p>
           </div>
         </div>
       </div>

@@ -68,7 +68,7 @@ export default function Footer() {
 
       <div className={`wrap ${styles.legal}`}>
         <span>
-          © {year} {brand.name}. {brand.region}. All prices CAD.
+          © {year} {brand.name}. {brand.region}. Prices in CAD and USD.
         </span>
         <Link href="/privacy">Privacy</Link>
         <Link href="/terms">Terms</Link>

@@ -28,7 +28,7 @@ Copy `.env.example` to `.env.local` (or your host's environment) and fill in:
 | `NEXT_PUBLIC_FIREBASE_*` | Only to point at another Firebase project. The web config for `resume-project-56b09` is built into `src/lib/firebase/client.ts`; set `NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID` empty to turn Google Analytics off |
 | `ANTHROPIC_API_KEY` | Claude. Routing: Haiku 4.5 extracts and parses, Sonnet 5 rewrites, Opus 5 for Landed (`SHORTLIST_MODEL_*`) |
 | `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` | Stripe Checkout, one-time payments in CAD; point the webhook at `/api/billing/webhook` |
-| `ADZUNA_APP_ID`, `ADZUNA_APP_KEY` | Salary bands and Plan B roles. Without keys the pay report says "no reliable data" in production |
+| `ADZUNA_APP_ID`, `ADZUNA_APP_KEY` | Salary bands and Plan B roles for every Adzuna country (Canada, US, UK, Australia and more). Without keys the pay report says "no reliable data" in production |
 | `RESEND_API_KEY`, `EMAIL_FROM`, `FOUNDER_EMAIL` | Delivery emails and human-review notifications |
 | `FREE_SCAN_SALT` | Salts the hashed email used for the one-scan-per-7-days limit |
 
@@ -49,10 +49,14 @@ npx firebase deploy --only firestore
 | Sign in | `/sign-in`, `/sign-up`, `/forgot-password` | Firebase Auth: email + password and Google. Required for anything paid |
 | Checkout | `/checkout?plan=single|pass|landed` (+ add-ons) | Stripe Checkout session; webhook and success-page confirmation both grant the purchase idempotently. No card is ever stored |
 | Dashboard | `/app` | Package status, resume on file, recent applications |
-| New application | `/app/applications/new` | Posting + resume (saved profile or new upload) → score, verdict, pay report (Adzuna), red flags, Plan B |
+| New application | `/app/applications/new` | Posting + resume (saved profile or new upload) → score, verdict, pay report (Adzuna, in the posting's country and currency), red flags, Plan B |
 | Application | `/app/applications/[id]` | Build the package: metric interview (pass and up) → rewrite → every figure validated against the source → rescore → interview prep, objections, LinkedIn. DOCX and PDF generated on demand. Status tracker and notes |
 | Resume profile | `/app/profile` | The extracted Candidate Profile with per-bullet figure flags, replace resume, language and city |
 | Account | `/app/account` | Purchases, add-ons, sign out, one-click delete of everything (PIPEDA) |
+
+### Markets
+
+The service works for a posting anywhere. `src/lib/app/markets.ts` is the one table that decides what changes by country: the currency of pay data, whether Adzuna covers it, what the region line of an address is called, the paper size of the delivered documents and the spelling the rewrite uses. The posting's country is taken from the posting itself (explicit country, province, state, postcode), then the account's home market, then the resume. Checkout charges Canadian dollars in Canada and US dollars everywhere else; the price table in `src/lib/billing/plans.ts` is per currency, so adding GBP or EUR is one row. The account's home market defaults from the browser locale at sign-up and can be changed on the profile page.
 
 Server code lives in `src/lib`: `pipeline/` orchestrates, `ai/` talks to Claude (with `mock.ts` as the offline stand-in), `scoring/` is the deterministic scorer and red-flag rules, `parse/` reads PDF and DOCX, `documents/` builds DOCX and PDF, `billing/` holds the catalogue, entitlements and Stripe, `store/` is the only code that touches Firestore. Fair-use caps live in `billing/plans.ts` and are enforced server-side, never shown.
 

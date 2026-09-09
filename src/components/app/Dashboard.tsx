@@ -8,6 +8,7 @@ import { PRODUCTS } from "@/lib/billing/plans";
 import type { ApplicationSummary } from "@/app/api/applications/route";
 import { Card, EmptyState, PageHead, ScoreRing, Skeleton, StatusBadge, VerdictChip, fmtDate } from "./ui";
 import PlanPicker from "./PlanPicker";
+import { CURRENCY_NAMES } from "@/lib/app/markets";
 import { IconPlus } from "@/components/icons";
 
 export default function Dashboard() {
@@ -112,8 +113,8 @@ export default function Dashboard() {
       )}
 
       {!loading && !hasPlan ? (
-        <Card title="Pick a package" hint="One-time purchases in Canadian dollars. No subscription, no card kept on file.">
-          <PlanPicker compact />
+        <Card title="Pick a package" hint={`One-time purchases in ${CURRENCY_NAMES[me?.user.currency ?? "cad"]}. No subscription, no card kept on file.`}>
+          <PlanPicker compact currency={me?.user.currency ?? "cad"} />
         </Card>
       ) : null}
 

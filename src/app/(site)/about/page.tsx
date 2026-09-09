@@ -7,7 +7,7 @@ import { aboutPage } from "@/lib/pages";
 
 export const metadata: Metadata = {
   title: "About",
-  description: "Shortlist is an independent Canadian company built on one idea: job seekers need fewer, better applications. The three things nobody else will do, and the six rules we never break.",
+  description: "Shortlist is an independent Canadian company serving job seekers in Canada, the US and beyond, built on one idea: fewer, better applications. The three things nobody else will do, and the six rules we never break.",
 };
 
 export default function AboutPage() {

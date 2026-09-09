@@ -25,7 +25,7 @@ const body = Outfit({
 });
 
 const description =
-  "Shortlist tells Canadian job seekers which postings are worth applying to, what those roles actually pay in their city, and rewrites the resume for the ones that pass. Under five minutes. One-time purchase, no subscription.";
+  "Shortlist tells job seekers which postings are worth applying to, what those roles actually pay in their city, and rewrites the resume for the ones that pass. Canada, the US and beyond. Under five minutes. One-time purchase, no subscription.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   },
   description,
   applicationName: "Shortlist",
-  keywords: ["resume", "ATS score", "job search", "Canada", "Windsor", "salary report", "cover letter"],
+  keywords: ["resume", "ATS score", "job search", "Canada", "United States", "Windsor", "salary report", "cover letter"],
   openGraph: {
     title: "Shortlist — Stop applying to 200 jobs.",
     description,
@@ -62,7 +62,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en-CA" className={`${display.variable} ${body.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${display.variable} ${body.variable}`} suppressHydrationWarning>
       <body>
         {/* Picks the headline variant and marks JS-enabled before first paint. */}
         <script dangerouslySetInnerHTML={{ __html: headlineBootstrap }} />

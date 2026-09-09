@@ -1,4 +1,5 @@
 import type { CandidateProfile, InterviewPrep, JobRequirements, LinkedInRewrite, MetricQuestion, ObjectionReport, Strategy, TailoredResume } from "@/lib/app/types";
+import { detectCountry, marketFor } from "@/lib/app/markets";
 import { extractNumbers, normalize, phraseIn, tokens } from "@/lib/scoring/text";
 
 /* ------------------------------------------------------------------
@@ -6,6 +7,9 @@ import { extractNumbers, normalize, phraseIn, tokens } from "@/lib/scoring/text"
    or no API key is present outside production. They follow the same
    rules as the real prompts: nothing is invented, no new figures.
 ------------------------------------------------------------------- */
+
+/** "City, Region" with a Canadian province, US state or Australian state (code or name). */
+const LOCATION_RE = /([A-Z][a-zA-Z.' -]+),\s*(ON|Ontario|QC|Qu[eé]bec|BC|British Columbia|AB|Alberta|MB|Manitoba|SK|Saskatchewan|NS|Nova Scotia|NB|New Brunswick|PE|Prince Edward Island|NL|Newfoundland|AL|AK|AZ|AR|CA|CO|CT|DE|FL|GA|HI|ID|IL|IN|IA|KS|KY|LA|ME|MD|MA|MI|MN|MS|MO|MT|NE|NV|NH|NJ|NM|NY|NC|ND|OH|OK|OR|PA|RI|SC|SD|TN|TX|UT|VT|VA|WA|WV|WI|WY|DC|California|Texas|Florida|New York|Michigan|Ohio|Illinois|Washington|Georgia|Arizona|Colorado|Massachusetts|Pennsylvania|NSW|VIC|QLD|TAS|ACT|Queensland|New South Wales)\b/;
 
 const SECTION_RE = /^(summary|profile|professional summary|objective|experience|work experience|employment history|work history|professional experience|education|skills|core skills|technical skills|key skills|certifications?|licen[cs]es? (?:and|&) certifications?|languages?|projects|volunteer(?:ing)?)\b[:\s]*$/i;
 
@@ -15,7 +19,7 @@ export function mockExtractProfile(text: string): CandidateProfile {
   const lines = text.split("\n").map((l) => l.trim()).filter(Boolean);
   const email = text.match(/[\w.+-]+@[\w-]+\.[\w.-]+/)?.[0];
   const phone = text.match(/(?:\+?1[\s.-]?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}/)?.[0];
-  const cityMatch = text.match(/([A-Z][a-zA-Z.' -]+),\s*(ON|Ontario|QC|Quebec|BC|AB|MB|SK|NS|NB|PE|NL)\b/);
+  const cityMatch = text.match(LOCATION_RE);
   const linkedin = text.match(/linkedin\.com\/in\/[\w-]+/i)?.[0];
 
   const name = lines.find((l) => l.length < 40 && /^[A-Z][a-zA-Z'.-]+(?: [A-Z][a-zA-Z'.-]+){1,3}$/.test(l) && !/resume|curriculum/i.test(l));
@@ -78,7 +82,7 @@ export function mockExtractProfile(text: string): CandidateProfile {
   const profile: CandidateProfile = {
     name,
     headline: experience[0]?.title,
-    contact: { email, phone, city: cityMatch?.[1]?.trim(), province: cityMatch?.[2], linkedin },
+    contact: { email, phone, city: cityMatch?.[1]?.trim(), province: cityMatch?.[2], country: detectCountry(text.slice(0, 600)), linkedin },
     summary,
     experience,
     skills,
@@ -94,7 +98,7 @@ export function mockParsePosting(text: string): JobRequirements {
   const titleLine = lines.find((l) => /^(job )?title\s*:/i.test(l))?.replace(/^(job )?title\s*:\s*/i, "") ?? lines[0] ?? "Role";
   const title = titleLine.replace(/\s*[-–|].*$/, "").slice(0, 80);
   const company = text.match(/(?:^|\n)\s*(?:company|employer)\s*:\s*(.+)/i)?.[1]?.trim() ?? text.match(/\bat\s+([A-Z][\w&.' -]{2,40}?)(?:\s+(?:in|is|are|,|\.|\n))/)?.[1]?.trim();
-  const loc = text.match(/([A-Z][a-zA-Z.' -]+),\s*(ON|Ontario|QC|Quebec|BC|AB|MB|SK|NS|NB|PE|NL)\b/);
+  const loc = text.match(LOCATION_RE);
   const salaryStated = text.match(/\$\s?\d{2,3}(?:,\d{3})?(?:\.\d+)?(?:\s?(?:k|K))?(?:\s*(?:–|-|to)\s*\$?\s?\d{2,3}(?:,\d{3})?(?:\.\d+)?(?:\s?(?:k|K))?)?(?:\s*(?:per|\/|an?)\s*(?:year|hour|hr|annum))?/)?.[0];
   const years = text.match(/(\d+)\s*\+?\s*(?:years|yrs)/i);
   const posted = text.match(/posted\s+(\d+)\s+days?\s+ago/i);
@@ -122,7 +126,7 @@ export function mockParsePosting(text: string): JobRequirements {
     if (/^[•\-*·▪–]\s*/.test(l)) {
       const item = l.replace(/^[•\-*·▪–]\s*/, "").replace(/\.$/, "");
       const short = item.length > 70 ? item.split(/[,;(]/)[0].trim() : item;
-      if (/legally (?:entitled|eligible|authorized|authorised)|work permit|background check|criminal record/i.test(item)) continue;
+      if (/(?:entitled|eligible|authori[sz]ed) to work|work (?:permit|authori[sz]ation)|background check|criminal record/i.test(item)) continue;
       if (/licen[cs]e|certif|degree|diploma|ticket/i.test(item)) credentials.push(short.replace(/^(?:valid|current|active)\s+/i, ""));
       else if (/asset|preferred|bonus|nice to have/i.test(item)) niceToHave.push(...keywordsIn(short.replace(/\s*(?:is )?(?:an asset|preferred|a plus).*$/i, "")));
       else if (bucket === "must") mustHave.push(...keywordsIn(short));
@@ -131,7 +135,8 @@ export function mockParsePosting(text: string): JobRequirements {
     }
   }
   for (const k of KNOWN_SKILLS) if (phraseIn(k, norm) && !mustHave.some((m) => phraseIn(k, normalize(m)))) mustHave.push(titleCase(k));
-  if (/legally (?:entitled|eligible|authorized|authorised) to work|work permit|permanent resident/i.test(text)) attestations.push("Legally entitled to work in Canada");
+  const country = detectCountry(text);
+  if (/(?:entitled|eligible|authori[sz]ed) to work|work (?:permit|authori[sz]ation)|permanent resident/i.test(text)) attestations.push(country ? `Legally entitled to work in ${/^(United|Netherlands)/.test(marketFor(country).name) ? "the " : ""}${marketFor(country).name}` : "Work authorization");
   if (/background check|criminal record|police check/i.test(text)) attestations.push("Background or record check");
   if (/driver'?s? licen[cs]e|class g|valid licen[cs]e/i.test(text)) attestations.push("Valid driver's licence");
 
@@ -141,6 +146,7 @@ export function mockParsePosting(text: string): JobRequirements {
     location: loc ? `${loc[1]}, ${loc[2]}` : undefined,
     city: loc?.[1]?.trim(),
     province: loc?.[2],
+    country,
     remote: /\bremote\b/i.test(text),
     employmentType: text.match(/\b(full[- ]time|part[- ]time|contract|permanent|temporary|seasonal)\b/i)?.[1],
     salaryStated,

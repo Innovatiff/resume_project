@@ -8,7 +8,7 @@ export const metadata: Metadata = { title: "Checkout", robots: { index: false, f
 export default function Page() {
   return (
     <main>
-      <PageHero eyebrow="Checkout" title="Pay once. Keep the files." lead="One-time purchase in Canadian dollars. No subscription, no auto-renew, no card kept on file." tiles={false} />
+      <PageHero eyebrow="Checkout" title="Pay once. Keep the files." lead="One-time purchase, in Canadian dollars in Canada and US dollars everywhere else. No subscription, no auto-renew, no card kept on file." tiles={false} />
       <section className="section section--tight">
         <Suspense fallback={null}>
           <CheckoutPanel />

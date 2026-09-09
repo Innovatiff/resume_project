@@ -1,6 +1,6 @@
 /* ------------------------------------------------------------------
    All copy and data for the Shortlist landing page.
-   Prices are CAD. Windsor–Essex, Ontario.
+   Prices in CAD (Canada) and USD (everywhere else). Windsor–Essex, Ontario.
    Note: the 30-day pass fair-use cap lives in the terms, never in UI.
 ------------------------------------------------------------------- */
 
@@ -16,7 +16,7 @@ export const brand = {
   region: "Windsor–Essex, Ontario",
   email: "hello@shortlist.ca",
   blurb:
-    "Shortlist tells Canadian job seekers which postings are worth applying to, what those roles really pay in their city, and rewrites the resume for the ones that pass. Built in Windsor–Essex, Ontario.",
+    "Shortlist tells job seekers which postings are worth applying to, what those roles really pay in their city, and rewrites the resume for the ones that pass. Built in Windsor–Essex, Ontario, for Canada, the US and beyond.",
 };
 
 export const nav = {
@@ -38,10 +38,10 @@ export const hero = {
     b: "Know what the job actually pays.",
   },
   lead:
-    "Shortlist tells Canadian job seekers which postings are worth applying to, what those roles really pay in their city, and then rewrites their resume for the ones that pass. Delivered in under five minutes.",
+    "Shortlist tells job seekers in Canada, the US and beyond which postings are worth applying to, what those roles really pay in their city, and then rewrites their resume for the ones that pass. Delivered in under five minutes.",
   primary: { label: "Scan my resume free", href: "/scan" } as Link,
   secondary: { label: "See pricing", href: "/pricing" } as Link,
-  trust: ["No subscription", "No auto-renew", "No card retained", "Prices in CAD"],
+  trust: ["No subscription", "No auto-renew", "No card retained", "Prices in CAD or USD"],
 };
 
 export interface Posting {
@@ -283,7 +283,7 @@ export interface Tier {
 export const pricing = {
   title: "One-time purchases. No subscription.",
   lead:
-    "All prices in Canadian dollars. Pay once, get the files, keep them. No card is kept on file and nothing renews on its own.",
+    "Canadian dollars in Canada, US dollars everywhere else. Pay once, get the files, keep them. No card is kept on file and nothing renews on its own.",
   tiers: [
     {
       id: "free",
@@ -406,7 +406,7 @@ export const faq = {
     },
     {
       q: "Where does the salary data come from?",
-      a: "From a market-data API that returns minimum, median and maximum pay by title and city, including Canadian cities. The model is never allowed to estimate. If there is no reliable data for a role in your market, the report says exactly that.",
+      a: "From a market-data API that returns minimum, median and maximum pay by title and city for Canada, the United States, the UK, Australia and a dozen other markets. The model is never allowed to estimate. If there is no reliable data for a role in your market, the report says exactly that.",
     },
     {
       q: "Will the AI make things up on my resume?",
@@ -418,7 +418,7 @@ export const faq = {
     },
     {
       q: "What happens to my resume and personal data?",
-      a: "Resumes are personal information under PIPEDA. We publish a privacy policy and a retention window, you can delete everything with one click, and nothing is ever sold or shared.",
+      a: "Resumes are personal information, and we treat them that way under PIPEDA in Canada and the privacy law where you live. We publish a privacy policy and a retention window, you can delete everything with one click, and nothing is ever sold or shared.",
     },
     {
       q: "What if the score is low but I still want to apply?",
