@@ -24,15 +24,22 @@ Copy `.env.example` to `.env.local` (or your host's environment) and fill in:
 
 | Variable | What it is |
 | --- | --- |
-| `NEXT_PUBLIC_FIREBASE_*` | Web app config from the Firebase console (Auth only; browsers never touch Firestore) |
-| `FIREBASE_SERVICE_ACCOUNT` | Service-account JSON (or base64 of it) for the Admin SDK |
+| `FIREBASE_SERVICE_ACCOUNT` | Service-account JSON (or base64 of it) for the Admin SDK: Firebase console → Project settings → Service accounts → Generate new private key. Not needed on Google Cloud hosting with Application Default Credentials |
+| `NEXT_PUBLIC_FIREBASE_*` | Only to point at another Firebase project. The web config for `resume-project-56b09` is built into `src/lib/firebase/client.ts`; set `NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID` empty to turn Google Analytics off |
 | `ANTHROPIC_API_KEY` | Claude. Routing: Haiku 4.5 extracts and parses, Sonnet 5 rewrites, Opus 5 for Landed (`SHORTLIST_MODEL_*`) |
 | `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` | Stripe Checkout, one-time payments in CAD; point the webhook at `/api/billing/webhook` |
 | `ADZUNA_APP_ID`, `ADZUNA_APP_KEY` | Salary bands and Plan B roles. Without keys the pay report says "no reliable data" in production |
 | `RESEND_API_KEY`, `EMAIL_FROM`, `FOUNDER_EMAIL` | Delivery emails and human-review notifications |
 | `FREE_SCAN_SALT` | Salts the hashed email used for the one-scan-per-7-days limit |
 
-Deploy `firestore.rules` (deny-all: every read and write goes through the server) with `npx firebase deploy --only firestore`. In production, mock AI and dev checkout are ignored no matter what the env says. Vercel caps request bodies at 4.5 MB; the app enforces 5 MB, so lower `maxUploadBytes` in `src/lib/app/config.ts` if you deploy there.
+Firebase console, once: enable **Email/Password** and **Google** under Authentication → Sign-in method, add the production domain under Authentication → Settings → Authorized domains, and create the **Firestore** database in Native mode (pick a Canadian region such as `northamerica-northeast2`, Toronto, so resumes stay in Canada). Then deploy the rules and indexes:
+
+```bash
+npx firebase login
+npx firebase deploy --only firestore
+```
+
+`firestore.rules` denies every client read and write: browsers only ever hold a Firebase Auth session, and all data access goes through the server with the Admin SDK. In production, mock AI and dev checkout are ignored no matter what the env says. Vercel caps request bodies at 4.5 MB; the app enforces 5 MB, so lower `maxUploadBytes` in `src/lib/app/config.ts` if you deploy there.
 
 ## The product
 

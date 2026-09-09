@@ -427,6 +427,7 @@ export const legal: Record<"privacy" | "terms" | "refunds", LegalDoc> = {
           "Answers you give in the metric interview.",
           "Payment confirmation from Stripe. We never see or store your card number.",
           "Basic technical logs (time of request, approximate region, browser type) kept for security and to keep delivery under five minutes.",
+          "Anonymous usage analytics through Google Analytics: which pages are visited and which version of the home page headline you saw. Analytics never receives your resume, your posting or your email address.",
         ],
       },
       {
@@ -458,7 +459,7 @@ export const legal: Record<"privacy" | "terms" | "refunds", LegalDoc> = {
         id: "sharing",
         heading: "Who we share it with",
         paragraphs: [
-          "We never sell personal information and we never share it with employers, recruiters or job boards. We use a small number of service providers to run the service: hosting, database, payments, email delivery, the AI model provider and the salary-data provider. Each receives only what it needs to perform its function and is bound by its own privacy commitments.",
+          "We never sell personal information and we never share it with employers, recruiters or job boards. We use a small number of service providers to run the service: hosting, database and sign-in (Google Firebase), payments, email delivery, analytics, the AI model provider and the salary-data provider. Each receives only what it needs to perform its function and is bound by its own privacy commitments.",
         ],
       },
       {

@@ -7,6 +7,7 @@ import "./app/app.css";
 import "@/components/auth/auth.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import RevealManager from "@/components/RevealManager";
+import Analytics from "@/components/Analytics";
 import { AuthProvider } from "@/lib/app/auth-client";
 import { headlineBootstrap } from "@/lib/headline";
 import { siteUrl } from "@/lib/site";
@@ -68,6 +69,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <AuthProvider>{children}</AuthProvider>
         <SmoothScroll />
         <RevealManager />
+        <Analytics />
       </body>
     </html>
   );
