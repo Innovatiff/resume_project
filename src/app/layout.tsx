@@ -3,10 +3,11 @@ import type { ReactNode } from "react";
 import { Inter_Tight, Outfit } from "next/font/google";
 import "lenis/dist/lenis.css";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import "./app/app.css";
+import "@/components/auth/auth.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import RevealManager from "@/components/RevealManager";
+import { AuthProvider } from "@/lib/app/auth-client";
 import { headlineBootstrap } from "@/lib/headline";
 import { siteUrl } from "@/lib/site";
 
@@ -64,9 +65,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body>
         {/* Picks the headline variant and marks JS-enabled before first paint. */}
         <script dangerouslySetInnerHTML={{ __html: headlineBootstrap }} />
-        <Navbar />
-        {children}
-        <Footer />
+        <AuthProvider>{children}</AuthProvider>
         <SmoothScroll />
         <RevealManager />
       </body>

@@ -4,13 +4,17 @@ import { useId, useRef, useState } from "react";
 import type { ChangeEvent, DragEvent, FormEvent } from "react";
 import styles from "./FreeScan.module.css";
 import BlurText from "./BlurText";
+import ScanResultCard from "./app/ScanResultCard";
 import { scan } from "@/lib/content";
+import type { FreeScanResult } from "@/lib/app/types";
 import { IconClock, IconFile, IconLock, IconTrash, IconUpload } from "./icons";
 
 const MAX_BYTES = 5 * 1024 * 1024;
 const MIN_POSTING = 80;
 
-type Status = { kind: "idle" } | { kind: "busy" } | { kind: "error" | "ok" | "info"; message: string };
+type Status = { kind: "idle" } | { kind: "busy"; step: number } | { kind: "error" | "info"; message: string } | { kind: "ok"; result: FreeScanResult };
+
+const STEPS = ["Reading your resume", "Parsing the posting", "Scoring against the requirements", "Emailing the breakdown"];
 
 function fmtSize(bytes: number) {
   return bytes > 1024 * 1024 ? `${(bytes / 1024 / 1024).toFixed(1)} MB` : `${Math.max(1, Math.round(bytes / 1024))} KB`;
@@ -51,27 +55,26 @@ export default function FreeScan({ first = false }: { first?: boolean }) {
     e.preventDefault();
     if (!file) return setStatus({ kind: "error", message: "Attach your resume first." });
     if (posting.trim().length < MIN_POSTING) return setStatus({ kind: "error", message: "Paste the full job posting, not just the title." });
-    setStatus({ kind: "busy" });
+    setStatus({ kind: "busy", step: 0 });
+    const tick = window.setInterval(() => setStatus((s) => (s.kind === "busy" ? { kind: "busy", step: Math.min(STEPS.length - 1, s.step + 1) } : s)), 2600);
     try {
-      const res = await fetch("/api/scan", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email,
-          postingLength: posting.trim().length,
-          file: { name: file.name, size: file.size, type: file.type },
-        }),
-      });
-      const data = (await res.json()) as { ok: boolean; message?: string; error?: string };
-      if (data.ok) {
-        setStatus({ kind: "ok", message: data.message ?? "Done. Check your inbox for the breakdown." });
-      } else if (data.error === "scanner_not_connected") {
-        setStatus({ kind: "info", message: data.message ?? "The scanner is not connected yet." });
+      const form = new FormData();
+      form.set("file", file);
+      form.set("posting", posting.trim());
+      form.set("email", email.trim());
+      const res = await fetch("/api/scan", { method: "POST", body: form });
+      const data = (await res.json()) as { ok: boolean; message?: string; error?: string; result?: FreeScanResult };
+      if (res.ok && data.ok && data.result) {
+        setStatus({ kind: "ok", result: data.result });
+      } else if (res.status === 429) {
+        setStatus({ kind: "info", message: data.message ?? "One scan per email address every 7 days." });
       } else {
         setStatus({ kind: "error", message: data.message ?? "Something went wrong. Try again." });
       }
     } catch {
       setStatus({ kind: "error", message: "Could not reach the server. Check your connection and try again." });
+    } finally {
+      window.clearInterval(tick);
     }
   };
 
@@ -100,6 +103,14 @@ export default function FreeScan({ first = false }: { first?: boolean }) {
           </ul>
         </div>
 
+        {status.kind === "ok" ? (
+          <div className={styles.result} id="scan-result">
+            <ScanResultCard result={status.result} />
+            <button type="button" className="btn btn--ghost btn--sm" onClick={() => { setStatus({ kind: "idle" }); clear(); setPosting(""); }}>
+              Scan another posting
+            </button>
+          </div>
+        ) : (
         <form className={styles.form} onSubmit={submit} noValidate data-reveal="" aria-describedby={`${uid}-consent`}>
           <label
             className={styles.drop}
@@ -154,7 +165,17 @@ export default function FreeScan({ first = false }: { first?: boolean }) {
             </button>
           </div>
 
-          {status.kind === "error" || status.kind === "ok" || status.kind === "info" ? (
+          {status.kind === "busy" ? (
+            <ol className={styles.progress} aria-live="polite">
+              {STEPS.map((st, i) => (
+                <li key={st} data-state={i < status.step ? "done" : i === status.step ? "active" : "todo"}>
+                  {st}
+                </li>
+              ))}
+            </ol>
+          ) : null}
+
+          {status.kind === "error" || status.kind === "info" ? (
             <p className={styles.status} data-kind={status.kind === "info" ? "info" : status.kind} role="status">
               {status.message}
             </p>
@@ -164,6 +185,7 @@ export default function FreeScan({ first = false }: { first?: boolean }) {
             One scan per email address every 7 days. No card, no account. Your resume is personal information under PIPEDA: it is used only to produce your score and deleted afterwards, never sold or shared.
           </p>
         </form>
+        )}
       </div>
     </section>
   );

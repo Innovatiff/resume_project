@@ -27,7 +27,8 @@ export const nav = {
     { label: "About", href: "/about" },
     { label: "FAQ", href: "/faq" },
   ] as Link[],
-  secondary: { label: "Contact", href: "/contact" } as Link,
+  secondary: { label: "Sign in", href: "/sign-in" } as Link,
+  app: { label: "Dashboard", href: "/app" } as Link,
   cta: { label: "Free scan", href: "/scan" } as Link,
 };
 
@@ -313,7 +314,7 @@ export const pricing = {
         "One free revision within 48 hours",
         "Delivery in under 5 minutes",
       ],
-      cta: { label: "Buy a Single Shot", href: "/scan" },
+      cta: { label: "Buy a Single Shot", href: "/checkout?plan=single" },
     },
     {
       id: "pass",
@@ -330,7 +331,7 @@ export const pricing = {
         "LinkedIn headline and About rewrite",
         "No subscription, no auto-renew, no card retained",
       ],
-      cta: { label: "Get the 30-Day Pass", href: "/scan" },
+      cta: { label: "Get the 30-Day Pass", href: "/checkout?plan=pass" },
       featured: true,
       badge: "Most people choose this",
     },
@@ -347,7 +348,7 @@ export const pricing = {
         "Priority delivery in under 2 minutes",
         "Direct email access, same-day response",
       ],
-      cta: { label: "Get Landed", href: "/scan" },
+      cta: { label: "Get Landed", href: "/checkout?plan=landed" },
     },
   ] as Tier[],
   addons: [
@@ -443,6 +444,7 @@ export const footer = {
       title: "Product",
       links: [
         { label: "Free scan", href: "/scan" },
+        { label: "Sign in", href: "/sign-in" },
         { label: "How it works", href: "/how-it-works" },
         { label: "Pricing", href: "/pricing" },
         { label: "Guarantee", href: "/pricing#guarantee" },

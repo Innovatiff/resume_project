@@ -1,6 +1,6 @@
-# Shortlist — landing page
+# Shortlist
 
-Marketing site for **Shortlist** (working name): a paid web service that tells Canadian job seekers which postings are worth applying to, what those roles actually pay in their city, and rewrites the resume for the ones that pass. Windsor–Essex, Ontario. All prices CAD.
+Marketing site and product app for **Shortlist** (working name): a paid web service that tells Canadian job seekers which postings are worth applying to, what those roles actually pay in their city, and rewrites the resume for the ones that pass. Windsor–Essex, Ontario. All prices CAD.
 
 Built with Next.js (App Router, Turbopack), TypeScript, CSS Modules, GSAP ScrollTrigger and Lenis smooth scrolling. No UI framework, no Tailwind.
 
@@ -8,13 +8,46 @@ Built with Next.js (App Router, Turbopack), TypeScript, CSS Modules, GSAP Scroll
 
 ```bash
 npm install
-npm run dev      # http://localhost:3000
-npm run build    # production build
-npm run start    # serve the production build
-npm run lint
+cp .env.local.example .env.local   # everything local: emulators, mock AI, dev checkout
+npm run emulators                  # Firebase Auth + Firestore emulators (needs Java 21+)
+npm run dev                        # http://localhost:3000
+npm test                           # unit tests (scorer, validator, parser, mock AI)
+npm run e2e                        # browser end-to-end against the emulators (see e2e/README.md)
+npm run build && npm start         # production build
 ```
 
-Node 20.9+ is required by Next.js 16.
+Node 20.9+ is required by Next.js 16. With `.env.local.example` the whole product runs with no external accounts: Firebase emulators for sign-in and data, deterministic local logic instead of Claude, and a development checkout that grants purchases without payment. `GET /api/health` tells you which integrations are live.
+
+### Going live
+
+Copy `.env.example` to `.env.local` (or your host's environment) and fill in:
+
+| Variable | What it is |
+| --- | --- |
+| `NEXT_PUBLIC_FIREBASE_*` | Web app config from the Firebase console (Auth only; browsers never touch Firestore) |
+| `FIREBASE_SERVICE_ACCOUNT` | Service-account JSON (or base64 of it) for the Admin SDK |
+| `ANTHROPIC_API_KEY` | Claude. Routing: Haiku 4.5 extracts and parses, Sonnet 5 rewrites, Opus 5 for Landed (`SHORTLIST_MODEL_*`) |
+| `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` | Stripe Checkout, one-time payments in CAD; point the webhook at `/api/billing/webhook` |
+| `ADZUNA_APP_ID`, `ADZUNA_APP_KEY` | Salary bands and Plan B roles. Without keys the pay report says "no reliable data" in production |
+| `RESEND_API_KEY`, `EMAIL_FROM`, `FOUNDER_EMAIL` | Delivery emails and human-review notifications |
+| `FREE_SCAN_SALT` | Salts the hashed email used for the one-scan-per-7-days limit |
+
+Deploy `firestore.rules` (deny-all: every read and write goes through the server) with `npx firebase deploy --only firestore`. In production, mock AI and dev checkout are ignored no matter what the env says. Vercel caps request bodies at 4.5 MB; the app enforces 5 MB, so lower `maxUploadBytes` in `src/lib/app/config.ts` if you deploy there.
+
+## The product
+
+| Area | Where | What happens |
+| --- | --- | --- |
+| Free scan | `/scan`, `POST /api/scan` | No account. PDF/DOCX parsed with column detection, profile extracted, posting parsed, deterministic score with published breakdown, red flags. Result stored 7 days (no resume text), emailed, one scan per email per 7 days |
+| Sign in | `/sign-in`, `/sign-up`, `/forgot-password` | Firebase Auth: email + password and Google. Required for anything paid |
+| Checkout | `/checkout?plan=single|pass|landed` (+ add-ons) | Stripe Checkout session; webhook and success-page confirmation both grant the purchase idempotently. No card is ever stored |
+| Dashboard | `/app` | Package status, resume on file, recent applications |
+| New application | `/app/applications/new` | Posting + resume (saved profile or new upload) → score, verdict, pay report (Adzuna), red flags, Plan B |
+| Application | `/app/applications/[id]` | Build the package: metric interview (pass and up) → rewrite → every figure validated against the source → rescore → interview prep, objections, LinkedIn. DOCX and PDF generated on demand. Status tracker and notes |
+| Resume profile | `/app/profile` | The extracted Candidate Profile with per-bullet figure flags, replace resume, language and city |
+| Account | `/app/account` | Purchases, add-ons, sign out, one-click delete of everything (PIPEDA) |
+
+Server code lives in `src/lib`: `pipeline/` orchestrates, `ai/` talks to Claude (with `mock.ts` as the offline stand-in), `scoring/` is the deterministic scorer and red-flag rules, `parse/` reads PDF and DOCX, `documents/` builds DOCX and PDF, `billing/` holds the catalogue, entitlements and Stripe, `store/` is the only code that touches Firestore. Fair-use caps live in `billing/plans.ts` and are enforced server-side, never shown.
 
 ## Pages
 
@@ -72,14 +105,11 @@ Two headline variants are built in, per the business plan's open decision:
 
 The variant is chosen before first paint: `?h=a` or `?h=b` in the URL wins, then `localStorage` (`sl_headline`), then a coin flip. The choice is stamped on `<html data-headline="a|b">` so analytics can read it. Logic lives in `src/lib/headline.ts`.
 
-## The free scan API
-
-`src/app/api/scan/route.ts` validates the request (email, posting length, file name/size/type) and currently returns `501 scanner_not_connected`. The client only sends file metadata, so resume bytes never leave the browser until the pipeline exists. The intended flow (Stage 1 extractor, deterministic scorer, email delivery, one scan per email per 7 days, delete the file after scoring) is documented at the top of that file. Switch the client to multipart `FormData` when wiring it.
-
 ## Things still to decide (from the plan)
 
 - **Name and domain.** "Shortlist" is a placeholder; `hello@shortlist.ca` in `content.ts` is too. Check `.ca` availability and CIPO before launch.
 - **Legal pages.** `/privacy`, `/terms` and `/refunds` are plain-language drafts written from the business plan. Review them with counsel before launch. Choices made in the drafts that you may want to change: free-scan files deleted within 24 hours, paid files kept for the access period plus 30 days, a 14-day window to claim the guarantee, a 48-hour unused-pass refund, and the fair-use caps (50 and 150 packages) stated in the terms as the plan intends.
-- **Sign in.** There is no sign-in button; the thin slice ships without accounts. Add one when accounts exist.
+- **Browser extension and B2B seats.** Not built yet. Seat purchases can be granted with `source: "seat"` purchases until an intake page exists.
+- **Human review and coaching (Landed).** Packages are queued and the founder is emailed (`FOUNDER_EMAIL`); marking a review done is a manual Firestore update for now.
 - **Fair-use caps** for the passes live in the terms and are deliberately not shown anywhere in the UI.
-- **Payments.** CTAs scroll to the free scan; wire Stripe Checkout links to the paid tiers when ready.
+- **Payments.** Stripe Checkout is wired for every package and add-on. Before launch: live keys, the webhook endpoint at `/api/billing/webhook`, and decide whether to turn on Stripe Tax (`STRIPE_AUTOMATIC_TAX=1`) for HST.

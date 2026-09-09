@@ -39,3 +39,17 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# firebase emulator state
+/.firebase/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+/emulator-data/
+
+# keep the templates, ignore real env files
+!.env.example
+!.env.local.example
+
+# e2e screenshots
+/e2e/output/

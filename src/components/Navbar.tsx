@@ -7,12 +7,15 @@ import styles from "./Navbar.module.css";
 import Logo from "./Logo";
 import { nav, brand } from "@/lib/content";
 import { getLenis } from "@/lib/lenis-store";
+import { useAuth } from "@/lib/app/auth-client";
 import { IconArrowRight, IconMenu, IconX } from "./icons";
 
 export default function Navbar() {
   const pathname = usePathname();
+  const { user, loading: authLoading } = useAuth();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const signedIn = Boolean(user) && !authLoading;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -59,13 +62,21 @@ export default function Navbar() {
           ))}
         </ul>
 
-        <div className={styles.actions}>
-          <Link className={`btn btn--ghost btn--sm ${styles.secondary}`} href={nav.secondary.href}>
-            {nav.secondary.label}
-          </Link>
-          <Link className="btn btn--ink btn--sm" href={nav.cta.href} onClick={() => setOpen(false)}>
-            {nav.cta.label}
-          </Link>
+        <div className={styles.actions} data-auth={authLoading ? "loading" : signedIn ? "in" : "out"}>
+          {signedIn ? (
+            <Link className="btn btn--ink btn--sm" href={nav.app.href} onClick={() => setOpen(false)}>
+              {nav.app.label}
+            </Link>
+          ) : (
+            <>
+              <Link className={`btn btn--ghost btn--sm ${styles.secondary}`} href={nav.secondary.href}>
+                {nav.secondary.label}
+              </Link>
+              <Link className="btn btn--ink btn--sm" href={nav.cta.href} onClick={() => setOpen(false)}>
+                {nav.cta.label}
+              </Link>
+            </>
+          )}
           <button
             type="button"
             className={styles.burger}
@@ -82,7 +93,7 @@ export default function Navbar() {
       <div id="mobile-menu" className={styles.overlay} data-open={open} aria-hidden={!open}>
         <nav aria-label="Mobile">
           <ul className={styles.overlayLinks}>
-            {[...nav.links, nav.secondary].map((l) => (
+            {[...nav.links, signedIn ? nav.app : nav.secondary].map((l) => (
               <li key={l.href}>
                 <Link href={l.href} tabIndex={open ? 0 : -1} aria-current={isActive(l.href) ? "page" : undefined} onClick={() => setOpen(false)}>
                   {l.label}
@@ -93,8 +104,8 @@ export default function Navbar() {
           </ul>
         </nav>
         <div className={styles.overlayFoot}>
-          <Link className="btn btn--coral btn--lg btn--block" href={nav.cta.href} tabIndex={open ? 0 : -1} onClick={() => setOpen(false)}>
-            Scan my resume free
+          <Link className="btn btn--coral btn--lg btn--block" href={signedIn ? "/app/applications/new" : nav.cta.href} tabIndex={open ? 0 : -1} onClick={() => setOpen(false)}>
+            {signedIn ? "New application" : "Scan my resume free"}
           </Link>
           <p className={styles.overlayMeta}>
             {brand.region} · No subscription, no auto-renew

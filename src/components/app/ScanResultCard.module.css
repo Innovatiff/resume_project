@@ -1,0 +1,145 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: clamp(20px, 3vw, 32px);
+  border-radius: var(--r-card);
+  background: #fff;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-card);
+}
+
+.top {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 24px;
+  align-items: center;
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.reasons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  counter-reset: r;
+}
+
+.reasons li {
+  display: flex;
+  gap: 12px;
+  font-size: 0.93rem;
+  line-height: 1.45;
+  color: var(--ink-2);
+}
+
+.reasons li::before {
+  counter-increment: r;
+  content: counter(r);
+  flex: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--coral-soft);
+  color: var(--coral-deep);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+.toggle {
+  align-self: flex-start;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--purple-deep);
+  text-decoration: underline;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.table td {
+  padding: 8px 6px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+.num {
+  font-family: var(--font-display);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.detail {
+  color: var(--muted);
+}
+
+.next {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 18px 20px;
+  border-radius: 16px;
+  background: var(--panel-soft);
+  border: 1px solid var(--line);
+}
+
+.next b {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.next span {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--muted);
+  max-width: 420px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.fine {
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.fine a {
+  text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+  .top {
+    grid-template-columns: 1fr;
+  }
+
+  .actions,
+  .actions :global(.btn) {
+    width: 100%;
+  }
+}
