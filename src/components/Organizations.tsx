@@ -2,6 +2,7 @@ import styles from "./Organizations.module.css";
 import BlurText from "./BlurText";
 import { organizations as org } from "@/lib/content";
 import { IconCheckCircle } from "./icons";
+import { IllustIntakePage } from "./illustrations";
 
 export default function Organizations() {
   return (
@@ -31,6 +32,9 @@ export default function Organizations() {
         </div>
 
         <div className={styles.tableWrap} data-reveal="">
+          <div className={styles.art} aria-hidden="true">
+            <IllustIntakePage />
+          </div>
           <table className={styles.table}>
             <thead>
               <tr>

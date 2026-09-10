@@ -75,6 +75,21 @@
   backdrop-filter: blur(6px);
 }
 
+.art {
+  position: relative;
+  border-radius: calc(var(--r-card) - 8px);
+  background: radial-gradient(120% 140% at 30% 0%, rgba(139, 92, 246, 0.35), rgba(255, 255, 255, 0.04) 60%);
+  overflow: hidden;
+  aspect-ratio: 16 / 7;
+  margin-bottom: 8px;
+}
+
+.art svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 .table {
   width: 100%;
   border-collapse: collapse;

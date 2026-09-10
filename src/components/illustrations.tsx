@@ -723,3 +723,179 @@ export function IllustStepApply({ className }: Props) {
     </Wide>
   );
 }
+
+/* ---------- organizations ---------- */
+
+/** A small bust for group scenes. */
+function Bust({ x, y, s = 1, skin, hair, shirt }: { x: number; y: number; s?: number; skin: string; hair: string; shirt: string }) {
+  return (
+    <g transform={`translate(${x} ${y}) scale(${s})`}>
+      <path d="M0 44C0 28 10 22 22 22s22 6 22 22Z" fill={shirt} />
+      <rect x="17.5" y="12" width="9" height="12" rx="4" fill={skin} />
+      <circle cx="22" cy="10" r="10" fill={skin} />
+      <path d="M12 10.5c0-8 4.5-12 10-12s10 4 10 12c-2-4.5-5-6.5-10-6.5s-8 2-10 6.5Z" fill={hair} />
+    </g>
+  );
+}
+
+/** The white-labelled intake page, with seats going out to clients. Drawn for a dark panel. */
+export function IllustIntakePage({ className }: Props) {
+  return (
+    <Wide className={className}>
+      <rect x="14" y="10" width="126" height="90" rx="9" fill="#fff" />
+      <rect x="14" y="10" width="126" height="16" rx="9" fill="#ececf1" />
+      <rect x="14" y="18" width="126" height="8" fill="#ececf1" />
+      <circle cx="24" cy="18" r="2.4" fill={coral} />
+      <circle cx="31" cy="18" r="2.4" fill="#f6c52e" />
+      <circle cx="38" cy="18" r="2.4" fill={green} />
+      <rect x="24" y="34" width="12" height="12" rx="3.5" fill={purple} />
+      <rect x="40" y="36" width="34" height="4.5" rx="2.25" fill={ink} />
+      <rect x="40" y="43" width="22" height="3" rx="1.5" fill={muted} />
+      <rect x="24" y="54" width="106" height="30" rx="7" fill="#fff" stroke={purple} strokeWidth="1.5" strokeDasharray="4 3" />
+      <path d="M77 62v14M71 68l6-6 6 6" stroke={purple} strokeWidth="2.6" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+      <rect x="60" y="90" width="34" height="2" rx="1" fill="#ececf1" />
+      <rect x="112" y="30" width="20" height="9" rx="4.5" fill={purpleSoft} />
+      <rect x="116" y="33.4" width="12" height="2.2" rx="1.1" fill={purpleDeep} />
+      <Bust x={140} y={58} s={0.72} skin="#f4b9a4" hair="#3b2b2b" shirt={coral} />
+      <Bust x={162} y={44} s={0.72} skin="#d9a583" hair="#2b1d16" shirt={purple} />
+      <Bust x={168} y={70} s={0.72} skin="#ecbc99" hair="#5a3b2a" shirt="#3ecfef" />
+    </Wide>
+  );
+}
+
+/** Employment agencies: clients placed. */
+export function IllustOrgAgency({ className }: Props) {
+  return (
+    <Wide className={className}>
+      <rect x="18" y="26" width="164" height="72" rx="12" fill="#fff" stroke={line} />
+      <Bust x={36} y={40} skin="#f4b9a4" hair="#3b2b2b" shirt={coral} />
+      <Bust x={78} y={40} skin="#d9a583" hair="#2b1d16" shirt={purple} />
+      <Bust x={120} y={40} skin="#ecbc99" hair="#5a3b2a" shirt="#3ecfef" />
+      <rect x="18" y="84" width="164" height="14" rx="0" fill="#f6f6f8" />
+      <rect x="30" y="89" width="40" height="4" rx="2" fill={line} />
+      <rect x="150" y="14" width="42" height="20" rx="10" fill={green} />
+      <path d="M160 24l4 4 8-9" stroke="#fff" strokeWidth="2.8" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+      <rect x="175" y="22.5" width="10" height="3" rx="1.5" fill="#fff" />
+    </Wide>
+  );
+}
+
+/** Settlement organizations: credentials made legible, in three languages. */
+export function IllustOrgSettlement({ className }: Props) {
+  return (
+    <Wide className={className}>
+      <circle cx="62" cy="56" r="34" fill="#dff7fd" stroke="#1eb9de" strokeWidth="2.5" />
+      <ellipse cx="62" cy="56" rx="14" ry="34" fill="none" stroke="#1eb9de" strokeWidth="2" />
+      <path d="M28 56h68M34 40h56M34 72h56" stroke="#1eb9de" strokeWidth="2" />
+      <Sheet x={112} y={16} w={62} h={78} rot={4} />
+      <g transform="translate(120 74) rotate(4)">
+        <rect x="0" y="0" width="16" height="10" rx="5" fill={purpleSoft} />
+        <text x="8" y="7.5" fontSize="6" fontWeight="700" fill={purpleDeep} textAnchor="middle" fontFamily="var(--font-body), Outfit, sans-serif">
+          FR
+        </text>
+        <rect x="19" y="0" width="16" height="10" rx="5" fill={yellowSoft} />
+        <text x="27" y="7.5" fontSize="6" fontWeight="700" fill="#8a6d0f" textAnchor="middle" fontFamily="var(--font-body), Outfit, sans-serif">
+          ES
+        </text>
+      </g>
+      <Check cx={106} cy={30} r={10} />
+    </Wide>
+  );
+}
+
+/** College career centres: a cohort, a cap, a first negotiation. */
+export function IllustOrgCollege({ className }: Props) {
+  return (
+    <Wide className={className}>
+      <rect x="112" y="46" width="70" height="52" rx="6" fill="#fff" stroke={line} />
+      <path d="M108 48l39-18 39 18Z" fill={ink} />
+      <rect x="130" y="60" width="10" height="16" rx="2" fill={purpleSoft} />
+      <rect x="146" y="60" width="10" height="16" rx="2" fill={purpleSoft} />
+      <rect x="162" y="60" width="10" height="16" rx="2" fill={purpleSoft} />
+      <rect x="141" y="80" width="12" height="18" rx="2" fill={ink} />
+      <path d="M24 46l40-16 40 16-40 16Z" fill={ink} />
+      <path d="M40 52v14c0 6 11 10 24 10s24-4 24-10V52l-24 10Z" fill="#2a2a31" />
+      <path d="M104 46v22" stroke={ink} strokeWidth="2.5" strokeLinecap="round" />
+      <circle cx="104" cy="71" r="3.5" fill="#f6c52e" />
+      <rect x="22" y="82" width="52" height="16" rx="8" fill={green} />
+      <text x="48" y="93" fontSize="8.5" fontWeight="700" fill="#fff" textAnchor="middle" fontFamily="var(--font-display), Inter Tight, sans-serif" letterSpacing="-0.2">
+        +$4K
+      </text>
+    </Wide>
+  );
+}
+
+/** Pilot step 1: a 30-minute call. */
+export function IllustPilotCall({ className }: Props) {
+  return (
+    <Wide className={className}>
+      <rect x="28" y="22" width="80" height="70" rx="9" fill="#fff" stroke={line} />
+      <rect x="28" y="22" width="80" height="18" rx="9" fill={purple} />
+      <rect x="28" y="32" width="80" height="8" fill={purple} />
+      {[0, 1, 2, 3, 4].map((c) =>
+        [0, 1].map((r) => <rect key={`${c}-${r}`} x={38 + c * 13} y={48 + r * 16} width="9" height="9" rx="2.5" fill={c === 2 && r === 1 ? coral : "#ececf1"} />),
+      )}
+      <rect x="120" y="36" width="56" height="34" rx="12" fill={ink} />
+      <path d="M128 70l-6 10 14-8Z" fill={ink} />
+      <rect x="130" y="47" width="36" height="3.5" rx="1.75" fill="#fff" />
+      <rect x="130" y="55" width="24" height="3.5" rx="1.75" fill="rgba(255,255,255,.6)" />
+    </Wide>
+  );
+}
+
+/** Pilot step 2: the intake page, in the organization's name. */
+export function IllustPilotIntake({ className }: Props) {
+  return (
+    <Wide className={className}>
+      <rect x="30" y="14" width="140" height="84" rx="9" fill="#fff" stroke={line} />
+      <rect x="30" y="14" width="140" height="14" rx="9" fill="#ececf1" />
+      <rect x="30" y="20" width="140" height="8" fill="#ececf1" />
+      <rect x="42" y="38" width="16" height="16" rx="4.5" fill={coral} />
+      <rect x="64" y="41" width="44" height="5" rx="2.5" fill={ink} />
+      <rect x="64" y="49" width="30" height="3" rx="1.5" fill={muted} />
+      <rect x="42" y="64" width="116" height="24" rx="7" fill="#fff" stroke={purple} strokeWidth="1.5" strokeDasharray="4 3" />
+      <path d="M100 70v12M95 75l5-5 5 5" stroke={purple} strokeWidth="2.4" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+    </Wide>
+  );
+}
+
+/** Pilot step 3: counsellors onboarded. */
+export function IllustPilotOnboarding({ className }: Props) {
+  return (
+    <Wide className={className}>
+      <rect x="20" y="14" width="160" height="56" rx="8" fill="#fff" stroke={line} />
+      <circle cx="58" cy="42" r="15" fill="none" stroke={purple} strokeWidth="7" strokeDasharray="70 100" transform="rotate(-90 58 42)" />
+      <circle cx="58" cy="42" r="15" fill="none" stroke="#ececf1" strokeWidth="7" strokeDasharray="100 70" strokeDashoffset="-70" transform="rotate(-90 58 42)" />
+      <rect x="86" y="30" width="60" height="5" rx="2.5" fill={ink} />
+      <rect x="86" y="40" width="44" height="3.5" rx="1.75" fill={line} />
+      <rect x="86" y="47" width="52" height="3.5" rx="1.75" fill={line} />
+      <rect x="96" y="70" width="8" height="10" fill="#d8d8e0" />
+      <rect x="80" y="80" width="40" height="4" rx="2" fill="#d8d8e0" />
+      <Bust x={22} y={74} s={0.6} skin="#f4b9a4" hair="#3b2b2b" shirt={coral} />
+      <Bust x={150} y={74} s={0.6} skin="#d9a583" hair="#2b1d16" shirt={purple} />
+    </Wide>
+  );
+}
+
+/** Pilot step 4: the quarterly report. */
+export function IllustPilotReport({ className }: Props) {
+  return (
+    <Wide className={className}>
+      <rect x="34" y="12" width="132" height="88" rx="9" fill="#fff" stroke={line} />
+      <rect x="46" y="22" width="48" height="5" rx="2.5" fill={ink} />
+      <rect x="46" y="31" width="30" height="3.2" rx="1.6" fill={muted} />
+      {[
+        [46, 30, "#ececf1"],
+        [66, 46, purple],
+        [86, 38, "#ececf1"],
+        [106, 60, purple],
+        [126, 52, "#ececf1"],
+        [146, 68, purple],
+      ].map(([x, h, c], i) => (
+        <rect key={i} x={x as number} y={90 - (h as number)} width="12" height={h as number} rx="3" fill={c as string} />
+      ))}
+      <path d="M52 78L72 66l20 4 20-16 20 8 20-22" stroke={coral} strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+      <Check cx={162} cy={18} r={10} />
+    </Wide>
+  );
+}
