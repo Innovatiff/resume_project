@@ -29,6 +29,8 @@ const description =
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
+  // Google Search Console ownership of orvenic.com (the same token as the DNS TXT record).
+  verification: { google: "Bj1cvabK4DjkLSWzrkxHrTeIjJDgOQec1ddTwEeJN_Y" },
   title: {
     default: "Orvenic — Know which jobs are worth applying to",
     template: "%s · Orvenic",
