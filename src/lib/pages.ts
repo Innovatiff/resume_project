@@ -285,6 +285,7 @@ export const scanPage = {
 export interface FaqCategory {
   id: string;
   title: string;
+  lead: string;
   items: Faq[];
 }
 
@@ -300,6 +301,7 @@ export const faqPage = {
     {
       id: "product",
       title: "The product",
+      lead: "What you get, how fast it arrives, and the things we refuse to do.",
       items: [
         f[0],
         f[3],
@@ -323,6 +325,7 @@ export const faqPage = {
     {
       id: "pricing",
       title: "Pricing, renewals and refunds",
+      lead: "One-time purchases in your currency. Nothing renews on its own.",
       items: [
         f[1],
         {
@@ -346,6 +349,7 @@ export const faqPage = {
     {
       id: "privacy",
       title: "Privacy and your data",
+      lead: "A resume is personal information. Here is who sees it and how to delete it.",
       items: [
         f[5],
         {
@@ -361,6 +365,7 @@ export const faqPage = {
     {
       id: "organizations",
       title: "Organizations and seats",
+      lead: "Seat blocks, white-labelled intake pages and the reporting funders ask for.",
       items: [
         {
           q: "How do seats work?",

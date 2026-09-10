@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import styles from "./Faq.module.css";
 import BlurText from "./BlurText";
 import { faq, type Faq as FaqItem } from "@/lib/content";
@@ -9,14 +9,19 @@ import { IconPlus } from "./icons";
 interface Props {
   items?: FaqItem[];
   title?: string;
+  /** One line under the title; only shown in the category layout. */
+  lead?: string;
   /** Compact: a left-aligned category heading inside a larger page section. */
   compact?: boolean;
+  /** A scene beside the list. Switches the compact block to the two-column category layout. */
+  art?: ReactNode;
+  tone?: "purple" | "coral" | "cyan" | "yellow";
   idPrefix?: string;
   initialOpen?: number;
   id?: string;
 }
 
-export default function Faq({ items = faq.items, title = faq.title, compact = false, idPrefix = "faq", initialOpen = 0, id = "faq" }: Props) {
+export default function Faq({ items = faq.items, title = faq.title, lead, compact = false, art, tone, idPrefix = "faq", initialOpen = 0, id = "faq" }: Props) {
   const [open, setOpen] = useState<number>(initialOpen);
 
   const list = (
@@ -45,6 +50,30 @@ export default function Faq({ items = faq.items, title = faq.title, compact = fa
       })}
     </div>
   );
+
+  if (compact && art) {
+    return (
+      <div className={`${styles.compact} ${styles.cat}`} id={id} data-tone={tone}>
+        <div className={styles.catHead}>
+          <div className={styles.catArt} aria-hidden="true" data-reveal="scale">
+            {art}
+          </div>
+          <h2 className={`h-display ${styles.compactTitle}`} data-reveal="">
+            {title}
+          </h2>
+          {lead ? (
+            <p className={styles.catLead} data-reveal="">
+              {lead}
+            </p>
+          ) : null}
+          <span className={styles.catCount} data-reveal="">
+            {items.length} questions
+          </span>
+        </div>
+        {list}
+      </div>
+    );
+  }
 
   if (compact) {
     return (

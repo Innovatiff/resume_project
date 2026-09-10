@@ -106,3 +106,87 @@
 .compact .list {
   margin-top: 18px;
 }
+
+/* ---------- category layout with a scene (FAQ page) ---------- */
+
+.cat {
+  max-width: none;
+  display: grid;
+  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+  gap: clamp(24px, 4vw, 64px);
+  align-items: start;
+}
+
+.cat + .cat {
+  margin-top: clamp(56px, 7vw, 96px);
+}
+
+.cat .list {
+  margin: 0;
+  max-width: none;
+}
+
+.catHead {
+  position: sticky;
+  top: calc(var(--nav-h) + 32px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.catArt {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--r-card);
+  overflow: hidden;
+  background: linear-gradient(180deg, #fafafc, #f1f1f5);
+  margin-bottom: 10px;
+}
+
+.catArt svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.cat[data-tone="purple"] .catArt { background: linear-gradient(180deg, #f3edff, #e7ddff); }
+.cat[data-tone="coral"] .catArt { background: linear-gradient(180deg, #fff1ef, #fde1dc); }
+.cat[data-tone="cyan"] .catArt { background: linear-gradient(180deg, #e9fafd, #d3f2fa); }
+.cat[data-tone="yellow"] .catArt { background: linear-gradient(180deg, #fff9e0, #fff0bf); }
+
+.cat .compactTitle {
+  margin-bottom: 0;
+}
+
+.catLead {
+  color: var(--muted);
+  font-size: 0.98rem;
+  line-height: 1.5;
+  max-width: 34ch;
+  text-wrap: pretty;
+}
+
+.catCount {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+@media (max-width: 960px) {
+  .cat {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    max-width: 640px;
+  }
+
+  .catHead {
+    position: static;
+  }
+
+  .catArt {
+    aspect-ratio: 16 / 9;
+  }
+}

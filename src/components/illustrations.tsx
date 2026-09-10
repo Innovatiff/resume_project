@@ -976,3 +976,141 @@ export function IllustWedgeMarkets({ className }: Props) {
     </Wide>
   );
 }
+
+/* ---------- FAQ ---------- */
+
+function Card({ className, children }: Props & { children: React.ReactNode }) {
+  return (
+    <svg viewBox="0 0 160 120" className={className} aria-hidden="true" focusable="false">
+      {children}
+    </svg>
+  );
+}
+
+const chipFont = "var(--font-body), Outfit, sans-serif";
+
+function Chip({ x, y, w, label, bg, fg }: { x: number; y: number; w: number; label: string; bg: string; fg: string }) {
+  return (
+    <g transform={`translate(${x} ${y})`}>
+      <rect width={w} height="13" rx="6.5" fill={bg} />
+      <text x={w / 2} y="9.5" fontSize="7" fontWeight="700" fill={fg} textAnchor="middle" fontFamily={chipFont}>
+        {label}
+      </text>
+    </g>
+  );
+}
+
+/** The product: the delivery, a scored resume rising out of its envelope. */
+export function IllustFaqProduct({ className }: Props) {
+  return (
+    <Card className={className}>
+      <path d="M30 64 80 30l50 34Z" fill={purpleDeep} />
+      <rect x="50" y="18" width="62" height="70" rx="6" fill="#fff" stroke={line} />
+      <rect x="58" y="27" width="28" height="4.5" rx="2.25" fill={ink} />
+      <rect x="58" y="34" width="20" height="3" rx="1.5" fill={muted} />
+      <Lines x={58} y={43} widths={[46, 38, 42, 30]} gap={6.5} h={3.2} />
+      <rect x="30" y="64" width="100" height="46" rx="9" fill={purple} />
+      <path d="M30 68l50 30 50-30" stroke="rgba(255,255,255,.4)" strokeWidth="2.5" fill="none" strokeLinejoin="round" />
+      <circle cx="124" cy="36" r="18" fill="#fff" stroke={purpleSoft} strokeWidth="5" />
+      <circle cx="124" cy="36" r="18" fill="none" stroke={purple} strokeWidth="5" strokeDasharray="96 120" strokeLinecap="round" transform="rotate(-90 124 36)" />
+      <text x="124" y="41" fontSize="14" fontWeight="800" fill={ink} textAnchor="middle" fontFamily="var(--font-display), Inter Tight, sans-serif" letterSpacing="-0.8">
+        85
+      </text>
+      <Chip x={8} y={46} w={30} label="PDF" bg={coralSoft} fg={coral} />
+      <Chip x={6} y={64} w={36} label="DOCX" bg={cyanSoft} fg="#0d7a95" />
+    </Card>
+  );
+}
+
+/** Pricing: a receipt stamped one-time, the renewal cycle struck out. */
+export function IllustFaqPricing({ className }: Props) {
+  return (
+    <Card className={className}>
+      <path d="M40 20a6 6 0 0 1 6-6h60a6 6 0 0 1 6 6v76l-6 5-6-5-6 5-6-5-6 5-6-5-6 5-6-5-6 5-6-5-6 5-6-5Z" fill="#fff" stroke={line} />
+      <rect x="50" y="24" width="26" height="4.5" rx="2.25" fill={ink} />
+      <rect x="50" y="31.5" width="18" height="3" rx="1.5" fill={muted} />
+      <Lines x={50} y={40} widths={[52, 44, 48]} gap={7} h={3.2} />
+      <path d="M50 64h52" stroke={line} strokeWidth="1.2" strokeDasharray="3 3" />
+      <text x="50" y="76" fontSize="6.5" fontWeight="600" fill={muted} fontFamily={chipFont}>
+        Total
+      </text>
+      <text x="102" y="77" fontSize="11" fontWeight="800" fill={ink} textAnchor="end" fontFamily="var(--font-display), Inter Tight, sans-serif" letterSpacing="-0.5">
+        $79
+      </text>
+      <g transform="rotate(-12 82 92)">
+        <rect x="52" y="84" width="60" height="17" rx="4.5" fill="rgba(255,255,255,.92)" stroke={coral} strokeWidth="2.4" />
+        <text x="82" y="96" fontSize="8.5" fontWeight="700" fill={coral} textAnchor="middle" fontFamily="var(--font-display), Inter Tight, sans-serif" letterSpacing="1.4">
+          ONE-TIME
+        </text>
+      </g>
+      <g transform="translate(128 30)">
+        <circle r="15" fill="#fff" stroke={line} />
+        <path d="M-7 3a8 8 0 0 1 13-7" stroke={purple} strokeWidth="2.6" fill="none" strokeLinecap="round" />
+        <path d="M6-8v4h-4" stroke={purple} strokeWidth="2.6" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M7-3a8 8 0 0 1-13 7" stroke={purple} strokeWidth="2.6" fill="none" strokeLinecap="round" />
+        <path d="M-6 8v-4h4" stroke={purple} strokeWidth="2.6" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M-11 11L11-11" stroke={coral} strokeWidth="3" strokeLinecap="round" />
+      </g>
+      <Chip x={6} y={88} w={30} label="CAD" bg={purpleSoft} fg={purpleDeep} />
+      <Chip x={6} y={104} w={30} label="USD" bg={yellowSoft} fg="#8a6d0f" />
+    </Card>
+  );
+}
+
+/** Privacy: a resume under lock, and the bin it goes into when you say so. */
+export function IllustFaqPrivacy({ className }: Props) {
+  return (
+    <Card className={className}>
+      <rect x="44" y="12" width="72" height="90" rx="6" fill="#fff" stroke={line} />
+      <rect x="53" y="22" width="32" height="4.5" rx="2.25" fill={ink} />
+      <rect x="53" y="29.5" width="22" height="3" rx="1.5" fill={muted} />
+      <Lines x={53} y={39} widths={[54, 46, 50, 40, 52, 36]} gap={7} h={3.2} />
+      <path d="M96 66V54a12 12 0 0 1 24 0v12" stroke={purpleDeep} strokeWidth="6.5" fill="none" strokeLinecap="round" />
+      <rect x="86" y="66" width="44" height="38" rx="9" fill={purple} />
+      <circle cx="108" cy="82" r="4.5" fill="#fff" />
+      <rect x="105.5" y="83" width="5" height="9" rx="2.5" fill="#fff" />
+      <g transform="translate(34 94)">
+        <circle r="15" fill="#fff" stroke={line} />
+        <path d="M-7-5h14l-1.2 13h-11.6Z" fill="none" stroke={coral} strokeWidth="2.2" strokeLinejoin="round" />
+        <path d="M-9-5h18M-3-8h6" stroke={coral} strokeWidth="2.2" strokeLinecap="round" />
+        <path d="M-3-1v6M3-1v6" stroke={coral} strokeWidth="1.6" strokeLinecap="round" />
+      </g>
+    </Card>
+  );
+}
+
+/** Organizations: a block of seats, seven of twelve handed out. */
+export function IllustFaqOrgs({ className }: Props) {
+  const people: [string, string, string][] = [
+    ["#f4b9a4", "#3b2b2b", coral],
+    ["#d9a583", "#2b1d16", purple],
+    ["#ecbc99", "#5a3b2a", "#3ecfef"],
+    ["#c68642", "#1b1b1b", "#f6c52e"],
+    ["#f1c9b5", "#7a4a2a", green],
+    ["#8d5524", "#0d0d10", purpleDeep],
+    ["#e0ac69", "#4a2f1d", "#ff7a6d"],
+  ];
+  return (
+    <Card className={className}>
+      <rect x="14" y="22" width="132" height="86" rx="10" fill="#fff" stroke={line} />
+      <rect x="22" y="30" width="64" height="11" rx="5.5" fill={purpleSoft} />
+      <text x="54" y="38" fontSize="6.2" fontWeight="700" fill={purpleDeep} textAnchor="middle" fontFamily={chipFont} letterSpacing="0.6">
+        7 OF 12 SEATS
+      </text>
+      <rect x="106" y="30" width="32" height="11" rx="5.5" fill="#dff5e8" />
+      <text x="122" y="38" fontSize="6" fontWeight="700" fill={green} textAnchor="middle" fontFamily={chipFont} letterSpacing="0.6">
+        ACTIVE
+      </text>
+      {Array.from({ length: 12 }, (_, i) => {
+        const x = 26 + (i % 4) * 30;
+        const y = 44 + Math.floor(i / 4) * 20;
+        const p = people[i];
+        return p ? (
+          <Bust key={i} x={x} y={y} s={0.45} skin={p[0]} hair={p[1]} shirt={p[2]} />
+        ) : (
+          <rect key={i} x={x} y={y + 1} width="19.8" height="19.8" rx="6" fill="none" stroke={line} strokeWidth="1.4" strokeDasharray="3 2.5" />
+        );
+      })}
+    </Card>
+  );
+}

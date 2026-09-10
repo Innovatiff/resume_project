@@ -1,9 +1,18 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import Link from "next/link";
 import PageHero from "@/components/PageHero";
 import Faq from "@/components/Faq";
 import CtaBand from "@/components/CtaBand";
+import { IllustFaqOrgs, IllustFaqPricing, IllustFaqPrivacy, IllustFaqProduct } from "@/components/illustrations";
 import { faqPage } from "@/lib/pages";
+
+const scenes: Record<string, { art: ReactNode; tone: "purple" | "coral" | "cyan" | "yellow" }> = {
+  product: { art: <IllustFaqProduct />, tone: "purple" },
+  pricing: { art: <IllustFaqPricing />, tone: "coral" },
+  privacy: { art: <IllustFaqPrivacy />, tone: "cyan" },
+  organizations: { art: <IllustFaqOrgs />, tone: "yellow" },
+};
 
 export const metadata: Metadata = {
   title: "FAQ",
@@ -30,7 +39,18 @@ export default function FaqPage() {
       <section className="section" aria-label="Frequently asked questions">
         <div className="wrap">
           {faqPage.categories.map((c) => (
-            <Faq key={c.id} items={c.items} title={c.title} compact idPrefix={`faq-${c.id}`} id={c.id} initialOpen={-1} />
+            <Faq
+              key={c.id}
+              items={c.items}
+              title={c.title}
+              lead={c.lead}
+              art={scenes[c.id]?.art}
+              tone={scenes[c.id]?.tone}
+              compact
+              idPrefix={`faq-${c.id}`}
+              id={c.id}
+              initialOpen={-1}
+            />
           ))}
         </div>
       </section>
