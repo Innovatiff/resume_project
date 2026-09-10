@@ -129,9 +129,16 @@ function connectScreen(state: StoredState | undefined, message?: string): void {
 }
 
 function noPassScreen(state: StoredState, me: ExtensionMe): void {
+  const ended = me.hadPass;
   render(
     header(me.email),
-    h("section", { class: "card" }, h("h2", {}, "The extension comes with the 30-Day Pass and Landed."), h("p", { class: "lead" }, "Your account is connected. Once a pass is active, this popup scores postings from the page and fills application forms for your review."), h("a", { class: "btn btn--coral", href: `${me.siteUrl}/checkout?plan=pass`, target: "_blank", rel: "noreferrer" }, "See the passes")),
+    h(
+      "section",
+      { class: "card" },
+      h("h2", {}, ended ? "Your pass has ended." : "The extension comes with the 30-Day Pass and Landed."),
+      h("p", { class: "lead" }, ended ? "This browser stays connected. The moment you renew, the popup scores postings and fills forms again; nothing to set up twice." : "Your account is connected. Once a pass is active, this popup scores postings from the page and fills application forms for your review."),
+      h("a", { class: "btn btn--coral", href: `${me.siteUrl}/checkout?plan=${ended ? "extra30" : "pass"}`, target: "_blank", rel: "noreferrer" }, ended ? "Renew for 30 days" : "See the passes"),
+    ),
     footer(state, me),
   );
 }

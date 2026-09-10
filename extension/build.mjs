@@ -39,7 +39,8 @@ const manifest = {
   manifest_version: 3,
   name: dev ? "Orvenic (dev)" : "Orvenic",
   version: VERSION,
-  description: "Scores job postings against your resume and fills application forms from your Orvenic package for your review. Never submits for you.",
+  // The store caps this at 132 characters.
+  description: "Scores job postings against your resume and fills applications from your Orvenic package for your review. Never submits for you.",
   minimum_chrome_version: "116",
   icons: { 16: "icons/icon16.png", 32: "icons/icon32.png", 48: "icons/icon48.png", 128: "icons/icon128.png" },
   action: { default_title: "Orvenic", default_popup: "popup.html", default_icon: { 16: "icons/icon16.png", 32: "icons/icon32.png" } },

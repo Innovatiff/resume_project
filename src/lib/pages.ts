@@ -557,6 +557,7 @@ export const legal: Record<"privacy" | "terms" | "refunds", LegalDoc> = {
         heading: "The browser extension",
         paragraphs: [
           "The extension fills and drafts application forms in your own browser for your review. It never submits an application on your behalf, and it never pre-fills legal attestations such as work authorization, sponsorship, criminal history or licences; those are always flagged for you to answer. You are responsible for every application you submit and for complying with the terms of the sites you apply on.",
+          "The extension connects to your account with a key stored in your browser's extension storage; disconnecting a browser from the Extension page revokes it, and deleting your account deletes every key. When you ask it to score a posting, the text of that page is sent to us exactly as if you had pasted it into the app. Your details and files travel from your account to the form in front of you and are not kept by the extension.",
         ],
       },
       {

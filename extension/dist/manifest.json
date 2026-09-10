@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Orvenic",
   "version": "0.1.0",
-  "description": "Scores job postings against your resume and fills application forms from your Orvenic package for your review. Never submits for you.",
+  "description": "Scores job postings against your resume and fills applications from your Orvenic package for your review. Never submits for you.",
   "minimum_chrome_version": "116",
   "icons": {
     "16": "icons/icon16.png",

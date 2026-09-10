@@ -43,6 +43,10 @@ The shared, DOM-free logic lives in the app's tree so it is unit-tested with eve
 
 No `tabs`, no `webNavigation`, no `<all_urls>`. The dev build adds `localhost` so the end-to-end test can serve look-alike pages.
 
+## Store submission
+
+`store/listing.md` has the listing text, the permission justifications and the data disclosures to paste into the developer dashboard; `store/*.png` are the screenshots and promo tiles. After approval set `NEXT_PUBLIC_EXTENSION_STORE_URL` on the site so the Extension page offers Add to Chrome.
+
 ## Store submission notes
 
 - Single purpose: fill job applications from the candidate's own Orvenic package, for their review.

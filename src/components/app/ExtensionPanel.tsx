@@ -16,6 +16,9 @@ import { Card, CopyButton, Notice, PageHead, Skeleton, fmtDate } from "./ui";
 
 const SUPPORTED = ["Greenhouse", "Lever", "Ashby", "Workday"];
 
+/** The Chrome Web Store listing, once the review is through. Until then the zip and Load unpacked. */
+const STORE_URL = process.env.NEXT_PUBLIC_EXTENSION_STORE_URL || "";
+
 function browserLabel(): string {
   const ua = navigator.userAgent;
   const browser = /Edg\//.test(ua) ? "Edge" : /OPR\//.test(ua) ? "Opera" : /Brave/.test(ua) ? "Brave" : /Chrome\//.test(ua) ? "Chrome" : /Firefox\//.test(ua) ? "Firefox" : "Browser";
@@ -113,21 +116,49 @@ export default function ExtensionPanel() {
 
       <div className="app-grid app-grid--main">
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-          <Card title="1. Install it" hint="Chrome, Edge and Brave. Two minutes.">
-            <ol className="app-steps">
-              <li>
-                <a href="/downloads/orvenic-extension.zip">Download the extension</a> and unzip it somewhere you will not delete.
-              </li>
-              <li>
-                Open <code>chrome://extensions</code> (Edge: <code>edge://extensions</code>) and turn on <b>Developer mode</b>, top right.
-              </li>
-              <li>
-                Click <b>Load unpacked</b> and choose the unzipped folder. Pin the Orvenic button from the puzzle-piece menu.
-              </li>
-            </ol>
-            <p className="app-muted" style={{ marginTop: 10, fontSize: "0.85rem" }}>
-              A Chrome Web Store listing is in review. Until then this is the same code, loaded by hand.
-            </p>
+          <Card title="1. Install it" hint={STORE_URL ? "Chrome, Edge and Brave. One click." : "Chrome, Edge and Brave. Two minutes."}>
+            {STORE_URL ? (
+              <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                <div>
+                  <a className="btn btn--ink" href={STORE_URL} target="_blank" rel="noreferrer">
+                    Add to Chrome
+                  </a>
+                </div>
+                <p className="app-muted" style={{ fontSize: "0.85rem" }}>
+                  Opens the Chrome Web Store. Edge and Brave install from the same listing. Pin the Orvenic button from the puzzle-piece menu afterwards.
+                </p>
+                <details>
+                  <summary className="app-muted" style={{ cursor: "pointer", fontSize: "0.85rem" }}>
+                    Install by hand instead
+                  </summary>
+                  <ol className="app-steps" style={{ marginTop: 10 }}>
+                    <li>
+                      <a href="/downloads/orvenic-extension.zip">Download the extension</a> and unzip it somewhere you will not delete.
+                    </li>
+                    <li>
+                      Open <code>chrome://extensions</code> and turn on <b>Developer mode</b>, then <b>Load unpacked</b> and choose the folder.
+                    </li>
+                  </ol>
+                </details>
+              </div>
+            ) : (
+              <>
+                <ol className="app-steps">
+                  <li>
+                    <a href="/downloads/orvenic-extension.zip">Download the extension</a> and unzip it somewhere you will not delete.
+                  </li>
+                  <li>
+                    Open <code>chrome://extensions</code> (Edge: <code>edge://extensions</code>) and turn on <b>Developer mode</b>, top right.
+                  </li>
+                  <li>
+                    Click <b>Load unpacked</b> and choose the unzipped folder. Pin the Orvenic button from the puzzle-piece menu.
+                  </li>
+                </ol>
+                <p className="app-muted" style={{ marginTop: 10, fontSize: "0.85rem" }}>
+                  A Chrome Web Store listing is in review. Until then this is the same code, loaded by hand.
+                </p>
+              </>
+            )}
           </Card>
 
           <Card title="2. Connect this browser" hint="Links the extension to your account. Nothing to copy when the extension is installed here.">

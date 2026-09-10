@@ -380,6 +380,8 @@ export interface ExtensionMe {
   plan: PlanId | null;
   /** Whether the current package includes the extension. */
   extension: boolean;
+  /** The account has held a pass before; without one now, it has ended. */
+  hadPass: boolean;
   hasProfile: boolean;
   endsAt?: string;
   daysLeft?: number;
