@@ -102,6 +102,17 @@
   height: 48%;
 }
 
+/* Full-bleed illustrations, clipped by the tile's corners. */
+.tileInner {
+  overflow: hidden;
+}
+
+.tileInner .illust {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
 @keyframes float {
   0%,
   100% {
@@ -171,27 +182,32 @@
 }
 
 .avatar {
-  background: linear-gradient(145deg, #ffd0c7, #f3a596 55%, #c96d5d);
-  color: #fff;
-  font-family: var(--font-display);
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  font-size: calc(var(--size) * 0.36cqw * var(--s));
+  background: linear-gradient(145deg, #ffd9d1, #f7b3a4 55%, #e0806f);
   position: relative;
   overflow: hidden;
 }
 
-.avatar::after {
+.avatar::after,
+.recruiter::after {
   content: "";
   position: absolute;
-  inset: auto -20% -35% -20%;
-  height: 70%;
+  inset: -30% -20% auto -20%;
+  height: 60%;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.28);
+  pointer-events: none;
+}
+
+.recruiter {
+  position: relative;
 }
 
 .avatarB {
   background: linear-gradient(145deg, #c9d8ff, #8fa8f0 55%, #5f74c9);
+}
+
+.recruiter {
+  background: linear-gradient(145deg, #dbe6ff, #b7c6fb 55%, #8fa3ea);
 }
 
 /* ---------- copy ---------- */

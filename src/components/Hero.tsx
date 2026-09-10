@@ -6,7 +6,7 @@ import styles from "./Hero.module.css";
 import BlurText from "./BlurText";
 import { hero } from "@/lib/content";
 import { ensureGsap, isTouchDevice, prefersReducedMotion } from "@/lib/motion";
-import { IconBriefcase, IconCheck, IconDoc, IconEyes, IconFlag } from "./icons";
+import { IllustCandidate, IllustFlag, IllustPay, IllustPosting, IllustRecruiter, IllustResume, IllustVerdict } from "./illustrations";
 
 /* Tile geometry: centre position in % of the 1000x400 diagram, size in cqw. */
 const tiles = [
@@ -42,44 +42,45 @@ const dots = [
 function TileFace({ id }: { id: (typeof tiles)[number]["id"] }) {
   switch (id) {
     case "you":
-      return <div className={`${styles.tileInner} ${styles.avatar}`}>MR</div>;
+      return (
+        <div className={`${styles.tileInner} ${styles.avatar}`}>
+          <IllustCandidate className={styles.illust} />
+        </div>
+      );
     case "resume":
       return (
         <div className={`${styles.tileInner} ${styles.yellow}`}>
-          <IconDoc />
+          <IllustResume className={styles.illust} />
         </div>
       );
     case "posting":
       return (
         <div className={`${styles.tileInner} ${styles.cyan}`}>
-          <IconBriefcase />
+          <IllustPosting className={styles.illust} />
         </div>
       );
     case "verdict":
       return (
         <div className={`${styles.tileInner} ${styles.center}`}>
-          <IconCheck strokeWidth={2.2} />
+          <IllustVerdict className={styles.illust} />
         </div>
       );
     case "flag":
       return (
         <div className={`${styles.tileInner} ${styles.coral}`}>
-          <IconFlag />
+          <IllustFlag className={styles.illust} />
         </div>
       );
     case "pay":
       return (
-        <div className={`${styles.tileInner} ${styles.pay}`}>
-          <span>
-            $70K
-            <small>settled</small>
-          </span>
+        <div className={`${styles.tileInner} ${styles.white}`}>
+          <IllustPay className={styles.illust} />
         </div>
       );
     case "eyes":
       return (
-        <div className={`${styles.tileInner} ${styles.white}`}>
-          <IconEyes />
+        <div className={`${styles.tileInner} ${styles.recruiter}`}>
+          <IllustRecruiter className={styles.illust} />
         </div>
       );
   }

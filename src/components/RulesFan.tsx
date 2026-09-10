@@ -6,15 +6,16 @@ import styles from "./RulesFan.module.css";
 import BlurText from "./BlurText";
 import { rules } from "@/lib/content";
 import { prefersReducedMotion } from "@/lib/motion";
-import { IconBan, IconCardOff, IconDollar, IconDoorOpen, IconHand, IconHandshake, IconShield } from "./icons";
+import { IconBan } from "./icons";
+import { IllustRuleBlock, IllustRuleFabricate, IllustRulePay, IllustRulePromise, IllustRuleRenew, IllustRuleSubmit } from "./illustrations";
 
 const icons: Record<string, ReactNode> = {
-  fabricate: <IconShield />,
-  pay: <IconDollar />,
-  block: <IconDoorOpen />,
-  submit: <IconHand />,
-  renew: <IconCardOff />,
-  promise: <IconHandshake />,
+  fabricate: <IllustRuleFabricate className={styles.art} />,
+  pay: <IllustRulePay className={styles.art} />,
+  block: <IllustRuleBlock className={styles.art} />,
+  submit: <IllustRuleSubmit className={styles.art} />,
+  renew: <IllustRuleRenew className={styles.art} />,
+  promise: <IllustRulePromise className={styles.art} />,
 };
 
 /* Fanned arc positions by offset from the active tile (in tile units). */
