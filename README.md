@@ -52,6 +52,8 @@ The AI steps are long requests: scoring a posting takes a few seconds, building 
 | Your own Node server | Good | `npm run build && npm start`; no timeouts to worry about |
 | Netlify | Free scan and sign-in only | API routes run as a function with a 10 s limit (26 s on paid plans), so package builds with the live models time out. `netlify.toml` pins Node 22 |
 
+**Free path.** Firebase's Spark plan covers sign-in and Firestore at this stage, and Render's free web service runs the app with no short function timeout. `render.yaml` in the repo is a Render Blueprint: New → Blueprint → this repo, then fill in the secrets it asks for. Free instances sleep after 15 minutes without traffic, so the first visitor after a quiet spell waits half a minute; move to a paid instance or Firebase App Hosting when there is revenue. The Anthropic API itself is pay-per-use (a few cents per package) and needs prepaid credit.
+
 Whatever the host: `GET /api/health` lists the integrations that are live and the variables still missing, and `GET /api/health?check=1` also exercises Firestore and Firebase Auth with the server's credentials and explains any failure in plain words. A blank "Request failed (500)" in the app means the server function itself did not run; the host's function log names the cause, and `src/instrumentation.ts` prints route and error there.
 
 ## The product

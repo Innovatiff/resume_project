@@ -1,0 +1,38 @@
+# Render Blueprint: one free web service running `next start`.
+# Render → New → Blueprint → pick this repo. It asks for the values marked sync: false.
+services:
+  - type: web
+    name: shortlist
+    runtime: node
+    plan: free
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NEXT_PUBLIC_SITE_URL
+        sync: false
+      - key: FIREBASE_PROJECT_ID
+        value: resume-project-56b09
+      - key: FIREBASE_SERVICE_ACCOUNT
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
+      - key: ADZUNA_APP_ID
+        sync: false
+      - key: ADZUNA_APP_KEY
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false
+      - key: EMAIL_FROM
+        value: Shortlist <hello@shortlist.ca>
+      - key: FOUNDER_EMAIL
+        sync: false
+      - key: FREE_SCAN_SALT
+        generateValue: true
