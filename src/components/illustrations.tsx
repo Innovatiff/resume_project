@@ -423,3 +423,123 @@ export function IllustMap({ className }: Props) {
     </Svg>
   );
 }
+
+/* ---------- pricing ---------- */
+
+function Wide({ className, children }: Props & { children: React.ReactNode }) {
+  return (
+    <svg viewBox="0 0 200 110" className={className} aria-hidden="true" focusable="false">
+      {children}
+    </svg>
+  );
+}
+
+/** Free scan: a resume under the scanner's beam. */
+export function IllustTierFree({ className }: Props) {
+  const id = useId().replace(/[^a-zA-Z0-9]/g, "");
+  return (
+    <Wide className={className}>
+      <defs>
+        <linearGradient id={`beam${id}`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor={purple} stopOpacity="0" />
+          <stop offset="1" stopColor={purple} stopOpacity=".28" />
+        </linearGradient>
+      </defs>
+      <rect x="66" y="10" width="68" height="94" rx="7" fill="#fff" />
+      <rect x="66" y="10" width="68" height="94" rx="7" fill="none" stroke={line} />
+      <rect x="76" y="21" width="28" height="5" rx="2.5" fill={ink} />
+      <rect x="76" y="30" width="20" height="3.5" rx="1.75" fill={muted} />
+      <Lines x={76} y={42} widths={[48, 40, 46, 34, 44, 30]} gap={7.5} />
+      <rect x="66" y="26" width="68" height="30" fill={`url(#beam${id})`} />
+      <rect x="62" y="55" width="76" height="3" rx="1.5" fill={purple} />
+      <rect x="62" y="53" width="76" height="7" rx="3.5" fill={purple} opacity=".25" />
+      <g transform="translate(128 72)">
+        <rect x="0" y="0" width="46" height="20" rx="10" fill={ink} />
+        <text x="23" y="14" fontSize="10" fontWeight="700" fill="#fff" textAnchor="middle" fontFamily="var(--font-display), Inter Tight, sans-serif" letterSpacing="-0.3">
+          76
+        </text>
+      </g>
+    </Wide>
+  );
+}
+
+/** Single Shot: one dart, dead centre. */
+export function IllustTierSingle({ className }: Props) {
+  return (
+    <Wide className={className}>
+      <ellipse cx="100" cy="98" rx="46" ry="6" fill="rgba(13,13,16,.08)" />
+      <circle cx="100" cy="56" r="40" fill={coral} />
+      <circle cx="100" cy="56" r="31" fill="#fff" />
+      <circle cx="100" cy="56" r="22" fill={coral} />
+      <circle cx="100" cy="56" r="13" fill="#fff" />
+      <circle cx="100" cy="56" r="5" fill={ink} />
+      <path d="M100 56L150 12" stroke={purpleDeep} strokeWidth="5" strokeLinecap="round" />
+      <path d="M150 12l-2 12M150 12l-12 2" stroke="#f6c52e" strokeWidth="6" strokeLinecap="round" />
+      <path d="M100 56l10-8.8" stroke="#fff" strokeWidth="2" strokeLinecap="round" opacity=".7" />
+    </Wide>
+  );
+}
+
+/** 30-Day Pass: the lanyard badge, on ink. */
+export function IllustTierPass({ className }: Props) {
+  return (
+    <Wide className={className}>
+      <rect x="112" y="32" width="66" height="70" rx="8" fill="#fff" opacity=".14" transform="rotate(8 145 67)" />
+      <rect x="22" y="32" width="66" height="70" rx="8" fill="#fff" opacity=".14" transform="rotate(-8 55 67)" />
+      <path d="M86 0l14 34 14-34" stroke={purple} strokeWidth="6" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+      <rect x="93" y="30" width="14" height="9" rx="3" fill="#b9a4ff" />
+      <rect x="62" y="36" width="76" height="70" rx="9" fill="#fff" />
+      <rect x="62" y="36" width="76" height="12" rx="9" fill={purple} />
+      <rect x="62" y="42" width="76" height="6" fill={purple} />
+      <text x="100" y="83" fontSize="34" fontWeight="800" fill={ink} textAnchor="middle" fontFamily="var(--font-display), Inter Tight, sans-serif" letterSpacing="-2">
+        30
+      </text>
+      <text x="100" y="97" fontSize="8.5" fontWeight="600" fill={muted} textAnchor="middle" fontFamily="var(--font-body), Outfit, sans-serif" letterSpacing="1.5">
+        DAYS
+      </text>
+    </Wide>
+  );
+}
+
+/** Landed: the flag on the summit. */
+export function IllustTierLanded({ className }: Props) {
+  const id = useId().replace(/[^a-zA-Z0-9]/g, "");
+  return (
+    <Wide className={className}>
+      <defs>
+        <linearGradient id={`mt${id}`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#a98af9" />
+          <stop offset="1" stopColor="#6d3ff0" />
+        </linearGradient>
+      </defs>
+      <circle cx="150" cy="30" r="14" fill="#ffd54a" />
+      <path d="M0 110L52 46l24 26 30-44 32 40 30-30 32 40v32Z" fill="#d9ccff" />
+      <path d="M0 110l38-48 26 26 36-56 40 50 22-24 38 52Z" fill={`url(#mt${id})`} />
+      <path d="M60 110l40-56 22 28-6-4-16-18Z" fill="#fff" opacity=".18" />
+      <path d="M100 54V22" stroke={ink} strokeWidth="3" strokeLinecap="round" />
+      <path d="M101 22h24l-6 7 6 7h-24Z" fill={coral} />
+      <ellipse cx="34" cy="38" rx="16" ry="6" fill="#fff" opacity=".9" />
+      <ellipse cx="44" cy="35" rx="10" ry="5" fill="#fff" opacity=".9" />
+      <ellipse cx="164" cy="62" rx="14" ry="5" fill="#fff" opacity=".8" />
+    </Wide>
+  );
+}
+
+/** The guarantee seal: 85, scalloped, with ribbon tails. */
+export function IllustSeal({ className }: Props) {
+  return (
+    <Svg className={className}>
+      <path d="M36 66l-8 32 14-8 10 8 4-32Z" fill={purpleDeep} />
+      <path d="M64 66l8 32-14-8-10 8-4-32Z" fill={purpleDeep} />
+      <circle cx="50" cy="46" r="42" fill={purple} />
+      <circle cx="50" cy="46" r="42" fill="none" stroke="#fff" strokeWidth="6" strokeDasharray="4 5.2" />
+      <circle cx="50" cy="46" r="34" fill={purple} stroke="rgba(255,255,255,.55)" strokeWidth="2" />
+      <text x="50" y="55" fontSize="30" fontWeight="800" fill="#fff" textAnchor="middle" fontFamily="var(--font-display), Inter Tight, sans-serif" letterSpacing="-1.5">
+        85
+      </text>
+      <text x="50" y="67" fontSize="6.5" fontWeight="600" fill="rgba(255,255,255,.85)" textAnchor="middle" fontFamily="var(--font-body), Outfit, sans-serif" letterSpacing="1.4">
+        OR FREE
+      </text>
+    </Svg>
+  );
+}

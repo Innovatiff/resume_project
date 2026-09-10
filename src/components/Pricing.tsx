@@ -6,6 +6,15 @@ import styles from "./Pricing.module.css";
 import BlurText from "./BlurText";
 import { pricing } from "@/lib/content";
 import { IconCheck, IconDollar } from "./icons";
+import { IllustSeal, IllustTierFree, IllustTierLanded, IllustTierPass, IllustTierSingle } from "./illustrations";
+import type { ReactNode } from "react";
+
+const tierArt: Record<string, ReactNode> = {
+  free: <IllustTierFree />,
+  single: <IllustTierSingle />,
+  pass: <IllustTierPass />,
+  landed: <IllustTierLanded />,
+};
 
 export default function Pricing({ showHead = true }: { showHead?: boolean }) {
   const tiersRef = useRef<HTMLDivElement>(null);
@@ -47,6 +56,9 @@ export default function Pricing({ showHead = true }: { showHead?: boolean }) {
               aria-label={`${t.name}, ${t.price}`}
             >
               {t.badge ? <span className={styles.badge}>{t.badge}</span> : null}
+              <div className={styles.art} data-tier={t.id} aria-hidden="true">
+                {tierArt[t.id]}
+              </div>
               <span className={styles.name}>{t.name}</span>
               <div className={styles.price}>
                 <b>{t.price}</b>
@@ -71,7 +83,8 @@ export default function Pricing({ showHead = true }: { showHead?: boolean }) {
         <div className={styles.below}>
           <div className={styles.guarantee} id="guarantee" data-reveal="">
             <div className={styles.gStat}>
-              <b>{pricing.guarantee.stat}</b>
+              <IllustSeal className={styles.seal} />
+              <b className="sr-only">{pricing.guarantee.stat}</b>
               <span>{pricing.guarantee.title}</span>
             </div>
             <div className={styles.gCopy}>
