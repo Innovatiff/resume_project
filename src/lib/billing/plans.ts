@@ -57,7 +57,7 @@ export const PLAN_RANK: Record<PlanId, number> = { single: 1, pass: 2, landed: 3
 
 export function featuresFor(plan: PlanId | null): PlanFeatures {
   if (!plan) {
-    return { rewrite: false, metricInterview: false, objections: false, linkedin: false, humanReview: false, coaching: false, priority: false, tracker: false };
+    return { rewrite: false, metricInterview: false, objections: false, linkedin: false, humanReview: false, coaching: false, priority: false, tracker: false, extension: false };
   }
   const passPlus = plan === "pass" || plan === "landed";
   return {
@@ -66,6 +66,7 @@ export function featuresFor(plan: PlanId | null): PlanFeatures {
     objections: passPlus,
     linkedin: passPlus,
     tracker: passPlus,
+    extension: passPlus,
     humanReview: plan === "landed",
     coaching: plan === "landed",
     priority: plan === "landed",

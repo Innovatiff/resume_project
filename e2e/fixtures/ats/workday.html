@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Inventory Lead - Acme Careers</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; color: #222; }
+    [data-automation-id="jobPostingPage"] { max-width: 720px; margin: 0 auto; padding: 24px 32px; white-space: pre-wrap; }
+    [data-automation-id="applyFlowPage"] { max-width: 720px; margin: 0 auto; padding: 24px 32px 64px; border-top: 1px solid #ddd; }
+    [data-automation-id^="formField-"] { margin-bottom: 18px; }
+    label, legend { display: block; font-weight: bold; margin-bottom: 6px; }
+    fieldset { border: 0; padding: 0; }
+    fieldset label { font-weight: normal; display: inline-block; margin-right: 18px; }
+    input:not([type=radio]), select { width: 100%; padding: 8px; box-sizing: border-box; }
+  </style>
+</head>
+<body>
+  <div data-automation-id="jobPostingPage">
+    <h2 data-automation-id="jobPostingHeader">Inventory Lead</h2>
+    <div data-automation-id="jobPostingDescription">{{POSTING}}</div>
+  </div>
+  <div data-automation-id="applyFlowPage">
+    <h2>My Information</h2>
+    <div data-automation-id="formField-legalNameSection_firstName"><label for="name--legalName--firstName">First Name<abbr title="required">*</abbr></label><input id="name--legalName--firstName" data-automation-id="legalNameSection_firstName" type="text"></div>
+    <div data-automation-id="formField-legalNameSection_lastName"><label for="name--legalName--lastName">Last Name<abbr title="required">*</abbr></label><input id="name--legalName--lastName" data-automation-id="legalNameSection_lastName" type="text"></div>
+    <div data-automation-id="formField-addressSection_city"><label for="address--city">City</label><input id="address--city" data-automation-id="addressSection_city" type="text"></div>
+    <div data-automation-id="formField-addressSection_countryRegion"><label for="address--region">State</label><select id="address--region" data-automation-id="addressSection_countryRegion"><option value="">Select One</option><option>Michigan</option><option>Ohio</option><option>Ontario</option></select></div>
+    <div data-automation-id="formField-country"><label for="country">Country</label><select id="country" data-automation-id="countryDropdown"><option value="">Select One</option><option>Canada</option><option>Mexico</option><option>United States of America</option></select></div>
+    <div data-automation-id="formField-email"><label for="email">Email Address<abbr title="required">*</abbr></label><input id="email" data-automation-id="email" type="email"></div>
+    <div data-automation-id="formField-phone-number"><label for="phone-number">Phone Number</label><input id="phone-number" data-automation-id="phone-number" type="text"></div>
+    <div data-automation-id="formField-file-upload"><label>Resume/CV</label><input data-automation-id="file-upload-input-ref" type="file" style="display:none"><button type="button" data-automation-id="select-files">Select files</button></div>
+    <div data-automation-id="formField-source"><label for="source--source">How Did You Hear About Us?</label><select id="source--source"><option value="">Select One</option><option>LinkedIn</option><option>Indeed</option></select></div>
+    <fieldset data-automation-id="formField-workAuthorization"><legend>Are you legally authorized to work in the United States?<abbr title="required">*</abbr></legend><label><input type="radio" name="wa" value="yes"> Yes</label><label><input type="radio" name="wa" value="no"> No</label></fieldset>
+    <fieldset data-automation-id="formField-veteran"><legend>Veteran Status</legend><label><input type="radio" name="vet" value="1"> I am a veteran</label><label><input type="radio" name="vet" value="0"> I am not a veteran</label></fieldset>
+    <div data-automation-id="formField-dob"><label for="dob">Date of Birth</label><input id="dob" type="date"></div>
+    <button type="button" data-automation-id="bottom-navigation-next-button">Save and Continue</button>
+  </div>
+</body>
+</html>

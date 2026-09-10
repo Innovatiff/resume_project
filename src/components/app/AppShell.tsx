@@ -7,13 +7,14 @@ import Logo from "@/components/Logo";
 import { useAuth, hardNavigate } from "@/lib/app/auth-client";
 import { MeProvider, useMe } from "@/lib/app/use-me";
 import { PRODUCTS } from "@/lib/billing/plans";
-import { IconBriefcase, IconCompass, IconDoc, IconDoorOpen, IconPlus, IconTarget } from "@/components/icons";
+import { IconBolt, IconBriefcase, IconCompass, IconDoc, IconDoorOpen, IconPlus, IconTarget } from "@/components/icons";
 import { Skeleton } from "./ui";
 
 const NAV = [
   { href: "/app", label: "Dashboard", icon: <IconCompass />, exact: true },
   { href: "/app/applications", label: "Applications", icon: <IconBriefcase /> },
   { href: "/app/profile", label: "Resume profile", icon: <IconDoc /> },
+  { href: "/app/extension", label: "Extension", icon: <IconBolt /> },
   { href: "/app/account", label: "Account", icon: <IconTarget /> },
 ];
 

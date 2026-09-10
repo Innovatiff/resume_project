@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Acme Greenhouses - Inventory Lead</title>
+  <style>
+    body { font-family: Helvetica, Arial, sans-serif; margin: 0; color: #333; }
+    .main-header { padding: 16px 32px; border-bottom: 1px solid #eee; }
+    .posting { max-width: 720px; margin: 0 auto; padding: 24px 32px; white-space: pre-wrap; }
+    .application-form { max-width: 720px; margin: 0 auto; padding: 24px 32px 64px; }
+    .application-question { margin-bottom: 18px; }
+    .application-question > label { display: block; font-weight: 600; margin-bottom: 6px; }
+    .application-question input:not([type=checkbox]), .application-question select, .application-question textarea { width: 100%; padding: 8px; box-sizing: border-box; }
+    .file-wrap { position: relative; }
+  </style>
+</head>
+<body>
+  <div class="main-header"><div class="main-header-logo"><img alt="Acme Greenhouses logo" src="" width="1" height="1"></div></div>
+  <div class="posting">
+    <h2>Inventory Lead</h2>
+    <div class="posting-categories">Leamington, ON · Full-time</div>
+    <div class="section-wrapper">{{POSTING}}</div>
+  </div>
+  <form id="application-form" class="application-form" action="#" method="post">
+    <div class="application-question"><label>Full name<span>✱</span></label><input type="text" name="name" placeholder="Full name"></div>
+    <div class="application-question"><label>Email<span>✱</span></label><input type="email" name="email" placeholder="Email"></div>
+    <div class="application-question"><label>Phone</label><input type="text" name="phone" placeholder="Phone"></div>
+    <div class="application-question"><label>Current location</label><input type="text" name="location" placeholder="Current location"></div>
+    <div class="application-question"><label>Current company</label><input type="text" name="org" placeholder="Current company"></div>
+    <div class="application-question"><label>Resume/CV<span>✱</span></label><div class="file-wrap"><input type="file" name="resume" style="opacity:0;position:absolute;width:1px;height:1px"><span class="filename">Attach resume/CV</span></div></div>
+    <div class="application-question"><label>LinkedIn URL</label><input type="text" name="urls[LinkedIn]" placeholder="LinkedIn URL"></div>
+    <div class="application-question"><label>GitHub URL</label><input type="text" name="urls[GitHub]" placeholder="GitHub URL"></div>
+    <div class="application-question"><label>Additional information</label><textarea name="comments" rows="6" placeholder="Add a cover letter or anything else you want to share."></textarea></div>
+    <div class="application-question"><label>Have you ever been convicted of a criminal offence for which a pardon has not been granted?</label><select name="cards[a1][field0]"><option value="">Select</option><option>Yes</option><option>No</option></select></div>
+    <div class="application-question"><label>Pronouns</label><select name="pronouns"><option value="">Select</option><option>she/her</option><option>he/him</option><option>they/them</option></select></div>
+    <div class="application-question"><label>Desired hourly rate</label><input type="text" name="cards[a1][field1]"></div>
+    <div class="application-question"><label>Are you at least 18 years of age?</label><label><input type="checkbox" name="cards[a1][field2]"> Yes</label></div>
+    <button type="submit" id="btn-submit">Submit application</button>
+  </form>
+  <script>
+    window.__submitted = false;
+    document.getElementById("application-form").addEventListener("submit", function (e) { e.preventDefault(); window.__submitted = true; });
+    document.querySelector('input[name="resume"]').addEventListener("change", function (e) {
+      var f = e.target.files && e.target.files[0];
+      document.querySelector(".filename").textContent = f ? f.name : "Attach resume/CV";
+    });
+  </script>
+</body>
+</html>

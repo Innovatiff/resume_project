@@ -56,3 +56,6 @@ ui-debug.log
 
 # netlify build output
 /.netlify/
+
+# extension dev build (e2e loads it); the release build in extension/dist is committed
+/extension/.dev/

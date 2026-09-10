@@ -1187,3 +1187,55 @@
     justify-content: flex-start;
   }
 }
+
+/* ---------- numbered steps (extension install) ---------- */
+
+.app-steps {
+  margin: 0;
+  padding-left: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: var(--ink-2);
+  line-height: 1.5;
+}
+
+.app-steps li::marker {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.app-steps code,
+.app-notice code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.9em;
+  background: var(--panel-soft-2);
+  padding: 1px 6px;
+  border-radius: 6px;
+}
+
+.app-steps a {
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.app-bullets {
+  margin: 0;
+  padding-left: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: var(--ink-2);
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+
+.app-card--ink .app-bullets {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.app-bullets li::marker {
+  color: var(--purple);
+}

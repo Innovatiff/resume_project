@@ -3,6 +3,7 @@ import { adminDb } from "@/lib/firebase/admin";
 import type { CandidateProfile, ProfileSource, UserDoc } from "@/lib/app/types";
 import { nowIso } from "@/lib/app/hash";
 import type { CountryCode } from "@/lib/app/markets";
+import { deleteExtensionKeys } from "./extension-keys";
 
 const users = () => adminDb().collection("users");
 
@@ -49,6 +50,7 @@ export async function deleteUserData(uid: string): Promise<void> {
   const db = adminDb();
   const ref = users().doc(uid);
   await db.recursiveDelete(ref);
+  await deleteExtensionKeys(uid);
   const purchases = await db.collection("purchases").where("uid", "==", uid).get();
   const batch = db.batch();
   purchases.docs.forEach((d) => batch.delete(d.ref));

@@ -4,6 +4,7 @@
 ------------------------------------------------------------------- */
 
 import type { CheckoutCurrency, CountryCode, CurrencyCode } from "./markets";
+import type { FillCandidate, PayBand } from "@/lib/extension/fields";
 
 export type Language = "en" | "fr" | "es";
 
@@ -259,6 +260,16 @@ export interface Application {
   planUsed?: PlanId;
   appliedAt?: string;
   notes?: string;
+  /** Last time the browser extension filled a form for this application. */
+  extension?: ExtensionFillRecord;
+}
+
+export interface ExtensionFillRecord {
+  filledAt: string;
+  ats: string;
+  url: string;
+  filled: number;
+  flagged: number;
 }
 
 /* ---------- user + purchases ---------- */
@@ -334,6 +345,8 @@ export interface PlanFeatures {
   coaching: boolean;
   priority: boolean;
   tracker: boolean;
+  /** The browser extension that fills forms for review. */
+  extension: boolean;
 }
 
 export interface MeResponse {
@@ -343,4 +356,64 @@ export interface MeResponse {
   profileSource?: ProfileSource;
   entitlement: EntitlementSummary;
   purchases: Purchase[];
+}
+
+/* ---------- browser extension ---------- */
+
+/** A connected browser. The secret is shown once and only its hash is stored. */
+export interface ExtensionKey {
+  /** sha256 of the secret; the document id. */
+  id: string;
+  uid: string;
+  label: string;
+  /** First characters of the secret, so a key can be recognised in a list. */
+  prefix: string;
+  createdAt: string;
+  lastUsedAt?: string;
+}
+
+export type PublicExtensionKey = Omit<ExtensionKey, "uid">;
+
+export interface ExtensionMe {
+  email: string;
+  displayName?: string;
+  plan: PlanId | null;
+  /** Whether the current package includes the extension. */
+  extension: boolean;
+  hasProfile: boolean;
+  endsAt?: string;
+  daysLeft?: number;
+  siteUrl: string;
+}
+
+export interface ExtensionApplication {
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+  status: ApplicationStatus;
+  title: string;
+  company?: string;
+  location?: string;
+  url?: string;
+  score: number;
+  verdict: Verdict;
+  scoreAfter?: number;
+  hasPackage: boolean;
+  reasons: string[];
+  redFlags: number;
+  pay?: PayBand;
+  filledAt?: string;
+}
+
+export interface ExtensionFillData {
+  applicationId: string;
+  status: ApplicationStatus;
+  posting: { title: string; company?: string; url?: string };
+  candidate: FillCandidate;
+  coverLetter: string;
+  /** Attestations the posting asks for, from the parsed requirements. */
+  attestations: string[];
+  pay?: PayBand;
+  /** API paths, relative to the site, for the generated files. */
+  documents: { resumePdf: string; resumeDocx: string; coverPdf: string; coverDocx: string };
 }

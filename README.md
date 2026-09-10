@@ -128,11 +128,22 @@ The hero headline is "Resumes that attract the right jobs." (variant `a`). A sec
 
 The test is dormant: `HEADLINE_TEST_ENABLED` in `src/lib/headline.ts` is `false`, so every visitor gets variant `a` and nothing is stored. Set it to `true` to run the test: `?h=a` or `?h=b` in the URL wins, then `localStorage` (`sl_headline`), then a coin flip, chosen before first paint. Either way the choice is stamped on `<html data-headline="a|b">` so analytics can read it.
 
+## Browser extension
+
+`extension/` is a Manifest V3 extension for Chrome, Edge and Brave. It comes with the passes and does three things: scores the job posting on the current page against the candidate's resume (same pipeline as the app), fills application forms from a built package for the candidate's review, and records the fill on the tracker. It never clicks submit and never pre-fills a legal attestation; see `src/lib/extension/fields.ts` for what counts as one.
+
+- **Install.** `npm run build:extension` writes `extension/dist` (load it unpacked from `chrome://extensions` with Developer mode on) and `public/downloads/orvenic-extension.zip`, which the app's Extension page links to. Both are committed so a customer can install without building.
+- **Connect.** `/app/extension` in the app mints a long-lived key (`ovx_…`, stored only as a hash in the `extensionKeys` collection) and hands it to the extension through a bridge content script on the site. Without the bridge the code is shown once for pasting into the popup. Keys are listed and revoked on the same page and deleted with the account.
+- **API.** `/api/extension/*` accepts the key (or a Firebase ID token): `me`, `applications` (list + which one the page matches, and `POST` to score a posting read off the page), `applications/[id]/fill`, `applications/[id]/documents`, `applications/[id]/events` (`filled`, `applied`). Everything but `me` needs a pass.
+- **Sites.** Greenhouse, Lever, Ashby and Workday hosts are declared in the manifest; any other page works through `activeTab` when the popup is opened on it, including forms embedded in company sites.
+- **Test.** `npm run e2e:extension` builds a dev variant (`extension/.dev`, adds localhost), loads it into a persistent Chromium context and drives the whole flow against three ATS look-alike pages in `e2e/fixtures/ats/`: connect, score from the page, fill, flags, undo, nothing submitted, mark applied, revoke.
+
 ## Things still to decide (from the plan)
 
 - **Name and domain.** Orvenic, at orvenic.com only. Still to do: a mailbox for `hello@orvenic.com` (the address in `content.ts`) and the CIPO and USPTO trademark searches before filing.
 - **Legal pages.** `/privacy`, `/terms` and `/refunds` are plain-language drafts written from the business plan. Review them with counsel before launch. Choices made in the drafts that you may want to change: free-scan files deleted within 24 hours, paid files kept for the access period plus 30 days, a 14-day window to claim the guarantee, a 48-hour unused-pass refund, and the fair-use caps (50 and 150 packages) stated in the terms as the plan intends.
-- **Browser extension and B2B seats.** Not built yet. Seat purchases can be granted with `source: "seat"` purchases until an intake page exists.
+- **B2B seats.** No intake page yet. Seat purchases can be granted with `source: "seat"` purchases until one exists.
+- **Chrome Web Store.** The extension is installed by hand until the listing is approved; `extension/README.md` has the submission notes.
 - **Human review and coaching (Landed).** Packages are queued and the founder is emailed (`FOUNDER_EMAIL`); marking a review done is a manual Firestore update for now.
 - **Fair-use caps** for the passes live in the terms and are deliberately not shown anywhere in the UI.
 - **Payments.** Stripe Checkout is wired for every package and add-on. Before launch: live keys, the webhook endpoint at `/api/billing/webhook`, and decide whether to turn on Stripe Tax (`STRIPE_AUTOMATIC_TAX=1`) for HST.

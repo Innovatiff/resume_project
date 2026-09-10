@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Job Application for Inventory Lead at Acme Greenhouses</title>
+  <meta property="og:site_name" content="Acme Greenhouses">
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; color: #222; }
+    #header { padding: 16px 32px; border-bottom: 1px solid #ddd; }
+    #content { max-width: 760px; margin: 0 auto; padding: 24px 32px; white-space: pre-wrap; }
+    #application { max-width: 760px; margin: 0 auto; padding: 24px 32px 64px; border-top: 1px solid #ddd; }
+    .field { margin: 0 0 18px; }
+    .field label, .field legend { display: block; font-weight: bold; margin-bottom: 6px; }
+    .field input[type=text], .field input[type=email], .field input[type=tel], .field input:not([type]), .field select, .field textarea { width: 100%; padding: 8px; box-sizing: border-box; }
+    fieldset.field { border: 0; padding: 0; }
+    fieldset.field label { font-weight: normal; display: inline-block; margin-right: 18px; }
+    button { padding: 10px 18px; }
+  </style>
+</head>
+<body>
+  <div id="header"><span class="company-name">at Acme Greenhouses</span></div>
+  <div id="content">
+    <h1 class="app-title">Inventory Lead</h1>
+    <div class="location">Leamington, Ontario</div>
+    <div id="job_description">{{POSTING}}</div>
+  </div>
+  <div id="application">
+    <form id="application_form" action="#" method="post">
+      <h2>Apply for this job</h2>
+      <div class="field"><label for="first_name">First Name <span>*</span></label><input type="text" id="first_name" name="job_application[first_name]"></div>
+      <div class="field"><label for="last_name">Last Name <span>*</span></label><input type="text" id="last_name" name="job_application[last_name]"></div>
+      <div class="field"><label for="email">Email <span>*</span></label><input type="email" id="email" name="job_application[email]"></div>
+      <div class="field"><label for="phone">Phone</label><input type="tel" id="phone" name="job_application[phone]"></div>
+      <div class="field"><label for="job_application_location">Location (City)</label><input type="text" id="job_application_location" name="job_application[location]"></div>
+      <div class="field"><label>Resume/CV <span>*</span></label><input type="file" id="resume" name="job_application[resume]" accept=".pdf,.doc,.docx" style="display:none"><button type="button" class="attach">Attach</button></div>
+      <div class="field"><label for="cover_letter_text">Cover Letter</label><textarea id="cover_letter_text" name="job_application[cover_letter_text]" rows="6"></textarea></div>
+      <div class="field"><label for="linkedin">LinkedIn Profile</label><input type="text" id="linkedin" name="job_application[answers_attributes][0][text_value]"></div>
+      <div class="field"><label for="website">Website</label><input type="text" id="website" name="job_application[answers_attributes][1][text_value]"></div>
+      <div class="field"><label for="how">How did you hear about this job?</label><select id="how" name="job_application[answers_attributes][2][text_value]"><option value="">Select...</option><option>LinkedIn</option><option>Referral</option><option>Job board</option></select></div>
+      <fieldset class="field"><legend>Are you legally authorized to work in Canada? <span>*</span></legend><label><input type="radio" name="job_application[answers_attributes][3][boolean_value]" value="1"> Yes</label><label><input type="radio" name="job_application[answers_attributes][3][boolean_value]" value="0"> No</label></fieldset>
+      <div class="field"><label for="sponsor">Will you now or in the future require sponsorship for employment visa status?</label><select id="sponsor" name="job_application[answers_attributes][4][text_value]"><option value="">Select...</option><option>Yes</option><option>No</option></select></div>
+      <div class="field"><label for="licence">Do you hold a valid forklift licence?</label><select id="licence" name="job_application[answers_attributes][5][text_value]"><option value="">Select...</option><option>Yes</option><option>No</option></select></div>
+      <div class="field"><label for="salary">Salary expectations</label><input type="text" id="salary" name="job_application[answers_attributes][6][text_value]"></div>
+      <div class="field"><label for="why">Why do you want to work at Acme?</label><textarea id="why" name="job_application[answers_attributes][7][text_value]" rows="4"></textarea></div>
+      <h3>Voluntary Self-Identification</h3>
+      <div class="field"><label for="gender">Gender</label><select id="gender" name="job_application[gender]"><option value="">Select...</option><option>Female</option><option>Male</option><option>Decline to self-identify</option></select></div>
+      <button type="submit" id="submit_app">Submit Application</button>
+    </form>
+  </div>
+  <script>
+    window.__submitted = false;
+    document.getElementById("application_form").addEventListener("submit", function (e) { e.preventDefault(); window.__submitted = true; });
+    document.querySelector(".attach").addEventListener("click", function () { document.getElementById("resume").click(); });
+    document.getElementById("resume").addEventListener("change", function (e) {
+      var f = e.target.files && e.target.files[0];
+      document.querySelector(".attach").textContent = f ? "Attached: " + f.name : "Attach";
+    });
+  </script>
+</body>
+</html>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { ATS_LABEL, type Ats } from "@/lib/extension/ats";
 import { marketFor } from "@/lib/app/markets";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -150,6 +151,11 @@ export default function ApplicationDetail({ id }: { id: string }) {
               {pkg ? (
                 <span className="app-after">
                   after rewrite <b>{pkg.scoreAfter.score}</b>
+                </span>
+              ) : null}
+              {app.extension ? (
+                <span className="app-after" data-filled="">
+                  filled by the extension on {ATS_LABEL[(app.extension.ats as Ats) in ATS_LABEL ? (app.extension.ats as Ats) : "other"]} · {fmtDate(app.extension.filledAt)}
                 </span>
               ) : null}
             </div>

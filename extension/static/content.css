@@ -1,0 +1,84 @@
+/* Marks the extension leaves on an application page. Specific enough to survive most site styles. */
+
+.orvenic-badge {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 8px !important;
+  margin: 0 0 8px !important;
+  padding: 8px 12px !important;
+  border-radius: 12px !important;
+  font: 600 13px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  box-sizing: border-box !important;
+  width: fit-content !important;
+  max-width: 100% !important;
+}
+
+.orvenic-badge--flag {
+  background: #fdeae7 !important;
+  color: #b3261e !important;
+  border: 1.5px solid #ef4f42 !important;
+}
+
+.orvenic-badge--hint {
+  background: #fff6d1 !important;
+  color: #6b4d00 !important;
+  border: 1.5px solid #f6c52e !important;
+  font-weight: 500 !important;
+}
+
+.orvenic-badge__mark {
+  flex: none !important;
+  width: 18px !important;
+  height: 18px !important;
+  border-radius: 50% !important;
+  display: inline-grid !important;
+  place-items: center !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  color: #fff !important;
+  background: #ef4f42 !important;
+}
+
+.orvenic-badge--hint .orvenic-badge__mark {
+  background: #f6c52e !important;
+  color: #3a2a00 !important;
+}
+
+.orvenic-badge__who {
+  margin-left: auto !important;
+  padding-left: 10px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  opacity: 0.7 !important;
+}
+
+.orvenic-flag {
+  outline: 2px solid #ef4f42 !important;
+  outline-offset: 6px !important;
+  border-radius: 8px !important;
+}
+
+.orvenic-filled {
+  outline: 2px solid #8b5cf6 !important;
+  outline-offset: 2px !important;
+  animation: orvenic-fade 4s ease forwards !important;
+}
+
+.orvenic-filled-file {
+  outline: 2px dashed #8b5cf6 !important;
+  outline-offset: 4px !important;
+  border-radius: 8px !important;
+  animation: orvenic-fade 4s ease forwards !important;
+}
+
+@keyframes orvenic-fade {
+  0%,
+  70% {
+    outline-color: #8b5cf6;
+  }
+  100% {
+    outline-color: transparent;
+  }
+}
