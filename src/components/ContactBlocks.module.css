@@ -19,20 +19,23 @@
   gap: 12px;
 }
 
-.icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 15px;
-  display: grid;
-  place-items: center;
-  background: var(--purple-soft);
-  color: var(--purple-deep);
+.art {
+  aspect-ratio: 16 / 9;
+  border-radius: 18px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #fafafc, #f1f1f5);
+  margin: -6px 0 4px;
 }
 
-.icon svg {
-  width: 22px;
-  height: 22px;
+.art svg {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
+
+.card:nth-child(1) .art { background: linear-gradient(180deg, #f3edff, #e7ddff); }
+.card:nth-child(2) .art { background: linear-gradient(180deg, #e9fafd, #d3f2fa); }
+.card:nth-child(3) .art { background: linear-gradient(180deg, #fff9e0, #fff0bf); }
 
 .card h3 {
   font-size: 1.15rem;
@@ -51,11 +54,38 @@
   word-break: break-all;
 }
 
+.where {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 14px 24px 14px 14px;
+  border-radius: var(--r-card);
+  border: 1px solid var(--line);
+  background: var(--panel-soft);
+}
+
+.whereArt {
+  flex: none;
+  width: 76px;
+  height: 76px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow-tile);
+}
+
+.whereArt svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 .address {
-  margin-top: 20px;
-  text-align: center;
-  font-size: 0.9rem;
-  color: var(--muted);
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  font-size: 1.05rem;
+  color: var(--ink);
 }
 
 @media (max-width: 860px) {

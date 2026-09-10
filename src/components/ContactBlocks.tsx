@@ -1,8 +1,8 @@
 import styles from "./ContactBlocks.module.css";
 import { contactPage } from "@/lib/pages";
-import { IconBriefcase, IconLock, IconMail } from "./icons";
+import { IllustContactCustomer, IllustContactOrg, IllustContactPrivacy, IllustWhere } from "./illustrations";
 
-const icons = [<IconMail key="m" />, <IconBriefcase key="b" />, <IconLock key="l" />];
+const art = [<IllustContactCustomer key="c" />, <IllustContactOrg key="o" />, <IllustContactPrivacy key="p" />];
 
 export default function ContactChannels() {
   return (
@@ -11,9 +11,9 @@ export default function ContactChannels() {
         <div className={styles.grid}>
           {contactPage.channels.map((c, i) => (
             <article key={c.title} className={styles.card} data-reveal="">
-              <span className={styles.icon} aria-hidden="true">
-                {icons[i]}
-              </span>
+              <div className={styles.art} aria-hidden="true">
+                {art[i]}
+              </div>
               <h3 className="h3">{c.title}</h3>
               <p>{c.body}</p>
               <a className="btn btn--outline" href={`mailto:${c.email}?subject=${c.subject}`}>
@@ -22,9 +22,12 @@ export default function ContactChannels() {
             </article>
           ))}
         </div>
-        <p className={styles.address} data-reveal="">
-          {contactPage.address}
-        </p>
+        <div className={styles.where} data-reveal="">
+          <div className={styles.whereArt} aria-hidden="true">
+            <IllustWhere />
+          </div>
+          <p className={styles.address}>{contactPage.address}</p>
+        </div>
       </div>
     </section>
   );

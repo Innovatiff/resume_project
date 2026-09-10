@@ -1114,3 +1114,100 @@ export function IllustFaqOrgs({ className }: Props) {
     </Card>
   );
 }
+
+/* ---------- contact ---------- */
+
+/** Customers: a person with a headset, replying. */
+export function IllustContactCustomer({ className }: Props) {
+  return (
+    <Wide className={className}>
+      <rect x="86" y="14" width="96" height="32" rx="11" fill="#fff" />
+      <path d="M176 44l6 10-15-3Z" fill="#fff" />
+      <Lines x={98} y={23} widths={[68, 44]} gap={8.5} h={3.6} />
+      <Bust x={20} y={36} s={1.15} skin="#d9a583" hair="#2b1d16" shirt={purple} />
+      <path d="M33.8 47.5a11.5 11.5 0 0 1 23 0" stroke={ink} strokeWidth="2.6" fill="none" strokeLinecap="round" />
+      <circle cx="33.8" cy="49" r="2.8" fill={ink} />
+      <circle cx="56.8" cy="49" r="2.8" fill={ink} />
+      <path d="M56.8 52c0 6-4 9-9 9" stroke={ink} strokeWidth="2" fill="none" strokeLinecap="round" />
+      <circle cx="47.8" cy="61" r="2.2" fill={ink} />
+      <rect x="78" y="58" width="104" height="36" rx="12" fill={ink} />
+      <path d="M80 72l-9 6 11 3Z" fill={ink} />
+      <rect x="92" y="68" width="60" height="3.8" rx="1.9" fill="#fff" />
+      <rect x="92" y="77" width="42" height="3.8" rx="1.9" fill="rgba(255,255,255,.6)" />
+      <Check cx={176} cy={60} r={8} />
+    </Wide>
+  );
+}
+
+/** Organizations: the pilot proposal, with the seats that come with it. */
+export function IllustContactOrg({ className }: Props) {
+  return (
+    <Wide className={className}>
+      <path d="M40 54 100 18l60 36Z" fill={purpleDeep} />
+      <rect x="62" y="26" width="76" height="62" rx="6" fill="#fff" stroke={line} />
+      <rect x="72" y="36" width="30" height="5" rx="2.5" fill={ink} />
+      <rect x="72" y="44" width="22" height="3" rx="1.5" fill={muted} />
+      <Lines x={72} y={53} widths={[56, 46, 50]} gap={6.5} h={3.2} />
+      <rect x="40" y="54" width="120" height="50" rx="9" fill={purple} />
+      <path d="M40 58l60 34 60-34" stroke="rgba(255,255,255,.4)" strokeWidth="2.5" fill="none" strokeLinejoin="round" />
+      <Chip x={48} y={86} w={38} label="PILOT" bg={yellowSoft} fg="#8a6d0f" />
+      <rect x="144" y="12" width="48" height="20" rx="10" fill={green} />
+      <text x="168" y="25.5" fontSize="7" fontWeight="700" fill="#fff" textAnchor="middle" fontFamily={chipFont} letterSpacing="0.6">
+        12 SEATS
+      </text>
+      <Bust x={6} y={58} s={0.75} skin="#f4b9a4" hair="#3b2b2b" shirt={coral} />
+      <Bust x={164} y={62} s={0.75} skin="#ecbc99" hair="#5a3b2a" shirt="#3ecfef" />
+    </Wide>
+  );
+}
+
+/** Privacy: a request form, one box ticked, under the shield. */
+export function IllustContactPrivacy({ className }: Props) {
+  const rows: [string, boolean][] = [
+    ["Access my data", false],
+    ["Correct my data", false],
+    ["Delete everything", true],
+  ];
+  return (
+    <Wide className={className}>
+      <rect x="36" y="12" width="112" height="90" rx="7" fill="#fff" stroke={line} />
+      <rect x="48" y="22" width="44" height="5" rx="2.5" fill={ink} />
+      <rect x="48" y="30" width="28" height="3" rx="1.5" fill={muted} />
+      {rows.map(([label, on], i) => {
+        const y = 42 + i * 16;
+        return (
+          <g key={label}>
+            <rect x="48" y={y} width="11" height="11" rx="3" fill={on ? green : "#fff"} stroke={on ? green : line} strokeWidth="1.4" />
+            {on ? <path d={`M50.5 ${y + 5.5}l2.6 2.6 4.6-5.4`} stroke="#fff" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round" /> : null}
+            <text x="65" y={y + 8.2} fontSize="6.6" fontWeight={on ? 700 : 500} fill={on ? ink : "#5a5a66"} fontFamily={chipFont}>
+              {label}
+            </text>
+          </g>
+        );
+      })}
+      <path d="M150 50l17 6v13c0 10-7 17-17 21-10-4-17-11-17-21V56Z" fill={purple} />
+      <path d="M142 70l6 6 11-12" stroke="#fff" strokeWidth="3.2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+      <Chip x={8} y={94} w={40} label="PIPEDA" bg={purpleSoft} fg={purpleDeep} />
+      <Chip x={52} y={94} w={32} label="GDPR" bg={cyanSoft} fg="#0d7a95" />
+      <Chip x={88} y={94} w={32} label="CCPA" bg={coralSoft} fg={coral} />
+    </Wide>
+  );
+}
+
+/** Where we are: one pin on the map, the river below. */
+export function IllustWhere({ className }: Props) {
+  return (
+    <Svg className={className}>
+      <rect width="100" height="100" fill="#f4f4f7" />
+      <path d="M0 70c18-10 34-12 52-6s30 10 48 2v34H0Z" fill={cyanSoft} />
+      <path d="M0 34h100M0 58h100M30 0v100M64 0v100" stroke="#fff" strokeWidth="7" />
+      <path d="M0 34h100M0 58h100M30 0v100M64 0v100" stroke="#e2e2e9" strokeWidth="1.5" />
+      <path d="M6 0c8 26 16 36 58 100" stroke="#fff" strokeWidth="5" fill="none" />
+      <path d="M6 0c8 26 16 36 58 100" stroke="#e2e2e9" strokeWidth="1.2" fill="none" />
+      <circle cx="50" cy="48" r="17" fill="rgba(239,79,66,.14)" />
+      <ellipse cx="50" cy="60" rx="9" ry="3.5" fill="rgba(13,13,16,.15)" />
+      <path d="M50 58c-8-9-12-15-12-21a12 12 0 0 1 24 0c0 6-4 12-12 21Z" fill={coral} />
+      <circle cx="50" cy="37" r="5" fill="#fff" />
+    </Svg>
+  );
+}
