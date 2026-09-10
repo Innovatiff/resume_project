@@ -55,7 +55,7 @@ export function Wedges() {
             </ul>
           </div>
           <div className={`${styles.col} ${styles.ours}`} data-reveal="">
-            <h4>What Shortlist does</h4>
+            <h4>What Orvenic does</h4>
             <ul>
               {w.ours.map((t) => (
                 <li key={t}>

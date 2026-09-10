@@ -7,7 +7,7 @@ import { connectAuthEmulator, getAuth, GoogleAuthProvider, type Auth } from "fir
    Firebase web SDK: authentication (and analytics) only. Firestore is
    server-side through the Admin SDK.
 
-   The web config below identifies the Shortlist Firebase project. These
+   The web config below identifies the Orvenic Firebase project. These
    values are meant to ship to browsers: access is controlled by Firebase
    Auth and the Firestore rules, not by keeping them secret. Set the
    NEXT_PUBLIC_FIREBASE_* variables to point at another project (staging)

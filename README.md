@@ -1,6 +1,6 @@
-# Shortlist
+# Orvenic
 
-Marketing site and product app for **Shortlist** (working name): a paid web service that tells Canadian job seekers which postings are worth applying to, what those roles actually pay in their city, and rewrites the resume for the ones that pass. Windsor–Essex, Ontario. All prices CAD.
+Marketing site and product app for **Orvenic** (orvenic.com): a paid web service that tells Canadian job seekers which postings are worth applying to, what those roles actually pay in their city, and rewrites the resume for the ones that pass. Windsor–Essex, Ontario. All prices CAD.
 
 Built with Next.js (App Router, Turbopack), TypeScript, CSS Modules, GSAP ScrollTrigger and Lenis smooth scrolling. No UI framework, no Tailwind.
 
@@ -133,7 +133,7 @@ The variant is chosen before first paint: `?h=a` or `?h=b` in the URL wins, then
 
 ## Things still to decide (from the plan)
 
-- **Name and domain.** "Shortlist" is a placeholder; `hello@shortlist.ca` in `content.ts` is too. Check `.ca` availability and CIPO before launch.
+- **Name and domain.** Orvenic, at orvenic.com. Still to do: a mailbox for `hello@orvenic.com` (the address in `content.ts`), the matching `.ca`, and the CIPO and USPTO trademark searches before filing.
 - **Legal pages.** `/privacy`, `/terms` and `/refunds` are plain-language drafts written from the business plan. Review them with counsel before launch. Choices made in the drafts that you may want to change: free-scan files deleted within 24 hours, paid files kept for the access period plus 30 days, a 14-day window to claim the guarantee, a 48-hour unused-pass refund, and the fair-use caps (50 and 150 packages) stated in the terms as the plan intends.
 - **Browser extension and B2B seats.** Not built yet. Seat purchases can be granted with `source: "seat"` purchases until an intake page exists.
 - **Human review and coaching (Landed).** Packages are queued and the founder is emailed (`FOUNDER_EMAIL`); marking a review done is a manual Firestore update for now.

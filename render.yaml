@@ -2,7 +2,7 @@
 # Render → New → Blueprint → pick this repo. It asks for the values marked sync: false.
 services:
   - type: web
-    name: shortlist
+    name: orvenic
     runtime: node
     plan: free
     buildCommand: npm ci && npm run build
@@ -13,7 +13,7 @@ services:
       - key: NODE_VERSION
         value: "22"
       - key: NEXT_PUBLIC_SITE_URL
-        sync: false
+        value: https://orvenic.com
       - key: FIREBASE_PROJECT_ID
         value: resume-project-56b09
       - key: FIREBASE_SERVICE_ACCOUNT
@@ -31,7 +31,7 @@ services:
       - key: RESEND_API_KEY
         sync: false
       - key: EMAIL_FROM
-        value: Shortlist <hello@shortlist.ca>
+        value: Orvenic <hello@orvenic.com>
       - key: FOUNDER_EMAIL
         sync: false
       - key: FREE_SCAN_SALT

@@ -115,7 +115,7 @@
   font-family: var(--font-display);
   font-weight: 700;
   letter-spacing: -0.055em;
-  font-size: clamp(4.2rem, 19.6vw, 21rem);
+  font-size: clamp(5.2rem, 24.6vw, 26.5rem);
   line-height: 0.9;
   color: var(--coral);
   white-space: nowrap;

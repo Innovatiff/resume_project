@@ -29,15 +29,15 @@ export async function sendEmail(input: { to: string; subject: string; text: stri
 
 export function freeScanEmail(input: { score: number; verdict: string; reasons: string[]; resultUrl: string }): { subject: string; text: string } {
   return {
-    subject: `Your Shortlist scan: ${input.score}/100`,
-    text: [`Your resume scored ${input.score} out of 100 against that posting (${input.verdict}).`, "", "The three reasons it is being filtered out:", ...input.reasons.map((r, i) => `${i + 1}. ${r}`), "", `Full breakdown: ${input.resultUrl}`, "", "Shortlist · Windsor–Essex, Ontario"].join("\n"),
+    subject: `Your Orvenic scan: ${input.score}/100`,
+    text: [`Your resume scored ${input.score} out of 100 against that posting (${input.verdict}).`, "", "The three reasons it is being filtered out:", ...input.reasons.map((r, i) => `${i + 1}. ${r}`), "", `Full breakdown: ${input.resultUrl}`, "", "Orvenic · Windsor–Essex, Ontario"].join("\n"),
   };
 }
 
 export function packageReadyEmail(input: { title: string; company?: string; score: number; url: string }): { subject: string; text: string } {
   return {
     subject: `Your ${input.title} package is ready (${input.score}/100)`,
-    text: [`Your tailored resume and cover letter for ${input.title}${input.company ? ` at ${input.company}` : ""} are ready.`, `After the rewrite it scores ${input.score} out of 100.`, "", `Open it: ${input.url}`, "", "Shortlist · Windsor–Essex, Ontario"].join("\n"),
+    text: [`Your tailored resume and cover letter for ${input.title}${input.company ? ` at ${input.company}` : ""} are ready.`, `After the rewrite it scores ${input.score} out of 100.`, "", `Open it: ${input.url}`, "", "Orvenic · Windsor–Essex, Ontario"].join("\n"),
   };
 }
 

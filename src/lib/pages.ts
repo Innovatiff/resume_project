@@ -213,16 +213,16 @@ export const orgPage = {
       { title: "Quarterly reporting", body: "Seats used, scores before and after, applications per client, and voluntary renewals. Numbers your funders can use." },
     ],
   },
-  cta: { label: "Talk to us about a pilot", href: `mailto:${brand.email}?subject=Shortlist%20pilot` } as Link,
+  cta: { label: "Talk to us about a pilot", href: `mailto:${brand.email}?subject=Orvenic%20pilot` } as Link,
 };
 
 /* ---------- About page ---------- */
 
 export const aboutPage = {
   hero: {
-    eyebrow: "About Shortlist",
+    eyebrow: "About Orvenic",
     title: "The resume is an output. The decision is the product.",
-    lead: "Shortlist is an independent Canadian company built on one idea: job seekers do not need more applications, they need fewer, better ones. It works for postings in Canada, the United States and beyond.",
+    lead: "Orvenic is an independent Canadian company built on one idea: job seekers do not need more applications, they need fewer, better ones. It works for postings in Canada, the United States and beyond.",
   },
   wedges: {
     title: "Three things nobody else will do.",
@@ -238,7 +238,7 @@ export const aboutPage = {
       },
       {
         title: "Built for Canada and the US, in three languages",
-        body: "Most tools are built for one market and one language. Shortlist reads postings on both sides of the border and beyond, speaks English, French and Spanish, and makes foreign credentials legible to the employer in front of you.",
+        body: "Most tools are built for one market and one language. Orvenic reads postings on both sides of the border and beyond, speaks English, French and Spanish, and makes foreign credentials legible to the employer in front of you.",
       },
     ],
     theirs: ["Sell you a subscription with a free trial that converts", "Make money when you apply to more postings", "Let the model guess at salary", "Invent metrics to make bullets sound better", "Submit applications on your behalf", "Promise interviews"],
@@ -247,7 +247,7 @@ export const aboutPage = {
   company: {
     title: "Built in Windsor–Essex.",
     body: [
-      "Shortlist is a sole proprietorship registered in Ontario and run by its founder. It serves job seekers in Canada, the United States and beyond, with roots in the logistics, healthcare, trades, hospitality and administrative labour markets of Essex County.",
+      "Orvenic is a sole proprietorship registered in Ontario and run by its founder. It serves job seekers in Canada, the United States and beyond, with roots in the logistics, healthcare, trades, hospitality and administrative labour markets of Essex County.",
       "We publish the score breakdown, the refund policy and the six rules because a product that asks for your resume should be able to explain itself.",
     ],
     facts: [
@@ -388,8 +388,8 @@ export const contactPage = {
     lead: "Email is the fastest way to reach us. Landed customers get a same-day response; everyone else hears back within two business days.",
   },
   channels: [
-    { title: "Customers", body: "Questions about a scan, a delivery, a revision or a refund.", email: brand.email, subject: "Shortlist%20support" },
-    { title: "Organizations", body: "Pilots, seat packages, white-labelled intake pages and reporting.", email: brand.email, subject: "Shortlist%20pilot" },
+    { title: "Customers", body: "Questions about a scan, a delivery, a revision or a refund.", email: brand.email, subject: "Orvenic%20support" },
+    { title: "Organizations", body: "Pilots, seat packages, white-labelled intake pages and reporting.", email: brand.email, subject: "Orvenic%20pilot" },
     { title: "Privacy", body: "Access, correction or deletion requests under PIPEDA, GDPR, CCPA or your local privacy law.", email: brand.email, subject: "Privacy%20request" },
   ],
   address: `${brand.name} · ${brand.region}`,
@@ -415,7 +415,7 @@ export const legal: Record<"privacy" | "terms" | "refunds", LegalDoc> = {
   privacy: {
     title: "Privacy policy",
     updated: "September 2026",
-    intro: "Your resume is personal information. This policy explains, in plain language, what we collect, why, how long we keep it, and how to make it go away. Shortlist is a Canadian company and operates under Canada's Personal Information Protection and Electronic Documents Act (PIPEDA). If you are in the United States, the United Kingdom, the European Union or elsewhere, you also have the rights your local law gives you (for example the CCPA in California or the GDPR), and this policy applies to you the same way.",
+    intro: "Your resume is personal information. This policy explains, in plain language, what we collect, why, how long we keep it, and how to make it go away. Orvenic is a Canadian company and operates under Canada's Personal Information Protection and Electronic Documents Act (PIPEDA). If you are in the United States, the United Kingdom, the European Union or elsewhere, you also have the rights your local law gives you (for example the CCPA in California or the GDPR), and this policy applies to you the same way.",
     sections: [
       {
         id: "collect",
@@ -479,7 +479,7 @@ export const legal: Record<"privacy" | "terms" | "refunds", LegalDoc> = {
       {
         id: "age",
         heading: "Age",
-        paragraphs: ["Shortlist is for people who are legally able to work in the country where they are applying. It is not directed at anyone under 16."],
+        paragraphs: ["Orvenic is for people who are legally able to work in the country where they are applying. It is not directed at anyone under 16."],
       },
       {
         id: "changes",
@@ -493,13 +493,13 @@ export const legal: Record<"privacy" | "terms" | "refunds", LegalDoc> = {
   terms: {
     title: "Terms of service",
     updated: "September 2026",
-    intro: "These terms are the agreement between you and Shortlist when you use the free scan or buy a package. They are written to be read, not skimmed.",
+    intro: "These terms are the agreement between you and Orvenic when you use the free scan or buy a package. They are written to be read, not skimmed.",
     sections: [
       {
         id: "service",
-        heading: "What Shortlist does",
+        heading: "What Orvenic does",
         paragraphs: [
-          "Shortlist scores your resume against job postings you choose, tells you whether a posting is worth applying to, reports the market salary band for that role in your city, flags problems in the posting, and produces a tailored resume and cover letter. Depending on the package, it also provides a browser extension that fills application forms for your review, an application tracker, interview preparation, and human coaching.",
+          "Orvenic scores your resume against job postings you choose, tells you whether a posting is worth applying to, reports the market salary band for that role in your city, flags problems in the posting, and produces a tailored resume and cover letter. Depending on the package, it also provides a browser extension that fills application forms for your review, an application tracker, interview preparation, and human coaching.",
         ],
       },
       {
@@ -558,7 +558,7 @@ export const legal: Record<"privacy" | "terms" | "refunds", LegalDoc> = {
         id: "acceptable-use",
         heading: "Acceptable use",
         bullets: [
-          "Do not use Shortlist to produce documents for a person who has not consented, or to misrepresent identity, credentials or experience.",
+          "Do not use Orvenic to produce documents for a person who has not consented, or to misrepresent identity, credentials or experience.",
           "Do not attempt to automate, scrape, resell or share access to the service outside the organization seat programme.",
           "Do not upload content you do not have the right to share.",
         ],

@@ -6,7 +6,7 @@ import { contactPage } from "@/lib/pages";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Email Shortlist about a scan, a delivery, a refund, an organization pilot or a privacy request. A person replies.",
+  description: "Email Orvenic about a scan, a delivery, a refund, an organization pilot or a privacy request. A person replies.",
 };
 
 export default function ContactPage() {

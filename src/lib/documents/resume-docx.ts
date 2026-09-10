@@ -100,7 +100,7 @@ export async function buildResumeDocx(r: TailoredResume, opts: { paper?: Paper }
   }
 
   const doc = new Document({
-    creator: "Shortlist",
+    creator: "Orvenic",
     title: `${r.name} – Resume`,
     styles: { default: { document: { run: { font: FONT, size: 21 } } } },
     sections: [{ properties: { page: { size: pageSize(opts.paper ?? "LETTER"), margin: { top: 900, bottom: 900, left: 1000, right: 1000 } } }, children }],
@@ -117,7 +117,7 @@ export async function buildCoverLetterDocx(input: { letter: string; resume: Tail
   children.push(line(`Re: ${input.title}${input.company ? ` at ${input.company}` : ""}`, { bold: true, after: 200 }));
   for (const para of input.letter.split(/\n{2,}/)) children.push(line(para.trim(), { after: 160 }));
   const doc = new Document({
-    creator: "Shortlist",
+    creator: "Orvenic",
     title: `${input.resume.name} – Cover letter`,
     styles: { default: { document: { run: { font: FONT, size: 22 } } } },
     sections: [{ properties: { page: { size: pageSize(input.paper ?? "LETTER"), margin: { top: 1100, bottom: 1100, left: 1100, right: 1100 } } }, children }],

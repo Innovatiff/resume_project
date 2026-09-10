@@ -25,28 +25,28 @@ const body = Outfit({
 });
 
 const description =
-  "Shortlist tells job seekers which postings are worth applying to, what those roles actually pay in their city, and rewrites the resume for the ones that pass. Canada, the US and beyond. Under five minutes. One-time purchase, no subscription.";
+  "Orvenic tells job seekers which postings are worth applying to, what those roles actually pay in their city, and rewrites the resume for the ones that pass. Canada, the US and beyond. Under five minutes. One-time purchase, no subscription.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Shortlist — Know which jobs are worth applying to",
-    template: "%s · Shortlist",
+    default: "Orvenic — Know which jobs are worth applying to",
+    template: "%s · Orvenic",
   },
   description,
-  applicationName: "Shortlist",
+  applicationName: "Orvenic",
   keywords: ["resume", "ATS score", "job search", "Canada", "United States", "Windsor", "salary report", "cover letter"],
   openGraph: {
-    title: "Shortlist — Stop applying to 200 jobs.",
+    title: "Orvenic — Stop applying to 200 jobs.",
     description,
     type: "website",
     locale: "en_CA",
-    siteName: "Shortlist",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Shortlist: stop applying to 200 jobs." }],
+    siteName: "Orvenic",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Orvenic: stop applying to 200 jobs." }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Shortlist — Stop applying to 200 jobs.",
+    title: "Orvenic — Stop applying to 200 jobs.",
     description,
     images: ["/og.png"],
   },

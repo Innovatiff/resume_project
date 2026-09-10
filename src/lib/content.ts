@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------
-   All copy and data for the Shortlist landing page.
+   All copy and data for the Orvenic landing page.
    Prices in CAD (Canada) and USD (everywhere else). Windsor–Essex, Ontario.
    Note: the 30-day pass fair-use cap lives in the terms, never in UI.
 ------------------------------------------------------------------- */
@@ -12,11 +12,11 @@ export interface Link {
 }
 
 export const brand = {
-  name: "Shortlist",
+  name: "Orvenic",
   region: "Windsor–Essex, Ontario",
-  email: "hello@shortlist.ca",
+  email: "hello@orvenic.com",
   blurb:
-    "Shortlist tells job seekers which postings are worth applying to, what those roles really pay in their city, and rewrites the resume for the ones that pass. Built in Windsor–Essex, Ontario, for Canada, the US and beyond.",
+    "Orvenic tells job seekers which postings are worth applying to, what those roles really pay in their city, and rewrites the resume for the ones that pass. Built in Windsor–Essex, Ontario, for Canada, the US and beyond.",
 };
 
 export const nav = {
@@ -38,7 +38,7 @@ export const hero = {
     b: "Know what the job actually pays.",
   },
   lead:
-    "Shortlist tells job seekers in Canada, the US and beyond which postings are worth applying to, what those roles really pay in their city, and then rewrites their resume for the ones that pass. Delivered in under five minutes.",
+    "Orvenic tells job seekers in Canada, the US and beyond which postings are worth applying to, what those roles really pay in their city, and then rewrites their resume for the ones that pass. Delivered in under five minutes.",
   primary: { label: "Scan my resume free", href: "/scan" } as Link,
   secondary: { label: "See pricing", href: "/pricing" } as Link,
   trust: ["No subscription", "No auto-renew", "No card retained", "Prices in CAD or USD"],
@@ -385,7 +385,7 @@ export const organizations = {
     "Staff onboarding",
     "Seats valid for 12 months from purchase",
   ],
-  cta: { label: "Talk to us about a pilot", href: `mailto:${brand.email}?subject=Shortlist%20pilot` } as Link,
+  cta: { label: "Talk to us about a pilot", href: `mailto:${brand.email}?subject=Orvenic%20pilot` } as Link,
 };
 
 export interface Faq {

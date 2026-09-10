@@ -50,7 +50,7 @@ export async function createCheckout(input: { uid: string; email: string; produc
         price_data: {
           currency,
           unit_amount: amount,
-          product_data: { name: `Shortlist ${product.name}`, description: product.description },
+          product_data: { name: `Orvenic ${product.name}`, description: product.description },
         },
       },
     ],

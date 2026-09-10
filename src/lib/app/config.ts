@@ -64,12 +64,12 @@ export const config = {
 
   email: {
     resendKey: process.env.RESEND_API_KEY ?? "",
-    from: process.env.EMAIL_FROM ?? "Shortlist <hello@shortlist.ca>",
+    from: process.env.EMAIL_FROM ?? "Orvenic <hello@orvenic.com>",
     founder: process.env.FOUNDER_EMAIL ?? "",
   },
 
   freeScan: {
-    salt: process.env.FREE_SCAN_SALT ?? "shortlist-free-scan",
+    salt: process.env.FREE_SCAN_SALT ?? "orvenic-free-scan",
     windowDays: 7,
     resultTtlDays: 7,
   },

@@ -28,7 +28,7 @@ type Paper = "LETTER" | "A4";
 
 function ResumeDoc({ r, paper }: { r: TailoredResume; paper: Paper }) {
   return (
-    <Document title={`${r.name} – Resume`} author={r.name} producer="Shortlist">
+    <Document title={`${r.name} – Resume`} author={r.name} producer="Orvenic">
       <Page size={paper} style={s.page}>
         <Text style={s.name}>{r.name}</Text>
         {r.headline ? <Text style={s.headline}>{r.headline}</Text> : null}
@@ -95,7 +95,7 @@ function ResumeDoc({ r, paper }: { r: TailoredResume; paper: Paper }) {
 function LetterDoc({ letter, r, title, company, paper }: { letter: string; r: TailoredResume; title: string; company?: string; paper: Paper }) {
   const date = new Date().toLocaleDateString("en-CA", { year: "numeric", month: "long", day: "numeric" });
   return (
-    <Document title={`${r.name} – Cover letter`} author={r.name} producer="Shortlist">
+    <Document title={`${r.name} – Cover letter`} author={r.name} producer="Orvenic">
       <Page size={paper} style={{ ...s.page, fontSize: 11, lineHeight: 1.5 }}>
         <Text style={s.name}>{r.name}</Text>
         {contactLine(r) ? <Text style={s.contact}>{contactLine(r)}</Text> : null}

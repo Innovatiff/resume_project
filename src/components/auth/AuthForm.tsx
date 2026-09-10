@@ -77,7 +77,7 @@ export default function AuthForm({ mode }: { mode: Mode }) {
   return (
     <div className="auth-wrap">
       <div className="auth-card">
-        <Link href="/" className="auth-brand" aria-label="Shortlist home">
+        <Link href="/" className="auth-brand" aria-label="Orvenic home">
           <Logo />
         </Link>
         <h1>{title}</h1>

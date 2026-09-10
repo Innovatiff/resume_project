@@ -1,5 +1,5 @@
 {
-  "name": "resume_project",
+  "name": "orvenic",
   "version": "0.1.0",
   "private": true,
   "engines": {
@@ -10,7 +10,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "emulators": "firebase emulators:start --only auth,firestore --project demo-shortlist",
+    "emulators": "firebase emulators:start --only auth,firestore --project demo-orvenic",
     "dev:local": "cp -n .env.local.example .env.local 2>/dev/null; next dev",
     "test": "vitest run",
     "test:watch": "vitest",

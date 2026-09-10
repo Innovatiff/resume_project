@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import AppShell from "@/components/app/AppShell";
 
 export const metadata: Metadata = {
-  title: { default: "Dashboard", template: "%s · Shortlist app" },
+  title: { default: "Dashboard", template: "%s · Orvenic app" },
   robots: { index: false, follow: false },
 };
 

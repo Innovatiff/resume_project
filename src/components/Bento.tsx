@@ -152,7 +152,7 @@ function MetricInterview() {
     <div className={styles.chat}>
       <div className={styles.thread}>
         <div className={styles.bubble} data-bubble="">
-          <small>Shortlist</small>
+          <small>Orvenic</small>
           You mention reducing picking errors. By how much, and over what period?
         </div>
         <div className={`${styles.bubble} ${styles.me}`} data-bubble="">

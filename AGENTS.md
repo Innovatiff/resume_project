@@ -10,7 +10,8 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 # Project notes
 
-- Marketing landing page for Shortlist. Design language: pale grey page, white rounded panels, ink text, coral / purple / yellow / cyan accents, heavy tight-tracked headlines (Inter Tight) with Outfit body text.
+- Marketing landing page for Orvenic. Design language: pale grey page, white rounded panels, ink text, coral / purple / yellow / cyan accents, heavy tight-tracked headlines (Inter Tight) with Outfit body text.
+- Brand: Orvenic, at orvenic.com (`brand` in `src/lib/content.ts`). "shortlist" survives only as a common noun ("Your shortlist", the 404 pun); never as the product name.
 - All copy, prices and example data live in `src/lib/content.ts`. Change content there, not in components.
 - Design tokens are CSS custom properties in `src/app/globals.css`. Components use CSS Modules.
 - Motion: GSAP + ScrollTrigger + Lenis. `RevealManager` handles `data-reveal` / `data-reveal-text`; keep new sections working with JS disabled and under `prefers-reduced-motion`.

@@ -53,7 +53,7 @@ function Shell({ children }: { children: ReactNode }) {
   return (
     <div className="app-shell">
       <aside className="app-side" aria-label="App navigation">
-        <Link href="/" className="app-side__brand" aria-label="Shortlist home">
+        <Link href="/" className="app-side__brand" aria-label="Orvenic home">
           <Logo />
         </Link>
         <nav className="app-nav">
