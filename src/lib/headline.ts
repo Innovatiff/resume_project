@@ -1,7 +1,8 @@
 /* ------------------------------------------------------------------
    Headline A/B test.
-   "Stop applying to 200 jobs" sells the filter; "Know what the job
-   actually pays" sells the salary data. The winner decides the roadmap.
+   "Stop applying to 200 jobs" sells the filter; "Know before you
+   apply" sells the decision: the verdict, the real pay and the red
+   flags before an evening is spent. The winner decides the roadmap.
 
    The variant is chosen before first paint by an inline script so
    there is no flash: ?h=a|b wins, then localStorage, then a coin flip.

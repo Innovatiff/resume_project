@@ -127,7 +127,7 @@ Motion:
 Two headline variants are built in, per the business plan's open decision:
 
 - `a` — "Stop applying to 200 jobs." (sells the filter)
-- `b` — "Know what the job actually pays." (sells the salary data)
+- `b` — "Know before you apply." (sells the decision: verdict, real pay and red flags first)
 
 The variant is chosen before first paint: `?h=a` or `?h=b` in the URL wins, then `localStorage` (`sl_headline`), then a coin flip. The choice is stamped on `<html data-headline="a|b">` so analytics can read it. Logic lives in `src/lib/headline.ts`.
 

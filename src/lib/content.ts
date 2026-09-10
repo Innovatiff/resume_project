@@ -35,7 +35,7 @@ export const nav = {
 export const hero = {
   variants: {
     a: "Stop applying to 200 jobs.",
-    b: "Know what the job actually pays.",
+    b: "Know before you apply.",
   },
   lead:
     "Orvenic tells job seekers in Canada, the US and beyond which postings are worth applying to, what those roles really pay in their city, and then rewrites their resume for the ones that pass. Delivered in under five minutes.",
