@@ -34,7 +34,7 @@ export const nav = {
 
 export const hero = {
   variants: {
-    a: "Stop applying to 200 jobs.",
+    a: "Resumes that attract the right jobs.",
     b: "Know before you apply.",
   },
   lead:

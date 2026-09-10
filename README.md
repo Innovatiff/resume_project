@@ -124,12 +124,9 @@ Motion:
 
 ## Headline A/B test
 
-Two headline variants are built in, per the business plan's open decision:
+The hero headline is "Resumes that attract the right jobs." (variant `a`). A second variant, `b` — "Know before you apply." (sells the decision) — stays in `src/lib/content.ts` for a future test; preview it with `?h=b`.
 
-- `a` — "Stop applying to 200 jobs." (sells the filter)
-- `b` — "Know before you apply." (sells the decision: verdict, real pay and red flags first)
-
-The variant is chosen before first paint: `?h=a` or `?h=b` in the URL wins, then `localStorage` (`sl_headline`), then a coin flip. The choice is stamped on `<html data-headline="a|b">` so analytics can read it. Logic lives in `src/lib/headline.ts`.
+The test is dormant: `HEADLINE_TEST_ENABLED` in `src/lib/headline.ts` is `false`, so every visitor gets variant `a` and nothing is stored. Set it to `true` to run the test: `?h=a` or `?h=b` in the URL wins, then `localStorage` (`sl_headline`), then a coin flip, chosen before first paint. Either way the choice is stamped on `<html data-headline="a|b">` so analytics can read it.
 
 ## Things still to decide (from the plan)
 
