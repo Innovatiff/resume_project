@@ -9,7 +9,7 @@ import { scan } from "@/lib/content";
 import type { FreeScanResult } from "@/lib/app/types";
 import { IconClock, IconFile, IconLock, IconTrash, IconUpload } from "./icons";
 
-const MAX_BYTES = 5 * 1024 * 1024;
+const MAX_BYTES = 4 * 1024 * 1024;
 const MIN_POSTING = 80;
 
 type Status = { kind: "idle" } | { kind: "busy"; step: number } | { kind: "error" | "info"; message: string } | { kind: "ok"; result: FreeScanResult };
@@ -33,7 +33,7 @@ export default function FreeScan({ first = false }: { first?: boolean }) {
     if (!f) return;
     const okType = /\.(pdf|docx)$/i.test(f.name);
     if (!okType) return setStatus({ kind: "error", message: "Only PDF and DOCX resumes are supported." });
-    if (f.size > MAX_BYTES) return setStatus({ kind: "error", message: "Resumes must be 5 MB or smaller." });
+    if (f.size > MAX_BYTES) return setStatus({ kind: "error", message: "Resumes must be 4 MB or smaller." });
     setFile(f);
     setStatus({ kind: "idle" });
   };
@@ -136,7 +136,7 @@ export default function FreeScan({ first = false }: { first?: boolean }) {
             ) : (
               <>
                 <b>Drop your resume here, or browse</b>
-                <small>PDF or DOCX, up to 5 MB</small>
+                <small>PDF or DOCX, up to 4 MB</small>
               </>
             )}
           </label>

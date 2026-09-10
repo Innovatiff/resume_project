@@ -193,12 +193,12 @@ export function fmtDate(iso?: string): string {
   return new Date(iso).toLocaleDateString("en-CA", { year: "numeric", month: "short", day: "numeric" });
 }
 
-export function Dropzone({ file, onFile, hint = "PDF or DOCX, up to 5 MB", label = "Drop your resume here, or browse" }: { file: File | null; onFile: (f: File | null) => void; hint?: string; label?: string }) {
+export function Dropzone({ file, onFile, hint = "PDF or DOCX, up to 4 MB", label = "Drop your resume here, or browse" }: { file: File | null; onFile: (f: File | null) => void; hint?: string; label?: string }) {
   const [over, setOver] = useState(false);
   const accept = (f?: File) => {
     if (!f) return;
     if (!/\.(pdf|docx)$/i.test(f.name)) return alert("Only PDF and DOCX resumes are supported.");
-    if (f.size > 5 * 1024 * 1024) return alert("Resumes must be 5 MB or smaller.");
+    if (f.size > 4 * 1024 * 1024) return alert("Resumes must be 4 MB or smaller.");
     onFile(f);
   };
   return (

@@ -1,0 +1,37 @@
+# Firebase App Hosting (Cloud Run under the hood). The backend's service account
+# gives the Admin SDK its credentials, so no FIREBASE_SERVICE_ACCOUNT is needed.
+#
+#   npx firebase apphosting:backends:create --project resume-project-56b09
+#   npx firebase apphosting:secrets:set ANTHROPIC_API_KEY   (repeat for each secret below)
+#
+# Request timeouts on App Hosting are long enough for the AI steps (a package
+# build can take a minute); serverless hosts with 10-second function limits are not.
+runConfig:
+  minInstances: 0
+  maxInstances: 5
+  concurrency: 40
+  cpu: 1
+  memoryMiB: 1024
+
+env:
+  - variable: NEXT_PUBLIC_SITE_URL
+    value: https://YOUR-DOMAIN
+    availability:
+      - BUILD
+      - RUNTIME
+  - variable: FIREBASE_PROJECT_ID
+    value: resume-project-56b09
+  - variable: ANTHROPIC_API_KEY
+    secret: ANTHROPIC_API_KEY
+  - variable: STRIPE_SECRET_KEY
+    secret: STRIPE_SECRET_KEY
+  - variable: STRIPE_WEBHOOK_SECRET
+    secret: STRIPE_WEBHOOK_SECRET
+  - variable: ADZUNA_APP_ID
+    secret: ADZUNA_APP_ID
+  - variable: ADZUNA_APP_KEY
+    secret: ADZUNA_APP_KEY
+  - variable: RESEND_API_KEY
+    secret: RESEND_API_KEY
+  - variable: FREE_SCAN_SALT
+    secret: FREE_SCAN_SALT

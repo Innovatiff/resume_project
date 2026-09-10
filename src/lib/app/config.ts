@@ -9,6 +9,24 @@ function flag(name: string): boolean {
   return v === "1" || v === "true";
 }
 
+/** Things a deployment got wrong that we could work around. Reported by /api/health. */
+const warnings: string[] = [];
+
+// The emulator variables belong to .env.local only. Pasted into a hosting environment they would
+// point the Admin SDK at localhost and hang every request, so production ignores them.
+if (isProd) {
+  for (const name of ["FIRESTORE_EMULATOR_HOST", "FIREBASE_AUTH_EMULATOR_HOST"]) {
+    if (process.env[name]) {
+      warnings.push(`${name} was set in production and ignored.`);
+      delete process.env[name];
+    }
+  }
+  if (flag("NEXT_PUBLIC_FIREBASE_USE_EMULATOR")) warnings.push("NEXT_PUBLIC_FIREBASE_USE_EMULATOR=1 is set: browsers will try to sign in against a local emulator. Remove it from the hosting environment.");
+}
+
+/** Default credentials exist on Google Cloud hosting (App Hosting, Cloud Run, Functions) or via GOOGLE_APPLICATION_CREDENTIALS. */
+const hasDefaultCredentials = Boolean(process.env.GOOGLE_APPLICATION_CREDENTIALS || process.env.K_SERVICE || process.env.GAE_SERVICE || process.env.FUNCTION_TARGET);
+
 export const config = {
   isProd,
   siteUrl: (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, ""),
@@ -57,7 +75,8 @@ export const config = {
   },
 
   limits: {
-    maxUploadBytes: 5 * 1024 * 1024,
+    /** Serverless hosts cap request bodies at roughly 4.5 to 6 MB once encoded; 4 MB stays under all of them. */
+    maxUploadBytes: 4 * 1024 * 1024,
     minPostingChars: 80,
     maxPostingChars: 20000,
   },
@@ -67,8 +86,12 @@ export function assertProductionConfig(): string[] {
   const missing: string[] = [];
   if (!isProd) return missing;
   if (!process.env.ANTHROPIC_API_KEY) missing.push("ANTHROPIC_API_KEY");
-  if (!process.env.FIREBASE_SERVICE_ACCOUNT && !process.env.GOOGLE_APPLICATION_CREDENTIALS) missing.push("FIREBASE_SERVICE_ACCOUNT");
+  if (!process.env.FIREBASE_SERVICE_ACCOUNT && !hasDefaultCredentials) missing.push("FIREBASE_SERVICE_ACCOUNT");
   if (!process.env.STRIPE_SECRET_KEY) missing.push("STRIPE_SECRET_KEY");
   if (!process.env.STRIPE_WEBHOOK_SECRET) missing.push("STRIPE_WEBHOOK_SECRET");
   return missing;
+}
+
+export function productionWarnings(): string[] {
+  return [...warnings];
 }

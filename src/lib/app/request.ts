@@ -25,7 +25,7 @@ export async function fileFromForm(form: FormData, field = "file", required = tr
     return null;
   }
   const file = f as File;
-  if (file.size > config.limits.maxUploadBytes) throw new ApiError(413, "file_too_large", "Resumes must be 5 MB or smaller.");
+  if (file.size > config.limits.maxUploadBytes) throw new ApiError(413, "file_too_large", "Resumes must be 4 MB or smaller.");
   if (file.size === 0) throw new ApiError(400, "empty_file", "That file is empty.");
   return { buffer: Buffer.from(await file.arrayBuffer()), name: file.name || "resume", type: file.type || undefined };
 }

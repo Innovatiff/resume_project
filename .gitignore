@@ -53,3 +53,6 @@ ui-debug.log
 
 # e2e screenshots
 /e2e/output/
+
+# netlify build output
+/.netlify/

@@ -1,0 +1,13 @@
+# Netlify. The Next.js runtime plugin builds the app and runs the server as one
+# Netlify Function. Mind the function execution limit (10 s by default, 26 s on
+# paid plans): the free scan and sign-in fit, a package build with the live AI
+# generally does not. See README "Deploying".
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"

@@ -41,6 +41,19 @@ npx firebase deploy --only firestore
 
 `firestore.rules` denies every client read and write: browsers only ever hold a Firebase Auth session, and all data access goes through the server with the Admin SDK. In production, mock AI and dev checkout are ignored no matter what the env says. Vercel caps request bodies at 4.5 MB; the app enforces 5 MB, so lower `maxUploadBytes` in `src/lib/app/config.ts` if you deploy there.
 
+### Deploying
+
+The AI steps are long requests: scoring a posting takes a few seconds, building a package with the live models can take a minute. Pick a host that allows that.
+
+| Host | Fit | Notes |
+| --- | --- | --- |
+| **Firebase App Hosting** (recommended) | Best | Same Google project as Auth and Firestore, so the server needs no `FIREBASE_SERVICE_ACCOUNT`; long request timeouts. `apphosting.yaml` is in the repo: create a backend, connect the repo, set the secrets it lists |
+| Vercel Pro | Good | `maxDuration` on the heavy routes is honoured (up to 300 s). Set every variable from the table above |
+| Your own Node server | Good | `npm run build && npm start`; no timeouts to worry about |
+| Netlify | Free scan and sign-in only | API routes run as a function with a 10 s limit (26 s on paid plans), so package builds with the live models time out. `netlify.toml` pins Node 22 |
+
+Whatever the host: `GET /api/health` lists the integrations that are live and the variables still missing, and `GET /api/health?check=1` also exercises Firestore and Firebase Auth with the server's credentials and explains any failure in plain words. A blank "Request failed (500)" in the app means the server function itself did not run; the host's function log names the cause, and `src/instrumentation.ts` prints route and error there.
+
 ## The product
 
 | Area | Where | What happens |

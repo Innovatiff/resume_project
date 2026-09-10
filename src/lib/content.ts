@@ -435,7 +435,7 @@ export const scan = {
   title: "Start with the free scan.",
   lead:
     "Your ATS score for one resume against one posting, and the three specific reasons it is being filtered out. No card, no account.",
-  fine: ["One scan per email address every 7 days", "PDF or DOCX, up to 5 MB", "Your file is deleted after scoring"],
+  fine: ["One scan per email address every 7 days", "PDF or DOCX, up to 4 MB", "Your file is deleted after scoring"],
 };
 
 export const footer = {
