@@ -2,16 +2,16 @@ import type { ReactNode } from "react";
 import styles from "./ProcessTimeline.module.css";
 import BlurText from "./BlurText";
 import { processPage, type ProcessStep } from "@/lib/pages";
-import { IconChat, IconCheck, IconCompass, IconDoc, IconDollar, IconTarget, IconUpload } from "./icons";
+import { IllustStepApply, IllustStepIntake, IllustStepPay, IllustStepProfile, IllustStepRewrite, IllustStepScore, IllustStepVerdict } from "./illustrations";
 
-const icons: Record<ProcessStep["icon"], ReactNode> = {
-  upload: <IconUpload />,
-  doc: <IconDoc />,
-  target: <IconTarget />,
-  check: <IconCheck strokeWidth={2.2} />,
-  dollar: <IconDollar />,
-  chat: <IconChat />,
-  compass: <IconCompass />,
+const art: Record<ProcessStep["icon"], ReactNode> = {
+  upload: <IllustStepIntake />,
+  doc: <IllustStepProfile />,
+  target: <IllustStepScore />,
+  check: <IllustStepVerdict />,
+  dollar: <IllustStepPay />,
+  chat: <IllustStepRewrite />,
+  compass: <IllustStepApply />,
 };
 
 export default function ProcessTimeline() {
@@ -51,9 +51,10 @@ export default function ProcessTimeline() {
         <ol className={styles.steps}>
           {processPage.steps.map((s, i) => (
             <li key={s.id} className={styles.step} data-reveal="">
-              <span className={styles.icon} aria-hidden="true">
-                {icons[s.icon]}
-              </span>
+              <div className={styles.art} data-step={i + 1} aria-hidden="true">
+                <span className={styles.badge}>{i + 1}</span>
+                {art[s.icon]}
+              </div>
               <div className={styles.body}>
                 <span className={styles.num}>Step {i + 1}</span>
                 <h3 className="h3">{s.title}</h3>

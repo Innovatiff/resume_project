@@ -543,3 +543,183 @@ export function IllustSeal({ className }: Props) {
     </Svg>
   );
 }
+
+/* ---------- how it works ---------- */
+
+function Sheet({ x, y, w, h, rot = 0 }: { x: number; y: number; w: number; h: number; rot?: number }) {
+  return (
+    <g transform={`rotate(${rot} ${x + w / 2} ${y + h / 2})`}>
+      <rect x={x} y={y} width={w} height={h} rx="6" fill="#fff" stroke={line} />
+      <rect x={x + 8} y={y + 9} width={w * 0.45} height="4.5" rx="2.25" fill={ink} />
+      <Lines x={x + 8} y={y + 19} widths={[w * 0.7, w * 0.6, w * 0.66, w * 0.5]} gap={6.5} h={3.2} />
+    </g>
+  );
+}
+
+/** Step 1: the posting and the resume go in. */
+export function IllustStepIntake({ className }: Props) {
+  return (
+    <Wide className={className}>
+      <rect x="24" y="36" width="58" height="42" rx="7" fill="#fff" stroke={line} />
+      <rect x="31" y="43" width="11" height="11" rx="3.5" fill={ink} />
+      <rect x="46" y="44" width="26" height="4" rx="2" fill={ink} />
+      <rect x="46" y="51" width="18" height="3" rx="1.5" fill={muted} />
+      <rect x="31" y="62" width="20" height="7" rx="3.5" fill={cyanSoft} />
+      <rect x="54" y="62" width="20" height="7" rx="3.5" fill={yellowSoft} />
+      <Sheet x={98} y={10} w={52} h={66} rot={4} />
+      <path d="M124 78v18" stroke={purple} strokeWidth="4" strokeLinecap="round" />
+      <path d="M116 88l8 8 8-8" stroke={purple} strokeWidth="4" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M60 104h86l-7-16H67Z" fill={ink} />
+      <path d="M60 104h86v4H60Z" fill="#2a2a31" />
+      <path d="M78 74l6 8h-12Z" fill={purple} opacity=".0" />
+    </Wide>
+  );
+}
+
+/** Step 2: the resume becomes a Candidate Profile with a flag on every bullet. */
+export function IllustStepProfile({ className }: Props) {
+  return (
+    <Wide className={className}>
+      <Sheet x={22} y={26} w={54} h={70} rot={-3} />
+      <path d="M82 58h24" stroke={ink} strokeWidth="3.5" strokeLinecap="round" />
+      <path d="M100 51l7 7-7 7" stroke={ink} strokeWidth="3.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+      <rect x="116" y="14" width="72" height="82" rx="8" fill="#fff" stroke={line} />
+      <rect x="124" y="23" width="30" height="4.5" rx="2.25" fill={ink} />
+      {[0, 1, 2, 3].map((i) => (
+        <g key={i} transform={`translate(124 ${36 + i * 15})`}>
+          <rect x="0" y="2" width="30" height="3.4" rx="1.7" fill={line} />
+          <rect x="34" y="-1" width="22" height="9" rx="4.5" fill={i === 1 ? "#ededf1" : purpleSoft} />
+          <rect x="38" y="2.6" width="14" height="2.2" rx="1.1" fill={i === 1 ? muted : purpleDeep} />
+        </g>
+      ))}
+    </Wide>
+  );
+}
+
+/** Step 3: the scorer, with its published breakdown. */
+export function IllustStepScore({ className }: Props) {
+  const r = 30;
+  const c = 2 * Math.PI * r;
+  return (
+    <Wide className={className}>
+      <circle cx="64" cy="60" r={r} stroke="#e4e4ea" strokeWidth="10" fill="none" />
+      <circle cx="64" cy="60" r={r} stroke={purple} strokeWidth="10" fill="none" strokeLinecap="round" strokeDasharray={`${c * 0.76} ${c}`} transform="rotate(-90 64 60)" />
+      <text x="64" y="69" fontSize="26" fontWeight="700" fill={ink} textAnchor="middle" fontFamily="var(--font-display), Inter Tight, sans-serif" letterSpacing="-1.2">
+        76
+      </text>
+      {[
+        [0.86, purple],
+        [0.42, coral],
+        [0.66, purple],
+        [0.3, coral],
+      ].map(([v, colr], i) => (
+        <g key={i} transform={`translate(108 ${26 + i * 17})`}>
+          <rect x="0" y="0" width="76" height="9" rx="4.5" fill="#ececf1" />
+          <rect x="0" y="0" width={76 * (v as number)} height="9" rx="4.5" fill={colr as string} />
+        </g>
+      ))}
+      <path d="M173 20v76" stroke={ink} strokeWidth="1.5" strokeDasharray="3 3" />
+    </Wide>
+  );
+}
+
+/** Step 4: apply, borderline, or skip. */
+export function IllustStepVerdict({ className }: Props) {
+  const stamps: [string, string, number, number, number][] = [
+    ["SKIP", muted, 34, 74, -9],
+    ["BORDERLINE", "#b7791f", 86, 56, 5],
+    ["APPLY", "#1c8f5a", 104, 30, -7],
+  ];
+  return (
+    <Wide className={className}>
+      <Sheet x={26} y={14} w={140} h={84} rot={0} />
+      {stamps.map(([label, colr, x, y, rot]) => {
+        const w = label.length * 8.6 + 18;
+        return (
+          <g key={label} transform={`rotate(${rot} ${x + w / 2} ${y + 10})`}>
+            <rect x={x} y={y} width={w} height="20" rx="5" fill="rgba(255,255,255,.9)" stroke={colr} strokeWidth="2.4" />
+            <text x={x + w / 2} y={y + 14} fontSize="11" fontWeight="700" fill={colr} textAnchor="middle" fontFamily="var(--font-display), Inter Tight, sans-serif" letterSpacing="1.2">
+              {label}
+            </text>
+          </g>
+        );
+      })}
+    </Wide>
+  );
+}
+
+/** Step 5: the pay band and the flags. */
+export function IllustStepPay({ className }: Props) {
+  const id = useId().replace(/[^a-zA-Z0-9]/g, "");
+  return (
+    <Wide className={className}>
+      <defs>
+        <linearGradient id={`sp${id}`} x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stopColor={purpleSoft} />
+          <stop offset="1" stopColor={purple} />
+        </linearGradient>
+      </defs>
+      <rect x="14" y="12" width="172" height="50" rx="9" fill="#fff" stroke={line} />
+      <text x="48" y="33" fontSize="15" fontWeight="700" fill={ink} fontFamily="var(--font-display), Inter Tight, sans-serif" letterSpacing="-0.6">
+        $62–78K
+      </text>
+      <rect x="24" y="42" width="152" height="9" rx="4.5" fill={`url(#sp${id})`} />
+      <rect x="112" y="37" width="3.5" height="19" rx="1.75" fill={ink} />
+      <rect x="14" y="70" width="172" height="28" rx="9" fill={coralSoft} />
+      <path d="M26 92V76M26 76h10l-2.5 4 2.5 4H26" fill={coral} stroke={coral} strokeWidth="1.5" strokeLinejoin="round" />
+      <rect x="44" y="81" width="72" height="4" rx="2" fill={coral} />
+      <rect x="122" y="81" width="46" height="4" rx="2" fill="#f2b2aa" />
+    </Wide>
+  );
+}
+
+/** Step 6: the interview, and a rewrite whose figures are checked. */
+export function IllustStepRewrite({ className }: Props) {
+  return (
+    <Wide className={className}>
+      <rect x="14" y="22" width="88" height="26" rx="10" fill="#fff" stroke={line} />
+      <rect x="44" y="30" width="48" height="3.5" rx="1.75" fill={ink} />
+      <rect x="44" y="37" width="34" height="3.5" rx="1.75" fill={muted} />
+      <rect x="36" y="56" width="66" height="22" rx="10" fill={purple} />
+      <rect x="46" y="65" width="46" height="3.5" rx="1.75" fill="#fff" />
+      <rect x="114" y="10" width="74" height="90" rx="8" fill="#fff" stroke={line} />
+      <rect x="122" y="19" width="32" height="4.5" rx="2.25" fill={ink} />
+      <Lines x={122} y={31} widths={[56, 48]} gap={7} h={3.4} />
+      <rect x="120" y="46" width="62" height="12" rx="4" fill={purpleSoft} />
+      <rect x="125" y="50.5" width="40" height="3.4" rx="1.7" fill={purpleDeep} />
+      <Lines x={122} y={65} widths={[54, 40, 50]} gap={7} h={3.4} />
+      <Check cx={181} cy={94} r={11} />
+    </Wide>
+  );
+}
+
+/** Step 7: Plan B on the map, then you press apply. */
+export function IllustStepApply({ className }: Props) {
+  const id = useId().replace(/[^a-zA-Z0-9]/g, "");
+  return (
+    <Wide className={className}>
+      <defs>
+        <clipPath id={`mp${id}`}>
+          <rect x="12" y="10" width="92" height="90" rx="10" />
+        </clipPath>
+      </defs>
+      <g clipPath={`url(#mp${id})`}>
+        <rect x="12" y="10" width="92" height="90" fill="#f4f4f7" />
+        <path d="M12 64c20-8 40-8 55 0s25 12 37 8v28H12Z" fill={cyanSoft} />
+        <circle cx="44" cy="40" r="12" fill="#dff5e8" />
+        <path d="M12 48h92M12 80h92M44 10v90M76 10v90" stroke="#fff" strokeWidth="6" />
+        <path d="M12 48h92M12 80h92M44 10v90M76 10v90" stroke="#e2e2e9" strokeWidth="1.4" />
+      </g>
+      <rect x="12" y="10" width="92" height="90" rx="10" fill="none" stroke={line} />
+      <path d="M60 66c-7-8-10.5-13.5-10.5-18a10.5 10.5 0 0 1 21 0c0 4.5-3.5 10-10.5 18Z" fill={coral} />
+      <circle cx="60" cy="47.5" r="4.2" fill="#fff" />
+      <path d="M88 44c-5.5-6.5-8-10.5-8-14a8 8 0 0 1 16 0c0 3.5-2.5 7.5-8 14Z" fill={purple} />
+      <circle cx="88" cy="29.5" r="3.2" fill="#fff" />
+      <path d="M30 90c-5.5-6.5-8-10.5-8-14a8 8 0 0 1 16 0c0 3.5-2.5 7.5-8 14Z" fill="#f6c52e" />
+      <circle cx="30" cy="75.5" r="3.2" fill="#fff" />
+      <rect x="118" y="42" width="68" height="24" rx="12" fill={ink} />
+      <rect x="132" y="52" width="40" height="4" rx="2" fill="#fff" />
+      <path d="M160 60l4 28 7-7.5 7.5 10 5-3.6-7.5-10h10Z" fill="#fff" stroke={ink} strokeWidth="2.4" strokeLinejoin="round" />
+    </Wide>
+  );
+}
