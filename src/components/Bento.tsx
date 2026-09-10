@@ -6,7 +6,9 @@ import styles from "./Bento.module.css";
 import BlurText from "./BlurText";
 import { bento } from "@/lib/content";
 import { ensureGsap, prefersReducedMotion } from "@/lib/motion";
-import { IconCheck, IconCompass, IconDollar, IconFlag, IconPlus } from "./icons";
+import { IconCheck, IconDollar, IconFlag, IconPlus } from "./icons";
+import { LogoMark } from "./Logo";
+import { IllustFace, IllustMagnifier, IllustMap, IllustRing, IllustSkyline } from "./illustrations";
 
 function Card({ copy, wide, children }: { copy: { title: string; body: string }; wide?: boolean; children: ReactNode }) {
   return (
@@ -21,31 +23,28 @@ function Card({ copy, wide, children }: { copy: { title: string; body: string };
 }
 
 /* 1 ------------------------------------------------------------- */
-const scores = [61, 91, 54, 88, 47, 86];
+const verdicts = [
+  { title: "Warehouse Supervisor", org: "Auto parts supplier", stamp: "Skip", tone: styles.skip, pos: styles.postBack },
+  { title: "Production Scheduler", org: "Packaging plant", stamp: "Borderline", tone: styles.borderline, pos: styles.postMid },
+  { title: "Logistics Coordinator", org: "Food distributor", stamp: "Apply", tone: styles.apply, pos: styles.postFront, score: 88 },
+];
 
-function ScoreBars() {
+function VerdictStack() {
   return (
     <>
       <span className={`chip chip--ink ${styles.floatChip}`}>61 → 91</span>
-      <div className={styles.mini}>
-        <div className={styles.miniHead}>
-          <span>Match scores · this week</span>
-          <span>6 postings</span>
-        </div>
-        <div className={styles.chart}>
-          <div className={styles.threshold}>
-            <span>85</span>
+      <div className={styles.posts} aria-hidden="true">
+        {verdicts.map((v) => (
+          <div key={v.title} className={`${styles.post} ${v.pos}`} data-post="">
+            <span className={styles.postMark} />
+            <span className={styles.postTitle}>{v.title}</span>
+            <span className={styles.postOrg}>{v.org}</span>
+            <span className={styles.postLine} />
+            <span className={styles.postLine} style={{ width: "62%" }} />
+            <span className={`${styles.stamp} ${v.tone}`}>{v.stamp}</span>
+            {v.score ? <IllustRing className={styles.postRing} value={v.score} /> : null}
           </div>
-          {scores.map((v, i) => (
-            <div
-              key={i}
-              className={`${styles.bar} ${v >= 85 ? styles.pass : ""}`}
-              data-bar=""
-              data-v={v}
-              style={{ "--v": v } as CSSProperties}
-            />
-          ))}
-        </div>
+        ))}
       </div>
     </>
   );
@@ -93,11 +92,7 @@ function PayStack() {
 
   return (
     <div ref={ref} style={{ position: "absolute", inset: 0 }}>
-      <div className={styles.rings} aria-hidden="true">
-        <i />
-        <i />
-        <i />
-      </div>
+      <IllustSkyline className={styles.skyline} />
       <div className={styles.stack} aria-live="off">
         {payItems.map((item, i) => (
           <div key={item.t} className={`${styles.note} ${roleFor(i)}`}>
@@ -142,6 +137,7 @@ function RedFlagDoc() {
       <div className={styles.flagTile}>
         <IconFlag />
       </div>
+      <IllustMagnifier className={styles.magnifier} />
     </div>
   );
 }
@@ -151,13 +147,23 @@ function MetricInterview() {
   return (
     <div className={styles.chat}>
       <div className={styles.thread}>
-        <div className={styles.bubble} data-bubble="">
-          <small>Orvenic</small>
-          You mention reducing picking errors. By how much, and over what period?
+        <div className={styles.turn} data-bubble="">
+          <span className={styles.speaker}>
+            <LogoMark size={30} />
+          </span>
+          <div className={styles.bubble}>
+            <small>Orvenic</small>
+            You mention reducing picking errors. By how much, and over what period?
+          </div>
         </div>
-        <div className={`${styles.bubble} ${styles.me}`} data-bubble="">
-          <small>You</small>
-          34%, over seven months. It is in my 2023 review.
+        <div className={`${styles.turn} ${styles.turnMe}`} data-bubble="">
+          <div className={`${styles.bubble} ${styles.me}`}>
+            <small>You</small>
+            34%, over seven months. It is in my 2023 review.
+          </div>
+          <span className={`${styles.speaker} ${styles.speakerMe}`}>
+            <IllustFace />
+          </span>
         </div>
         <div className={styles.result} data-bubble="">
           <span>
@@ -194,12 +200,13 @@ function MetricInterview() {
 }
 
 /* 5 ------------------------------------------------------------- */
+/* Ordered so the shortest labels sit at the orbit's left and right, where the card edge is closest. */
 const sats = [
-  { label: "Inventory Analyst", delta: "+$9K" },
-  { label: "Operations Coordinator", delta: "Windsor" },
   { label: "Supply Planner", delta: "+$4K" },
-  { label: "Purchasing Assistant", delta: "LaSalle" },
+  { label: "Operations Coordinator", delta: "Windsor" },
+  { label: "Inventory Analyst", delta: "+$9K" },
   { label: "Fleet Coordinator", delta: "+$2K" },
+  { label: "Purchasing Assistant", delta: "LaSalle" },
   { label: "Production Scheduler", delta: "Tecumseh" },
 ];
 
@@ -207,7 +214,7 @@ function PlanBOrbit() {
   return (
     <div className={styles.orbitWrap} aria-hidden="true">
       <div className={styles.hub}>
-        <IconCompass />
+        <IllustMap />
       </div>
       <div className={styles.orbit}>
         {sats.map((s, i) => (
@@ -231,12 +238,14 @@ export default function Bento() {
     const root = ref.current;
     if (!root || prefersReducedMotion()) return;
     const ctx = gsap.context(() => {
-      gsap.from("[data-bar]", {
-        scaleY: 0,
-        duration: 1.1,
-        stagger: 0.08,
-        ease: "power3.out",
-        scrollTrigger: { trigger: "[data-bar]", start: "top 85%", once: true },
+      gsap.from("[data-post]", {
+        opacity: 0,
+        scale: 0.8,
+        duration: 1,
+        stagger: 0.14,
+        ease: "back.out(1.6)",
+        clearProps: "all",
+        scrollTrigger: { trigger: "[data-post]", start: "top 85%", once: true },
       });
       gsap.from("[data-bubble]", {
         opacity: 0,
@@ -268,7 +277,7 @@ export default function Bento() {
 
         <div className={styles.grid}>
           <Card copy={c1}>
-            <ScoreBars />
+            <VerdictStack />
           </Card>
           <Card copy={c2}>
             <PayStack />

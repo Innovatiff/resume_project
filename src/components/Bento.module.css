@@ -46,88 +46,108 @@
   line-height: 1.5;
 }
 
-/* ---------- 1. score bars ---------- */
+/* ---------- 1. verdict stack ---------- */
 
-.mini {
+.posts {
   position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: min(78%, 300px);
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: var(--shadow-tile);
-  padding: 14px 16px 12px;
-}
-
-.miniHead {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 0.72rem;
-  color: var(--ink-2);
-  font-weight: 500;
-}
-
-.miniHead span:last-child {
-  padding: 3px 8px;
-  border-radius: 999px;
-  background: var(--panel-soft);
-  color: var(--muted);
-}
-
-.chart {
-  position: relative;
+  inset: 0;
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  align-items: end;
-  gap: 10px;
-  height: 110px;
-  margin-top: 14px;
-  padding-inline: 6px;
+  place-items: center;
 }
 
-.bar {
-  position: relative;
-  border-radius: 6px 6px 3px 3px;
-  height: calc(var(--v) * 1%);
-  background: linear-gradient(180deg, #ff8577, var(--coral));
-  transform-origin: bottom;
-}
-
-.bar.pass {
-  background: linear-gradient(180deg, #ab8dfb, var(--purple));
-}
-
-.bar::after {
-  content: attr(data-v);
+.post {
   position: absolute;
-  left: 50%;
-  top: -18px;
-  transform: translateX(-50%);
-  font-size: 0.62rem;
+  width: min(66%, 250px);
+  padding: 16px 18px 18px;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: var(--shadow-tile);
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  transform-origin: center;
+}
+
+.postBack {
+  transform: translate(-22%, -26%) rotate(-9deg);
+  opacity: 0.55;
+}
+
+.postMid {
+  transform: translate(20%, -12%) rotate(7deg);
+  opacity: 0.8;
+}
+
+.postFront {
+  transform: translate(0, 12%) rotate(-2deg);
+}
+
+.postMark {
+  width: 22px;
+  height: 22px;
+  border-radius: 7px;
+  background: var(--ink);
+  margin-bottom: 2px;
+}
+
+.postTitle {
+  font-family: var(--font-display);
   font-weight: 600;
+  letter-spacing: -0.02em;
+  font-size: 0.86rem;
+  color: var(--ink);
+}
+
+.postOrg {
+  font-size: 0.7rem;
   color: var(--muted);
 }
 
-.threshold {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: calc(100% - 85%);
-  border-top: 1.5px dashed rgba(13, 13, 16, 0.25);
+.postLine {
+  height: 6px;
+  width: 84%;
+  border-radius: 3px;
+  background: var(--panel-soft-2);
 }
 
-.threshold span {
+.stamp {
   position: absolute;
-  left: -10px;
-  top: -10px;
-  font-size: 0.62rem;
+  right: 14px;
+  top: 14px;
+  padding: 4px 9px;
+  border: 2px solid currentColor;
+  border-radius: 7px;
+  font-family: var(--font-display);
   font-weight: 700;
-  padding: 2px 6px;
-  border-radius: 999px;
-  background: var(--ink);
-  color: #fff;
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transform: rotate(-12deg);
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.stamp.apply {
+  color: var(--green-ink);
+}
+
+.stamp.borderline {
+  color: var(--amber-ink);
+}
+
+.stamp.skip {
+  color: var(--muted);
+}
+
+.postRing {
+  position: absolute;
+  right: -14px;
+  bottom: -16px;
+  width: 64px;
+  height: 64px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: var(--shadow-tile);
+  padding: 4px;
 }
 
 .floatChip {
@@ -140,31 +160,24 @@
 
 /* ---------- 2. pay stack ---------- */
 
-.rings {
+.skyline {
   position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 46%;
   pointer-events: none;
 }
-
-.rings i {
-  position: absolute;
-  border-radius: 50%;
-  border: 1px solid rgba(13, 13, 16, 0.06);
-}
-
-.rings i:nth-child(1) { width: 46%; aspect-ratio: 1; }
-.rings i:nth-child(2) { width: 72%; aspect-ratio: 1; }
-.rings i:nth-child(3) { width: 98%; aspect-ratio: 1; }
 
 .stack {
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: 44%;
   width: min(80%, 300px);
   height: 64px;
   transform: translate(-50%, -50%);
+  z-index: 2;
 }
 
 .note {
@@ -304,6 +317,22 @@
   50% { transform: translateY(-8px) rotate(3deg); }
 }
 
+.magnifier {
+  position: absolute;
+  left: 14%;
+  top: 40%;
+  width: 92px;
+  height: 92px;
+  filter: drop-shadow(0 14px 18px rgba(13, 13, 16, 0.22));
+  animation: peer 7s ease-in-out infinite;
+  z-index: 3;
+}
+
+@keyframes peer {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(10px, -6px) rotate(-4deg); }
+}
+
 /* ---------- 4. metric interview ---------- */
 
 .chat {
@@ -320,6 +349,42 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+.turn {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.turnMe {
+  justify-content: flex-end;
+}
+
+.speaker {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background: #fff;
+  box-shadow: var(--shadow-tile);
+}
+
+.speaker svg {
+  width: 30px;
+  height: 30px;
+}
+
+.speakerMe {
+  background: #ffd9d1;
+}
+
+.speakerMe svg {
+  width: 34px;
+  height: 34px;
 }
 
 .bubble {
@@ -455,25 +520,27 @@
 .hub {
   position: relative;
   z-index: 2;
-  width: 64px;
-  height: 64px;
-  border-radius: 19px;
-  display: grid;
-  place-items: center;
+  width: 104px;
+  height: 104px;
+  border-radius: 26px;
+  overflow: hidden;
   background: #fff;
-  color: var(--purple);
-  box-shadow: var(--shadow-tile);
+  box-shadow:
+    0 1px 2px rgba(13, 13, 16, 0.05),
+    0 24px 44px -18px rgba(13, 13, 16, 0.35);
+  border: 3px solid #fff;
 }
 
 .hub svg {
-  width: 30px;
-  height: 30px;
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .orbit {
   position: absolute;
-  width: 240px;
-  height: 240px;
+  width: 224px;
+  height: 224px;
   border-radius: 50%;
   border: 1px dashed rgba(13, 13, 16, 0.1);
   animation: spin 46s linear infinite;
@@ -483,7 +550,7 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: rotate(var(--a)) translateX(120px) rotate(calc(-1 * var(--a)));
+  transform: rotate(var(--a)) translateX(112px) rotate(calc(-1 * var(--a)));
 }
 
 .satInner {
@@ -543,6 +610,13 @@
 
   .art {
     min-height: 230px;
+  }
+
+  /* The interview thread sets its own height on phones instead of being clipped. */
+  .chat {
+    position: relative;
+    inset: auto;
+    padding: 22px 18px;
   }
 
   .orbit {

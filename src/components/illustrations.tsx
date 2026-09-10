@@ -300,3 +300,126 @@ export function IllustRulePromise({ className }: Props) {
     </Svg>
   );
 }
+
+/* ---------- bento ---------- */
+
+/** Just the candidate's face, for avatars. */
+export function IllustFace({ className }: Props) {
+  return (
+    <Svg className={className}>
+      <circle cx="50" cy="52" r="30" fill="#f4b9a4" />
+      <path d="M20 54c0-25 13.5-38 30-38s30 13 30 38c-4.5-14-15-20-30-20s-25.5 6-30 20Z" fill="#3b2b2b" />
+      <circle cx="39" cy="56" r="3" fill="#2a1d1d" />
+      <circle cx="61" cy="56" r="3" fill="#2a1d1d" />
+      <path d="M41 67q9 7 18 0" stroke="#b0604d" strokeWidth="3" fill="none" strokeLinecap="round" />
+    </Svg>
+  );
+}
+
+/** A small score ring, ink on white. */
+export function IllustRing({ className, value = 88 }: Props & { value?: number }) {
+  const r = 26;
+  const c = 2 * Math.PI * r;
+  return (
+    <Svg className={className}>
+      <circle cx="50" cy="50" r={r} stroke="#ececf1" strokeWidth="9" fill="none" />
+      <circle cx="50" cy="50" r={r} stroke={purple} strokeWidth="9" fill="none" strokeLinecap="round" strokeDasharray={`${(c * value) / 100} ${c}`} transform="rotate(-90 50 50)" />
+      <text x="50" y="58" fontSize="24" fontWeight="700" fill={ink} textAnchor="middle" fontFamily="var(--font-display), Inter Tight, sans-serif" letterSpacing="-1">
+        {value}
+      </text>
+    </Svg>
+  );
+}
+
+/** A city at dusk: pay in your city. */
+export function IllustSkyline({ className }: Props) {
+  const id = useId().replace(/[^a-zA-Z0-9]/g, "");
+  const towers: [number, number, number][] = [
+    [6, 62, 22],
+    [32, 40, 18],
+    [54, 78, 26],
+    [84, 30, 16],
+    [104, 58, 30],
+    [138, 46, 20],
+    [162, 84, 24],
+    [190, 36, 14],
+    [208, 64, 28],
+    [240, 50, 18],
+    [262, 90, 22],
+    [288, 42, 26],
+    [318, 70, 20],
+    [342, 56, 30],
+    [376, 78, 18],
+  ];
+  return (
+    <svg viewBox="0 0 400 140" className={className} aria-hidden="true" focusable="false" preserveAspectRatio="xMidYMax slice">
+      <defs>
+        <linearGradient id={`sky${id}`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#efe9ff" stopOpacity="0" />
+          <stop offset="1" stopColor="#efe9ff" />
+        </linearGradient>
+        <linearGradient id={`tw${id}`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#d9ccff" />
+          <stop offset="1" stopColor="#c3b1fb" />
+        </linearGradient>
+      </defs>
+      <rect width="400" height="140" fill={`url(#sky${id})`} />
+      <circle cx="318" cy="46" r="18" fill="#ffe28a" opacity=".9" />
+      <path d="M0 132c60-42 120-42 200-42s140 0 200 42" stroke="#b9a4ff" strokeWidth="2" fill="none" opacity=".7" />
+      <path d="M96 132V78M304 132V78" stroke="#b9a4ff" strokeWidth="3" strokeLinecap="round" opacity=".8" />
+      {towers.map(([x, h, w], i) => (
+        <g key={i}>
+          <rect x={x} y={140 - h} width={w} height={h} rx="2" fill={`url(#tw${id})`} />
+          {Array.from({ length: Math.max(1, Math.floor(h / 14)) }).map((_, j) => (
+            <rect key={j} x={x + 4} y={140 - h + 6 + j * 14} width={w - 8} height="4" rx="1" fill="#fff" opacity=".55" />
+          ))}
+        </g>
+      ))}
+      <rect x="0" y="132" width="400" height="8" fill="#c9b9ff" />
+    </svg>
+  );
+}
+
+/** A magnifying glass with a purple rim. */
+export function IllustMagnifier({ className }: Props) {
+  return (
+    <Svg className={className}>
+      <path d="M62 62l24 24" stroke={ink} strokeWidth="13" strokeLinecap="round" />
+      <path d="M62 62l24 24" stroke={purple} strokeWidth="7" strokeLinecap="round" />
+      <circle cx="40" cy="40" r="30" fill="rgba(255,255,255,.55)" stroke={ink} strokeWidth="7" />
+      <circle cx="40" cy="40" r="30" fill="none" stroke="rgba(255,255,255,.7)" strokeWidth="2" />
+      <path d="M24 30c3-7 9-11 15-12" stroke="#fff" strokeWidth="4" strokeLinecap="round" fill="none" opacity=".9" />
+      <rect x="27" y="36" width="26" height="8" rx="4" fill={coral} />
+    </Svg>
+  );
+}
+
+/** A street map with three pins: better roles nearby. */
+export function IllustMap({ className }: Props) {
+  return (
+    <Svg className={className}>
+      <rect width="100" height="100" fill="#f4f4f7" />
+      <path d="M0 62c20-8 40-8 60 0s30 14 40 10v28H0Z" fill={cyanSoft} />
+      <circle cx="22" cy="24" r="14" fill="#dff5e8" />
+      <path d="M0 40h100M0 76h100M34 0v100M68 0v100" stroke="#fff" strokeWidth="7" />
+      <path d="M0 40h100M0 76h100M34 0v100M68 0v100" stroke="#e2e2e9" strokeWidth="1.5" />
+      <path d="M8 0c10 30 20 40 60 100" stroke="#fff" strokeWidth="5" fill="none" />
+      <path d="M8 0c10 30 20 40 60 100" stroke="#e2e2e9" strokeWidth="1.2" fill="none" />
+      <g>
+        <ellipse cx="50" cy="60" rx="9" ry="3.5" fill="rgba(13,13,16,.15)" />
+        <path d="M50 58c-8-9-12-15-12-21a12 12 0 0 1 24 0c0 6-4 12-12 21Z" fill={coral} />
+        <circle cx="50" cy="37" r="5" fill="#fff" />
+      </g>
+      <g>
+        <ellipse cx="80" cy="34" rx="7" ry="2.8" fill="rgba(13,13,16,.12)" />
+        <path d="M80 32.5c-6.5-7.5-9.5-12-9.5-17a9.5 9.5 0 0 1 19 0c0 5-3 9.5-9.5 17Z" fill={purple} />
+        <circle cx="80" cy="15.5" r="4" fill="#fff" />
+      </g>
+      <g>
+        <ellipse cx="24" cy="88" rx="7" ry="2.8" fill="rgba(13,13,16,.12)" />
+        <path d="M24 86.5c-6.5-7.5-9.5-12-9.5-17a9.5 9.5 0 0 1 19 0c0 5-3 9.5-9.5 17Z" fill="#f6c52e" />
+        <circle cx="24" cy="69.5" r="4" fill="#fff" />
+      </g>
+    </Svg>
+  );
+}
