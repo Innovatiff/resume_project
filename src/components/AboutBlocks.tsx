@@ -3,16 +3,30 @@ import styles from "./AboutBlocks.module.css";
 import BlurText from "./BlurText";
 import { rules } from "@/lib/content";
 import { aboutPage } from "@/lib/pages";
-import { IconBan, IconCardOff, IconCheck, IconDollar, IconDoorOpen, IconHand, IconHandshake, IconShield, IconX } from "./icons";
+import { IconBan, IconCheck, IconX } from "./icons";
+import {
+  IllustRuleBlock,
+  IllustRuleFabricate,
+  IllustRulePay,
+  IllustRulePromise,
+  IllustRuleRenew,
+  IllustRuleSubmit,
+  IllustSkyline,
+  IllustWedgeMarkets,
+  IllustWedgeSkip,
+  IllustWedgeTrust,
+} from "./illustrations";
 
-const ruleIcons: Record<string, ReactNode> = {
-  fabricate: <IconShield />,
-  pay: <IconDollar />,
-  block: <IconDoorOpen />,
-  submit: <IconHand />,
-  renew: <IconCardOff />,
-  promise: <IconHandshake />,
+const ruleArt: Record<string, ReactNode> = {
+  fabricate: <IllustRuleFabricate />,
+  pay: <IllustRulePay />,
+  block: <IllustRuleBlock />,
+  submit: <IllustRuleSubmit />,
+  renew: <IllustRuleRenew />,
+  promise: <IllustRulePromise />,
 };
+
+const wedgeArt = [<IllustWedgeSkip key="skip" />, <IllustWedgeTrust key="trust" />, <IllustWedgeMarkets key="markets" />];
 
 export function Wedges() {
   const w = aboutPage.wedges;
@@ -31,9 +45,10 @@ export function Wedges() {
         <div className={styles.wedges}>
           {w.items.map((item, i) => (
             <article key={item.title} className={styles.wedge} data-reveal="">
-              <span className={styles.wedgeNum} aria-hidden="true">
-                0{i + 1}
-              </span>
+              <div className={styles.wedgeArt} aria-hidden="true">
+                <span className={styles.wedgeNum}>0{i + 1}</span>
+                {wedgeArt[i]}
+              </div>
               <h3 className="h3">{item.title}</h3>
               <p>{item.body}</p>
             </article>
@@ -91,13 +106,9 @@ export function RulesGrid() {
         <div className={styles.rules}>
           {rules.items.map((r, i) => (
             <article key={r.id} className={styles.rule} data-reveal="">
-              <div className={styles.ruleHead}>
-                <span className={styles.ruleIcon} aria-hidden="true">
-                  {ruleIcons[r.id]}
-                </span>
-                <span className={styles.ruleNum} aria-hidden="true">
-                  0{i + 1}
-                </span>
+              <div className={styles.ruleArt} aria-hidden="true">
+                <span className={styles.ruleNum}>0{i + 1}</span>
+                {ruleArt[r.id]}
               </div>
               <h3 className="h3">{r.title}</h3>
               <p>{r.body}</p>
@@ -125,6 +136,9 @@ export function Company() {
           ))}
         </div>
         <div className={styles.facts} data-reveal="">
+          <div className={styles.companyArt} aria-hidden="true">
+            <IllustSkyline />
+          </div>
           {c.facts.map((f) => (
             <div key={f.label} className={styles.factRow}>
               <span>{f.label}</span>

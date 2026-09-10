@@ -899,3 +899,80 @@ export function IllustPilotReport({ className }: Props) {
     </Wide>
   );
 }
+
+/* ---------- about ---------- */
+
+/** Tell you not to apply: one posting, stamped skip, out of a pile. */
+export function IllustWedgeSkip({ className }: Props) {
+  return (
+    <Wide className={className}>
+      {[0, 1, 2, 3].map((i) => (
+        <rect key={i} x={40 + i * 6} y={18 - i * 3} width="96" height="70" rx="8" fill="#fff" stroke={line} opacity={0.35 + i * 0.15} />
+      ))}
+      <rect x="64" y="30" width="96" height="70" rx="8" fill="#fff" stroke={line} />
+      <rect x="74" y="40" width="34" height="5" rx="2.5" fill={ink} />
+      <rect x="74" y="49" width="24" height="3.4" rx="1.7" fill={muted} />
+      <Lines x={74} y={60} widths={[70, 56, 62]} gap={7} h={3.4} />
+      <g transform="rotate(-12 128 78)">
+        <rect x="98" y="68" width="60" height="21" rx="5" fill="rgba(255,255,255,.92)" stroke={coral} strokeWidth="2.6" />
+        <text x="128" y="83" fontSize="12" fontWeight="700" fill={coral} textAnchor="middle" fontFamily="var(--font-display), Inter Tight, sans-serif" letterSpacing="1.6">
+          SKIP
+        </text>
+      </g>
+    </Wide>
+  );
+}
+
+/** Earn trust by design: one card, no cycle, one email at day 25. */
+export function IllustWedgeTrust({ className }: Props) {
+  return (
+    <Wide className={className}>
+      <rect x="30" y="30" width="86" height="72" rx="8" fill="#fff" stroke={line} />
+      <rect x="30" y="30" width="86" height="16" rx="8" fill={purple} />
+      <rect x="30" y="38" width="86" height="8" fill={purple} />
+      {[0, 1, 2, 3, 4].map((c) =>
+        [0, 1, 2].map((r) => {
+          const n = r * 5 + c;
+          return <rect key={`${c}-${r}`} x={39 + c * 14} y={54 + r * 14} width="9" height="9" rx="2.5" fill={n === 12 ? coral : "#ececf1"} />;
+        }),
+      )}
+      <rect x="122" y="34" width="62" height="42" rx="7" fill="#fff" stroke={line} />
+      <path d="M122 41l31 20 31-20" stroke={purple} strokeWidth="2.5" fill="none" strokeLinejoin="round" />
+      <g transform="translate(154 72)">
+        <circle cx="16" cy="16" r="14" fill="#fff" stroke={coral} strokeWidth="3" />
+        <rect x="7" y="10" width="18" height="12" rx="2.5" fill="none" stroke={muted} strokeWidth="2.2" />
+        <path d="M7 14h18" stroke={muted} strokeWidth="2.2" />
+        <path d="M6 26L26 6" stroke={coral} strokeWidth="3" strokeLinecap="round" />
+      </g>
+    </Wide>
+  );
+}
+
+/** Built for both sides of the border, in three languages. */
+export function IllustWedgeMarkets({ className }: Props) {
+  return (
+    <Wide className={className}>
+      <path d="M0 90c30-6 50-14 72-16 26-2 48 8 68 4s30-12 60-10v42H0Z" fill={cyanSoft} />
+      <path d="M0 110V86c26-2 46-10 70-10s52 6 76 4 30-8 54-8v38Z" fill="#dff5e8" opacity=".9" />
+      <path d="M40 82c30-42 90-42 120 0" stroke={purple} strokeWidth="2.5" fill="none" />
+      <path d="M70 82V60M130 82V60" stroke={purple} strokeWidth="3.5" strokeLinecap="round" />
+      <path d="M40 82h120" stroke={purple} strokeWidth="3.5" strokeLinecap="round" />
+      <path d="M52 82V70M88 82V56M112 82V56M148 82V70" stroke={purple} strokeWidth="1.6" opacity=".7" />
+      <Sheet x={126} y={8} w={58} h={46} rot={5} />
+      <g transform="translate(42 18)">
+        {[
+          ["EN", purpleSoft, purpleDeep],
+          ["FR", cyanSoft, "#0d7a95"],
+          ["ES", yellowSoft, "#8a6d0f"],
+        ].map(([t, bg, fg], i) => (
+          <g key={t} transform={`translate(${i * 26} 0)`}>
+            <rect x="0" y="0" width="22" height="13" rx="6.5" fill={bg} />
+            <text x="11" y="9.5" fontSize="7" fontWeight="700" fill={fg} textAnchor="middle" fontFamily="var(--font-body), Outfit, sans-serif">
+              {t}
+            </text>
+          </g>
+        ))}
+      </g>
+    </Wide>
+  );
+}

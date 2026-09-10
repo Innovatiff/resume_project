@@ -37,13 +37,40 @@
 .wedge:nth-child(2) { --tint: rgba(139, 92, 246, 0.18); }
 .wedge:nth-child(3) { --tint: rgba(62, 207, 239, 0.2); }
 
-.wedgeNum {
+.wedgeArt {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: 18px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #fafafc, #f1f1f5);
+  margin: -6px 0 2px;
+}
+
+.wedgeArt svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.wedge:nth-child(1) .wedgeArt { background: linear-gradient(180deg, #fff1ef, #fde1dc); }
+.wedge:nth-child(2) .wedgeArt { background: linear-gradient(180deg, #f3edff, #e7ddff); }
+.wedge:nth-child(3) .wedgeArt { background: linear-gradient(180deg, #e9fafd, #d3f2fa); }
+
+.wedgeNum,
+.ruleNum {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #fff;
   font-family: var(--font-display);
   font-weight: 700;
-  letter-spacing: -0.04em;
-  font-size: 2.6rem;
-  line-height: 1;
-  color: var(--muted-2);
+  font-size: 0.72rem;
+  letter-spacing: -0.01em;
+  box-shadow: var(--shadow-tile);
 }
 
 .wedge h3 {
@@ -157,32 +184,22 @@
   gap: 14px;
 }
 
-.ruleHead {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.ruleIcon {
-  width: 48px;
-  height: 48px;
-  border-radius: 15px;
+.ruleArt {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: 18px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #fafafc, #f1f1f5);
   display: grid;
   place-items: center;
-  background: var(--panel-soft);
-  color: var(--coral);
+  margin: -4px 0 2px;
 }
 
-.ruleIcon svg {
-  width: 22px;
-  height: 22px;
-}
-
-.ruleNum {
-  font-family: var(--font-display);
-  font-weight: 600;
-  color: var(--muted-2);
-  letter-spacing: -0.02em;
+.ruleArt svg {
+  display: block;
+  height: 100%;
+  width: auto;
+  max-width: 100%;
 }
 
 .rule h3 {
@@ -227,6 +244,20 @@
   border: 1px solid var(--line);
   background: var(--panel-soft);
   padding: 8px 26px;
+}
+
+.companyArt {
+  aspect-ratio: 16 / 7;
+  border-radius: 18px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #f6f2ff, #efe9ff);
+  margin: 10px 0 6px;
+}
+
+.companyArt svg {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .factRow {
