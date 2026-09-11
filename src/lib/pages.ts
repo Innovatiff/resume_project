@@ -447,7 +447,7 @@ export const legal: Record<"privacy" | "terms" | "refunds", LegalDoc> = {
         id: "ai",
         heading: "AI processing",
         paragraphs: [
-          "Your Candidate Profile and the posting are processed by a large language model through Anthropic's Claude API under commercial terms that do not permit training on customer data. Salary lookups go to a market-data provider and include only a job title and a city, never your name or resume.",
+          "Your Candidate Profile and the posting are processed by a large language model run by a third-party AI provider under commercial terms that do not permit training on customer data. Salary lookups go to a market-data provider and include only a job title and a city, never your name or resume.",
         ],
       },
       {
