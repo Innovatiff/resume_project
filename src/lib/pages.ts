@@ -318,7 +318,7 @@ export const faqPage = {
         },
         {
           q: "Do I need an account?",
-          a: "No. You do not need an account to run the free scan, to buy, or to receive your files by email. Pass holders receive a private link for the application tracker and the browser extension.",
+          a: "No account is needed to run the free scan, to buy, or to receive your files by email. A pass includes the application tracker and the browser extension, and both work through your account, so those are the parts that ask you to sign in.",
         },
       ],
     },

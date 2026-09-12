@@ -13,6 +13,8 @@ export interface Link {
 
 export const brand = {
   name: "Orvenic",
+  /** Chrome Web Store listing. Empty falls back to the zip and Load unpacked on the Extension page. */
+  extensionStoreUrl: process.env.NEXT_PUBLIC_EXTENSION_STORE_URL ?? "https://chromewebstore.google.com/detail/ilpkkihajccpmnnoalhobpcmbagbcjch",
   region: "Windsor–Essex, Ontario",
   email: "hello@orvenic.com",
   blurb:

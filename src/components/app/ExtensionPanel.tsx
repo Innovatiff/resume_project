@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { apiFetch, ApiClientError } from "@/lib/app/auth-client";
 import { useMe } from "@/lib/app/use-me";
+import { brand } from "@/lib/content";
 import type { PublicExtensionKey } from "@/lib/app/types";
 import { Card, CopyButton, Notice, PageHead, Skeleton, fmtDate } from "./ui";
 
@@ -16,8 +17,7 @@ import { Card, CopyButton, Notice, PageHead, Skeleton, fmtDate } from "./ui";
 
 const SUPPORTED = ["Greenhouse", "Lever", "Ashby", "Workday"];
 
-/** The Chrome Web Store listing, once the review is through. Until then the zip and Load unpacked. */
-const STORE_URL = process.env.NEXT_PUBLIC_EXTENSION_STORE_URL || "";
+const STORE_URL = brand.extensionStoreUrl;
 
 function browserLabel(): string {
   const ua = navigator.userAgent;

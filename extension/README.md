@@ -13,7 +13,11 @@ node extension/build.mjs --dev # extension/.dev: same code, plus localhost hosts
 
 `build.mjs` bundles `src/` with esbuild and writes the manifest. The ATS host list there mirrors `src/lib/extension/ats.ts`; change both together. `dist/` and the zip are committed so a customer can install without building.
 
-## Install by hand
+## Install
+
+Customers install from the Chrome Web Store listing: https://chromewebstore.google.com/detail/ilpkkihajccpmnnoalhobpcmbagbcjch — the Extension page in the app links to it. Edge and Brave install from the same listing.
+
+## Install by hand (development, or a browser without the store)
 
 1. Download `public/downloads/orvenic-extension.zip` (the app's Extension page links to it) and unzip it, or use `extension/dist` from a checkout.
 2. `chrome://extensions` → Developer mode → Load unpacked → choose the folder.

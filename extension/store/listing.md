@@ -1,5 +1,9 @@
 # Chrome Web Store listing
 
+Published: https://chromewebstore.google.com/detail/ilpkkihajccpmnnoalhobpcmbagbcjch
+
+The text below is what the listing carries; keep it in step with the dashboard when you update the item.
+
 Everything to paste into the developer dashboard (https://chrome.google.com/webstore/devconsole). The package to upload is `public/downloads/orvenic-extension.zip`, produced by `npm run build:extension`.
 
 ## Store listing
